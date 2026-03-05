@@ -16,12 +16,12 @@ st.markdown("""
     <style>
     .main { background-color: #0e1117; }
     .stTextInput > div > div > input { background-color: #1a1a1a; color: #dcdcdc; border: 1px solid #333; }
-    .stSuccess { background-color: #050505; border: 1px solid #2e7d32; color: #dcdcdc; font-size: 1.2rem; }
+    .stSuccess { background-color: #050505; border: 1px solid #2e7d32; color: #dcdcdc; font-size: 1.2rem; white-space: pre-wrap; }
     </style>
     """, unsafe_allow_html=True)
 
 # ============================================================
-# 2. INICJALIZACJA SILNIKA (LOKALNIE)
+# 2. INICJALIZACJA SILNIKA
 # ============================================================
 @st.cache_resource
 def setup_translator():
@@ -37,7 +37,7 @@ def setup_translator():
 translator_ready = setup_translator()
 
 # ============================================================
-# 3. ŁADOWANIE TWOJEJ BAZY (OSNOVA I VUZOR)
+# 3. ŁADOWANIE BAZY
 # ============================================================
 @st.cache_data
 def load_data():
@@ -59,87 +59,104 @@ def load_data():
 dictionary, vuzor_data = load_data()
 
 # ============================================================
-# 4. LOGIKA WYMUSZAJĄCA TWOJE ZASADY (KOD ZAMIAST PROMPTU)
+# 4. LOGIKA TRANSFORMACJI
 # ============================================================
 
 def match_case(original, translated):
-    """Zasada Case-by-Case: Matka -> Mati, matka -> mati"""
     if original.isupper(): return translated.upper()
-    if original[0].isupper(): return translated.capitalize()
+    if original and original[0].isupper(): return translated.capitalize()
     return translated.lower()
 
-def reorder_grammar(words_with_info):
-    """KRYTYCZNA ZASADA: Przymiotnik ZAWSZE przed rzeczownikiem"""
-    result = []
-    i = 0
-    while i < len(words_with_info):
-        # Sprawdzamy, czy mamy parę: Rzeczownik + Przymiotnik (polska kolejność)
-        if i + 1 < len(words_with_info):
-            w1, info1 = words_with_info[i]
-            w2, info2 = words_with_info[i+1]
-            
-            # Jeśli w1 to rzeczownik (noun), a w2 to przymiotnik (adj) -> zamień kolejność
-            if "noun" in info1.get('type', '') and "adj" in info2.get('type', ''):
-                result.append(w2)
-                result.append(w1)
-                i += 2
-                continue
-        
-        result.append(words_with_info[i][0])
-        i += 1
-    return result
-
 def custom_translate(text):
-    # 1. Czyszczenie i rozbicie na słowa
-    words = text.split()
-    processed_sentence = []
+    # Rozbijanie tekstu z zachowaniem separatorów (interpunkcja, spacje, znaki matematyczne)
+    # \w+ to słowa, [^\w\s] to znaki interpunkcyjne/matematyczne, \s+ to białe znaki
+    tokens = re.findall(r'\w+|[^\w\s]|\s+', text)
+    
+    processed_tokens = []
     found_in_base = []
 
-    for word in words:
-        clean = re.sub(r'[^\w]', '', word).lower()
-        
-        # 2. Szukanie w Twojej bazie (OSNOVA)
-        if clean in dictionary:
-            entry = dictionary[clean][0]
-            slov_word = entry['slovian']
-            # Zapamiętujemy typ słowa do późniejszej zmiany kolejności
-            word_type = entry.get('type and case', '').lower()
-            
-            final_word = match_case(word, slov_word)
-            processed_sentence.append((final_word, {'type': word_type}))
-            found_in_base.append(entry)
+    # Faza 1: Tłumaczenie słów, zachowanie reszty
+    for token in tokens:
+        # Jeśli token to słowo (litery/cyfry)
+        if re.match(r'\w+', token):
+            clean = token.lower()
+            if clean in dictionary:
+                entry = dictionary[clean][0]
+                slov_word = entry['slovian']
+                word_type = entry.get('type and case', '').lower()
+                
+                final_word = match_case(token, slov_word)
+                processed_tokens.append({'text': final_word, 'type': word_type, 'is_word': True})
+                found_in_base.append(entry)
+            else:
+                # Fallback do Argos dla słów, których nie ma w bazie
+                try:
+                    translated = argostranslate.translate.translate(token, 'pl', 'en')
+                    processed_tokens.append({'text': match_case(token, translated), 'type': 'unknown', 'is_word': True})
+                except:
+                    processed_tokens.append({'text': token, 'type': 'unknown', 'is_word': True})
         else:
-            # 3. Fallback do Argos (jeśli brak w bazie)
-            try:
-                translated = argostranslate.translate.translate(word, 'pl', 'en')
-                processed_sentence.append((match_case(word, translated), {'type': 'unknown'}))
-            except:
-                processed_sentence.append((word, {'type': 'unknown'}))
+            # Jeśli token to interpunkcja, spacja lub znak matematyczny - zostawiamy jak jest
+            processed_tokens.append({'text': token, 'type': 'separator', 'is_word': False})
 
-    # 4. WYMUSZENIE KOLEJNOŚCI: Przymiotnik przed Rzeczownik
-    final_ordered_words = reorder_grammar(processed_sentence)
+    # Faza 2: Logika gramatyczna (Przymiotnik przed Rzeczownik)
+    # Przeszukujemy tylko tokeny będące słowami, ignorując separatory między nimi
+    i = 0
+    final_result = []
     
-    return " ".join(final_ordered_words), found_in_base
+    while i < len(processed_tokens):
+        current = processed_tokens[i]
+        
+        # Próba znalezienia pary Rzeczownik + (opcjonalny separator) + Przymiotnik
+        if current['is_word'] and "noun" in current['type']:
+            next_word_idx = -1
+            separator_idx = -1
+            
+            # Szukaj następnego słowa, pomijając ewentualne spacje/interpunkcję
+            for j in range(i + 1, len(processed_tokens)):
+                if processed_tokens[j]['is_word']:
+                    next_word_idx = j
+                    break
+                else:
+                    separator_idx = j # Zapamiętaj separator między słowami
+            
+            if next_word_idx != -1:
+                next_word = processed_tokens[next_word_idx]
+                if "adj" in next_word['type']:
+                    # Zamiana: Przymiotnik + Separator + Rzeczownik
+                    final_result.append(next_word['text'])
+                    if separator_idx != -1:
+                        final_result.append(processed_tokens[separator_idx]['text'])
+                    final_result.append(current['text'])
+                    i = next_word_idx + 1
+                    continue
+        
+        final_result.append(current['text'])
+        i += 1
+    
+    return "".join(final_result), found_in_base
 
 # ============================================================
-# 5. INTERFEJS UŻYTKOWNIKA
+# 5. INTERFEJS
 # ============================================================
 st.title("Perkladačь slověnьskogo ęzyka")
-st.caption("Działanie lokalne (Argos + Logika Gramatyczna) - Bez Limitów")
+st.caption("Lokalny przekład: zachowanie interpunkcji, spacji i znaków matematycznych")
 
-user_input = st.text_input("Vupiši rěčenьje:", placeholder="np. Wojsko Słowiańskie")
+user_input = st.text_area("Vupiši tekst:", placeholder="np. Wojsko Słowiańskie + Wojsko Polskie = ?", height=150)
 
 if user_input:
     if not translator_ready:
         st.info("Inicjalizacja silnika...")
     else:
-        with st.spinner("Przetwarzanie zasad gramatyki..."):
+        with st.spinner("Przetwarzanie..."):
             result, matches = custom_translate(user_input)
             
             st.markdown("### Vynik perklada:")
             st.success(result)
             
             if matches:
-                with st.expander("Užito jiz Twojej podstawy (RAG)"):
-                    for m in matches:
+                with st.expander("Užito jiz Twojej podstawy"):
+                    # Usuwanie duplikatów w wyświetlaniu źródła
+                    unique_matches = {m['slovian']: m for m in matches}.values()
+                    for m in unique_matches:
                         st.write(f"**{m['polish']}** → `{m['slovian']}` ({m.get('type and case','')})")
