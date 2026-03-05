@@ -10290,88 +10290,172 @@
     "slovian": "slověnьščiny"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszcze",
-    "slovian": "jizgarišče"
+    "slovian": "žglišče"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszcze",
-    "slovian": "jizgarišče"
+    "slovian": "žglišče"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszcza",
-    "slovian": "jizgarišča"
+    "slovian": "žglišča"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszczu",
-    "slovian": "jizgarišči"
+    "slovian": "žglišči"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszczu",
-    "slovian": "jizgarišču"
+    "slovian": "žglišču"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszczem",
-    "slovian": "jizgariščemь"
+    "slovian": "žgliščemь"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruin",
     "polish": "zgliszcze",
-    "slovian": "jizgarišče"
+    "slovian": "žglišče"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszcza",
-    "slovian": "jizgarišča"
+    "slovian": "žglišča"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszcza",
-    "slovian": "jizgarišča"
+    "slovian": "žglišča"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
-    "polish": "zgliszcz",
-    "slovian": "jizgarišč"
+    "polish": "zgliszcz/zgliszczy",
+    "slovian": "žgliščь"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszczach",
-    "slovian": "jizgariščih"
+    "slovian": "žgliščih"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszczom",
-    "slovian": "jizgariščem"
+    "slovian": "žgliščem"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszczami",
-    "slovian": "jizgarišči"
+    "slovian": "žglišči"
   },
   {
-    "type and case": "noun - jimenьnik: \"jizgarišče\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "type and case": "noun - jimenьnik: \"žglišče\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
     "context": "ruins",
     "polish": "zgliszcza",
-    "slovian": "jizgarišča"
+    "slovian": "žglišča"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszcze",
+    "slovian": "žglišče"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszcze",
+    "slovian": "žglišče"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszcza",
+    "slovian": "žglišča"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszczu",
+    "slovian": "žglišči"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszczu",
+    "slovian": "žglišču"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszczem",
+    "slovian": "žgliščemь"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruin",
+    "polish": "żgliszcze",
+    "slovian": "žglišče"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszcza",
+    "slovian": "žglišča"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszcza",
+    "slovian": "žglišča"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszcz/żgliszczy",
+    "slovian": "žgliščь"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszczach",
+    "slovian": "žgliščih"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszczom",
+    "slovian": "žgliščem"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszczami",
+    "slovian": "žglišči"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"žglišče\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type neuter (inanimate) - rodjajь nijaky (neživotьny)",
+    "context": "ruins",
+    "polish": "żgliszcza",
+    "slovian": "žglišča"
   },
   {
     "type and case": "noun - jimenьnik: \"višьnja\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (inanimate) - rodjajь ženьsky (neživotьny)",
