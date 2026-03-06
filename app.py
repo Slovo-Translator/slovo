@@ -99,7 +99,8 @@ if user_input:
         ])
 
         system_prompt = f"""
-Jesteś deterministycznym parserem języka słowiańskiego. 
+Działasz jako tłumacz języka słowiańskiego (prasłowiańskiego) i używasz słowiańskich słów w tłumaczeniu pochodzących jedynie z plików osnova.json i vuzor.json.
+
 Twoim zadaniem jest przekształcenie polskiego zdania na język słowiański, używając dostarczonych rdzeni.
 
 --------------------------------------------------
@@ -152,6 +153,7 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
