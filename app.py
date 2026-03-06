@@ -13,7 +13,8 @@ st.markdown("""
     <style>
     .main { background-color: #0e1117; }
     .stTextInput > div > div > input { background-color: #1a1a1a; color: #dcdcdc; border: 1px solid #333; }
-    .stSuccess { background-color: #050505; border: 1px solid #2e7d32; color: #dcdcdc; font-size: 1.2rem; }
+    .stTextArea > div > div > textarea { background-color: #1a1a1a; color: #dcdcdc; border: 1px solid #333; }
+    .stSuccess { background-color: #050505; border: 1px solid #2e7d32; color: #dcdcdc; font-size: 1.2rem; white-space: pre-wrap; }
     </style>
     """, unsafe_allow_html=True)
 
@@ -47,10 +48,11 @@ def load_dictionary():
 dictionary = load_dictionary()
 
 # ============================================================
-# 4. PRECYZYJNA LOGIKA POBIERANIA KONTEKSTU
+# 4. PRECYZYJNA LOGIKA POBIERANIA KONTEKSTU (Słowa + Frazy)
 # ============================================================
 def get_strict_context(text, dic):
-    search_text = re.sub(r'[^\w\s]', '', text.lower())
+    # Wyciągamy słowa, ignorując interpunkcję dla wyszukiwania
+    search_text = re.sub(r'[^\w\s]', ' ', text.lower())
     words = search_text.split()
     relevant_entries = []
     
@@ -58,11 +60,10 @@ def get_strict_context(text, dic):
         if word in dic:
             relevant_entries.extend(dic[word])
     
-    # Usuwanie duplikatów
     seen = set()
     unique_entries = []
     for e in relevant_entries:
-        identifier = (e['polish'], e['slovian'])
+        identifier = (e['polish'].lower(), e['slovian'].lower())
         if identifier not in seen:
             seen.add(identifier)
             unique_entries.append(e)
@@ -70,55 +71,57 @@ def get_strict_context(text, dic):
     return unique_entries
 
 # ============================================================
-# 5. INTERFEJS I TŁUMACZENIE
+# 5. INTERFEJS UŻYTKOWNIKA
 # ============================================================
 st.title("Perkladačь slověnьskogo ęzyka")
 
-user_input = st.text_input("Vupiši slovo alibo rěčenьje:", placeholder="")
+# Używamy text_area zamiast text_input dla obsługi wielu linii
+user_input = st.text_area("Vupiši slovo alibo rěčenьje:", placeholder="", height=200)
 
 if user_input:
-    with st.spinner("Kopiowanie z bazy..."):
+    with st.spinner("Przetwarzanie tekstu..."):
         matches = get_strict_context(user_input, dictionary)
         
-        # Przygotowanie kontekstu jako sztywnego słownika mapowania
-        mapping_list = "\n".join([
-            f"ZASADA: Jeśli widzisz polskie słowo '{m['polish']}', to MUSISZ napisać dokładnie: '{m['slovian']}'"
+        # Przygotowanie bardzo technicznej instrukcji mapowania
+        mapping_rules = "\n".join([
+            f"MAPUJ: '{m['polish']}' NA '{m['slovian']}'"
             for m in matches
         ])
 
-        # NOWY PROMPT: Blokada kreatywności AI
-        system_prompt = """Jesteś prostym automatem podstawiającym słowa. Nie jesteś lingwistą. 
-Twoja wiedza o językach nie istnieje. Twoim jedynym zadaniem jest wykonanie operacji 'znajdź i zamień' na podstawie dostarczonych ZASAD.
+        system_prompt = """Jesteś procesorem tekstu działającym w trybie 'Search and Replace'. 
 
-INSTRUKCJA:
-1. Przeczytaj tekst do tłumaczenia.
-2. Znajdź odpowiednie słowo w dostarczonych ZASADACH.
-3. Skopiuj formę słowiańską litera po literze. Nie zmieniaj końcówek!
-4. Jeśli w ZASADZIE jest 'esmy', piszesz 'esmy'. Jeśli w ZASADZIE jest 'jesmь', piszesz 'jesmь'.
-5. Nigdy nie używaj swojej pamięci, używaj tylko tekstu z ZASAD.
-6. Nie dodawaj żadnych komentarzy."""
+ZADANIE:
+Zastąp polskie słowa ich odpowiednikami z listy MAPOWANIA, zachowując nienaruszony format źródłowy.
+
+RYGORYSTYCZNE ZASADY:
+1. FORMAT: Zachowaj identyczne odstępy, spacje, znaki interpunkcyjne (. , ! ?), linki (http/www), symbole matematyczne (+ = / * %) i nowej linii (entery).
+2. WIELKOŚĆ LITER: Odwzoruj wielkość liter słowa wejściowego:
+   - Jeśli 'Słowo' -> 'Slovian'
+   - Jeśli 'słowo' -> 'slovian'
+   - Jeśli 'SŁOWO' -> 'SLOVIAN'
+3. NIEZMIENNE: Jeśli słowa nie ma w MAPOWANIU, zostaw je w oryginale. Nie tłumacz niczego 'z głowy'.
+4. BRAK DOPISKÓW: Zwróć wyłącznie przetworzony tekst. Nie dodawaj cudzysłowów ani wyjaśnień.
+5. KOLEJNOŚĆ SŁÓW: przymiotniki i przysłówki są zawsze przed rzeczownikami."""
 
         try:
             chat_completion = client.chat.completions.create(
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"ZASADY MAPOWANIA:\n{mapping_list}\n\nTEKST DO ZAMIANY: {user_input}"}
+                    {"role": "user", "content": f"LISTA MAPOWANIA:\n{mapping_rules}\n\nTEKST ŹRÓDŁOWY:\n{user_input}"}
                 ],
                 model="openai/gpt-oss-120b",
                 temperature=0.0
             )
             response_text = chat_completion.choices[0].message.content.strip()
 
-            # Usuwanie ewentualnych cudzysłowów, które AI czasem dodaje
-            response_text = re.sub(r'^["\']|["\']$', '', response_text)
-
+            # Wyświetlanie wyniku
             st.markdown("### Vynik perklada:")
             st.success(response_text)
 
         except Exception as e:
-            st.error(f"Błąd połączenia: {e}")
+            st.error(f"Błąd modelu: {e}")
 
         if matches:
-            with st.expander("Użyte dane z osnova.json"):
+            with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
-                    st.write(f"W bazie: **{m['polish']}** → `{m['slovian']}`")
+                    st.write(f"'{m['polish']}' → `{m['slovian']}`")
