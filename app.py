@@ -119,14 +119,6 @@ STRUKTURA DANYCH
 
 osnova.json
 
-{
-  "polskie_slowo": {
-      "rdzen": "slowianski_rdzen",
-      "vuzor": "nazwa_wzoru",
-      "pos": "noun | adjective | adverb"
-  }
-}
-
 --------------------------------------------------
 
 Źródło wzorów/przykładów tworzenia gramatyczncyh odmian to plik vuzor.json
@@ -144,53 +136,6 @@ Podziel tekst na tokeny:
 --------------------------------------------------
 ROZPOZNAWANIE PRZYPADKU Z POLSKIEJ FORMY
 --------------------------------------------------
-
-Wykrywaj przypadek z końcówki polskiego słowa.
-
-LOCATIVE:
-
--ogrodzie  
--domu  
--lesie  
--mieście  
-
-→ LOC
-
-GENITIVE:
-
--ogrodu  
--domu  
--lasu  
--miasta  
-
-→ GEN
-
-INSTRUMENTAL:
-
--ogrodem  
--domem  
--lasem  
-
-→ INS
-
-DATIVE:
-
--ogrodowi  
--domowi  
-
-→ DAT
-
-ACCUSATIVE:
-
-jeśli identyczne z NOM dla rodzaju nieżywotnego
-
-→ ACC
-
-Jeśli brak przyimka i brak końcówki:
-
-→ NOM
-
---------------------------------------------------
 ALGORYTM
 --------------------------------------------------
 
@@ -202,7 +147,7 @@ Dla każdego słowa:
 4. określ przypadek
 5. określ liczbę
 6. rodzaj i w tym żywotność
-6. znajdź końcówkę w pliku vuzor.json
+6. znajdź odpowiednią, pasującą końcówkę w pliku vuzor.json
 
 vuzor → liczba → przypadek
 
@@ -287,6 +232,7 @@ Vu obgordě.
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
