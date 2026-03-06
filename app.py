@@ -102,7 +102,7 @@ RYGORYSTYCZNE ZASADY:
 3. NIEZMIENNE: Jeśli słowa nie ma w MAPOWANIU, zostaw je w oryginale. Nie tłumacz niczego 'z głowy'.
 4. BRAK DOPISKÓW: Zwróć wyłącznie przetworzony tekst. Nie dodawaj cudzysłowów ani wyjaśnień.
 5. KOLEJNOŚĆ SŁÓW: Przymiotniki (oznaczone jako adjective - pridavьnik) i przysłówki (oznaczone jako adverb - prislovok) są zawsze przed rzeczownikami (oznaczone jako noun - jimenьnik), dokładnie tak samo, jak w języku rosyjskim dla przykładu 'Wojsko Słowiańskie' albo 'Słowiańskie Wojsko' to 'Slověnьsko Vojisko'.
-6. Musisz rozpoznawać dobrze części mowy/języka i je dobrze odwzorowywać w przekładzie/tłumaczeniu."""
+6. Musisz rozpoznawać dobrze części mowy/języka polskiego i potem je dobrze odwzorowywać w przekładzie/tłumaczeniu na język słowiański (prasłowiański)."""
 
         try:
             chat_completion = client.chat.completions.create(
@@ -126,6 +126,7 @@ RYGORYSTYCZNE ZASADY:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
