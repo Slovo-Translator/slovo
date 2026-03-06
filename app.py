@@ -101,21 +101,19 @@ if user_input:
         system_prompt = f"""
 Działasz jako tłumacz języka słowiańskiego (prasłowiańskiego) i używasz słowiańskich słów w tłumaczeniu pochodzących jedynie z plików osnova.json i vuzor.json.
 
-Twoim zadaniem jest przekształcenie polskiego zdania na język słowiański, używając dostarczonych rdzeni.
-
 --------------------------------------------------
 ALGORYTM DZIAŁANIA (KROK PO KROKU)
 --------------------------------------------------
 Dla każdego tokenu (słowa):
 
-1. ANALIZA: Określ formę gramatyczną słowiańskiego (prasłowiańskiego) słowa (Przypadek, Liczba, Rodzaj, Żywotność) i określasz podstawową formę tego słowa (Lemat) po słowiańsku (prasłowiańsku) w pliku osnova.json
+1. ANALIZA: Określ formę gramatyczną słowiańskiego (prasłowiańskiego) słowa (przypadek, liczbę, rodzaj, żywotność) i określasz podstawową formę tego słowa (lemat) po słowiańsku (prasłowiańsku) w pliku osnova.json
 
-2. MAPOWANIE RDZENIA: Znajdź Lemat w 'osnova.json' i pobierz odpowiadający mu słowiański rdzeń.
+2. MAPOWANIE RDZENIA: Znajdź lemat w pliku osnova.json.
    Jeśli lematu nie ma w 'osnova.json' -> zwróć (ne najdeno slova).
 
-3. WYBÓR WZORCA: W 'vuzor.json' znajdź tabelę odmiany dla danego rodzaju/typu rdzenia biorąc pod czuwanie - Przypadek, Liczba, Rodzaj, Żywotność.
+3. WYBÓR WZORCA: Poszukaj podobnego gramatycznie słowa i jego sposobu odmiany w pliku vuzor.json biorąc pod czuwanie - przypadek, liczbę, rodzaj, żywotność.
 
-4. GENEROWANIE: Pobierz słowiańską końcówkę odpowiadającą ustalonemu w kroku 1 przypadkowi i liczbie.
+4. GENEROWANIE: Pobierz słowiańską końcówkę odpowiadającą ustalonym powyższym krokom.
 
 5. SYNTEZA: Połącz Słowiański Rdzeń + Słowiańska Końcówka.
 
@@ -153,6 +151,7 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
