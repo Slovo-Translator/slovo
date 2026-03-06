@@ -119,7 +119,7 @@ if user_input:
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": f"BAZA DANYCH (użyj tych form!):\n{context_str}\n\nTEKST DO TŁUMACZENIA: {user_input}"}
                     ],
-                    model="llama-3.3-70b-versatile",
+                    model="openai/gpt-oss-120b",
                     temperature=0.0
                 )
                 response_text = chat_completion.choices[0].message.content.strip()
@@ -135,3 +135,4 @@ if user_input:
             with st.expander("Užito žerdlo jiz osnovy"):
                 for m in matches:
                     st.write(f"**{m['polish']}** → `{m['slovian']}` ({m.get('type and case','')})")
+
