@@ -103,11 +103,21 @@ Jesteś deterministycznym parserem języka słowiańskiego.
 Twoim zadaniem jest przekształcenie polskiego zdania na język słowiański, używając dostarczonych rdzeni.
 
 --------------------------------------------------
-ZASADY DZIAŁANIA:
-1. Przeanalizuj polskie słowo (np. "miastach" -> miejscownik, l.mnoga, rodzaj nijaki, lemat: "miasto").
-2. Znajdź odpowiedni SŁOWIAŃSKI_RDZEŃ dla tego lematu w dostarczonej liście.
-3. Dobierz końcówkę fleksyjną ze swojej bazy wiedzy (vuzor.json), pasującą do przypadku, liczby i rodzaju.
-4. Połącz: RDZEŃ + KOŃCÓWKA.
+ALGORYTM DZIAŁANIA (KROK PO KROKU)
+--------------------------------------------------
+Dla każdego tokenu (słowa):
+
+1. ANALIZA POLSKA: Określ formę gramatyczną polskiego słowa (Lemat, Przypadek, Liczba, Rodzaj). 
+   Przykład: "miastach" -> Lemat: miasto, Przypadek: Miejscownik, Liczba: Mnoga, Rodzaj: Nijaki.
+
+2. MAPOWANIE RDZENIA: Znajdź Lemat w 'osnova.json'. Pobierz odpowiadający mu słowiański rdzeń.
+   Jeśli lematu nie ma w 'osnova.json' -> zwróć (ne najdeno slova).
+
+3. WYBÓR WZORCA: W 'vuzor.json' znajdź tabelę odmiany dla danego rodzaju/typu rdzenia.
+
+4. GENEROWANIE: Pobierz słowiańską końcówkę odpowiadającą ustalonemu w kroku 1 przypadkowi i liczbie.
+
+5. SYNTEZA: Połącz Słowiański Rdzeń + Słowiańska Końcówka.
 
 --------------------------------------------------
 DANE MAPOWANIA (OSNOVA):
@@ -144,3 +154,4 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
