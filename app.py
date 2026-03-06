@@ -122,14 +122,13 @@ ZASADY BEZWZGLĘDNE:
 """
 
         try:
-            # Używamy modelu gpt-4o lub llama-3 (zależnie od tego co masz w Groq)
-            # Podmień "openai/gpt-oss-120b" na właściwą nazwę modelu w Groq (np. "llama3-8b-8192")
+            # Używamy nowszej i wspieranej wersji modelu
             chat_completion = client.chat.completions.create(
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"TEKST DO KONWERSJI: {user_input}"}
                 ],
-                model="llama3-8b-8192", 
+                model="llama-3.3-70b-versatile", # <--- To jest kluczowa zmiana
                 temperature=0.0
             )
             response_text = chat_completion.choices[0].message.content.strip()
@@ -144,3 +143,4 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
