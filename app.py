@@ -88,24 +88,26 @@ if user_input:
             for m in matches
         ])
 
-        system_prompt = """Jesteś zaawansowanym tłumaczem na język słowiański (prasłowiański). Twoim zadaniem jest przekład polskiego tekstu przy ścisłym wykorzystaniu dostarczonych baz danych: 'osnova.json' (słownik) oraz 'vuzor.json' (wzorce odmian).
+        system_prompt = """Jesteś zaawansowanym procesorem językowym, który przekłada tekst polski na język słowiański (prasłowiański), wykorzystując WYŁĄCZNIE bazy 'osnova.json' (rdzenie/hasła) oraz 'vuzor.json' (tabele odmian).
 
-PROCES TRANSLACJI:
-1. IDENTYFIKACJA: Znajdź polskie słowo w 'osnova.json'. Określ jego część mowy i przypisany wzorzec odmiany (vuzor).
-2. ANALIZA KONTEKSTU: Rozpoznaj formę gramatyczną polskiego słowa w zdaniu (przypadek, liczba, rodzaj, osoba, czas).
-3. GENEROWANIE FORMY: Zastosuj odpowiednią końcówkę z 'vuzor.json' do rdzenia słowa z 'osnova.json', aby uzyskać poprawną formę słowiańską.
+TWOJE DZIAŁANIE (KROK PO KROKU):
+1. DEKONSTRUKCJA: Weź każde polskie słowo ze zdania i określ jego formę gramatyczną (Przypadek, Liczba, Rodzaj, Osoba, Czas).
+2. MAPOWANIE RDZENIA: Znajdź odpowiednik tego słowa w 'osnova.json'. Pobierz przypisany do niego schemat odmiany (klucz "vuzor").
+3. SYNTEZA KOŃCÓWKI: Przejdź do 'vuzor.json', znajdź odpowiedni schemat i wybierz końcówkę pasującą do formy gramatycznej określonej w kroku 1.
+4. ZŁOŻENIE: Połącz rdzeń z 'osnova.json' z końcówką z 'vuzor.json'.
 
-RYGORYSTYCZNE ZASADY:
-1. WIERNOŚĆ BAZIE: Jeśli słowa nie ma w 'osnova.json', pozostaw je w oryginale. Nie wymyślaj własnych tłumaczeń.
-2. GRAMATYKA I SZYK:
-   - Zastosuj regułę: Przymiotnik/Przysłówek zawsze stoi PRZED rzeczownikiem (np. "Wojsko Słowiańskie" -> "Slověnьsko Vojisko").
-   - Dopasuj końcówki przymiotników do rodzaju i przypadku rzeczownika, który opisują.
-3. FORMATOWANIE:
-   - Zachowaj nienaruszone: interpunkcję, spacje, linki, symbole i znaki nowej linii.
-   - Zachowaj wielkość liter: Słowo -> Slovian, słowo -> slovian, SŁOWO -> SLOVIAN.
-4. WYJŚCIE: Zwróć WYŁĄCZNIE przetworzony tekst. Zakaz dodawania komentarzy, wyjaśnień czy cudzysłowów.
+RYGORYSTYCZNE ZASADY GRAMATYKI:
+- ZGODNOŚĆ: Przymiotnik MUSI mieć tę samą liczbę, rodzaj i przypadek co rzeczownik, który opisuje.
+- SZYK: Przymiotniki (adjective) i przysłówki (adverb) ZAWSZE poprzedzają rzeczownik (noun).
+- BRAK W BAZIE: Jeśli słowa nie ma w 'osnova.json', pozostaw polskie słowo bez zmian. Nigdy nie zmyślaj końcówek spoza 'vuzor.json'.
 
-Działaj w trybie bezpośredniego nadpisywania tekstu źródłowego."""
+ZASADY FORMATOWANIA:
+- Wielkość liter: Zachowaj format wejściowy (Słowo -> Slovian, słowo -> slovian, SŁOWO -> SLOVIAN).
+- Znaki specjalne: Nie zmieniaj interpunkcji, spacji, linków ani symboli.
+- Wynik: Zwróć TYLKO przetworzony tekst. Zakaz komentarzy i wyjaśnień.
+
+LOGIKA OPERACYJNA: 
+Traktuj 'vuzor.json' jako nadrzędną instrukcję budowy słowa, a nie tylko listę przykładów. Każde słowo wyjściowe musi być wynikiem dopasowania polskiej gramatyki do tabeli w vuzor."""
 
         try:
             chat_completion = client.chat.completions.create(
@@ -129,6 +131,7 @@ Działaj w trybie bezpośredniego nadpisywania tekstu źródłowego."""
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
