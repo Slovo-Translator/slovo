@@ -107,13 +107,12 @@ ALGORYTM DZIAŁANIA (KROK PO KROKU)
 --------------------------------------------------
 Dla każdego tokenu (słowa):
 
-1. ANALIZA POLSKA: Określ formę gramatyczną polskiego słowa (Lemat, Przypadek, Liczba, Rodzaj). 
-   Przykład: "miastach" -> Lemat: miasto, Przypadek: Miejscownik, Liczba: Mnoga, Rodzaj: Nijaki.
+1. ANALIZA POLSKA: Określ formę gramatyczną polskiego słowa (Przypadek, Liczba, Rodzaj, Żywotność) i określasz podstawową formę tego słowa (Lemat) po słowiańsku (prasłowiańsku) w pliku osnova.json
 
-2. MAPOWANIE RDZENIA: Znajdź Lemat w 'osnova.json'. Pobierz odpowiadający mu słowiański rdzeń.
+2. MAPOWANIE RDZENIA: Znajdź Lemat w 'osnova.json' i pobierz odpowiadający mu słowiański rdzeń.
    Jeśli lematu nie ma w 'osnova.json' -> zwróć (ne najdeno slova).
 
-3. WYBÓR WZORCA: W 'vuzor.json' znajdź tabelę odmiany dla danego rodzaju/typu rdzenia.
+3. WYBÓR WZORCA: W 'vuzor.json' znajdź tabelę odmiany dla danego rodzaju/typu rdzenia biorąc pod czuwanie - Przypadek, Liczba, Rodzaj, Żywotność.
 
 4. GENEROWANIE: Pobierz słowiańską końcówkę odpowiadającą ustalonemu w kroku 1 przypadkowi i liczbie.
 
@@ -154,4 +153,5 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
