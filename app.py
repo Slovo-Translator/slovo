@@ -15,7 +15,7 @@ st.set_page_config(page_title="Perkladačь slověnьskogo ęzyka", layout="cent
 st.markdown("""
     <style>
     .main { background-color: #0e1117; }
-    .stTextArea textarea { background-color: #1a1a1a; color: #dcdcdc; border: 1px solid #333; }
+    .stTextArea textarea { background-color: #1a1a1a; color: #dcdcdc; border: 1px solid #333; height: 200px !important; }
     .stSuccess { background-color: #050505; border: 1px solid #2e7d32; color: #dcdcdc; font-size: 1.2rem; white-space: pre-wrap; }
     </style>
     """, unsafe_allow_html=True)
@@ -37,7 +37,7 @@ def setup_translator():
 translator_ready = setup_translator()
 
 # ============================================================
-# 3. ŁADOWANIE BAZY
+# 3. ŁADOWANIE BAZY (TWOJE PLIKI)
 # ============================================================
 @st.cache_data
 def load_data():
@@ -57,7 +57,7 @@ def load_data():
 dictionary, vuzor_data = load_data()
 
 # ============================================================
-# 4. LOGIKA TRANSFORMACJI
+# 4. LOGIKA TRANSFORMACJI (RYGOR TWOICH ZASAD)
 # ============================================================
 
 def match_case(original, translated):
@@ -68,7 +68,7 @@ def match_case(original, translated):
 def custom_translate(text):
     if not text: return "", []
     
-    # Precyzyjna tokenizacja (słowa, znaki, spacje)
+    # Tokenizacja zachowująca interpunkcję i spacje
     tokens = re.findall(r'\w+|[^\w\s]|\s+', text)
     processed_tokens = []
     found_in_base = []
@@ -76,6 +76,7 @@ def custom_translate(text):
     for token in tokens:
         if re.match(r'\w+', token):
             clean = token.lower()
+            # KROK 1: Twoja baza (Priorytet ABSOLUTNY)
             if clean in dictionary:
                 entry = dictionary[clean][0]
                 info = entry.get('type and case', '').lower()
@@ -83,15 +84,14 @@ def custom_translate(text):
                 processed_tokens.append({'text': final_word, 'type': info, 'is_word': True})
                 found_in_base.append(entry)
             else:
-                try:
-                    translated = argostranslate.translate.translate(token, 'pl', 'en')
-                    processed_tokens.append({'text': match_case(token, translated), 'type': 'unknown', 'is_word': True})
-                except:
-                    processed_tokens.append({'text': token, 'type': 'unknown', 'is_word': True})
+                # KROK 2: Zakaz angielskiego! Jeśli nie ma w bazie, zwróć błąd z promptu.
+                missing_label = match_case(token, "(ne najdeno slova)")
+                processed_tokens.append({'text': missing_label, 'type': 'unknown', 'is_word': True})
         else:
+            # Zachowanie interpunkcji i znaków matematycznych
             processed_tokens.append({'text': token, 'type': 'separator', 'is_word': False})
 
-    # GRAMATYKA: Przymiotnik ZAWSZE przed rzeczownikiem
+    # KROK 3: Gramatyka - Przymiotnik przed Rzeczownik
     i = 0
     final_output = []
     while i < len(processed_tokens):
@@ -119,33 +119,32 @@ def custom_translate(text):
     return "".join(final_output), found_in_base
 
 # ============================================================
-# 5. INTERFEJS UŻYTKOWNIKA (Live-Update)
+# 5. INTERFEJS UŻYTKOWNIKA (PRAWDZIWY LIVE)
 # ============================================================
 st.title("Perkladačь slověnьskogo ęzyka")
 
-# To pole reaguje na każdą zmianę stanu sesji
+# Aby działało bez Entera, musimy wymusić odświeżanie formularza
+if 'translation' not in st.session_state:
+    st.session_state.translation = ""
+
+# text_area z unikalnym kluczem i automatycznym wyzwalaniem
 user_input = st.text_area(
     "Vupiši slovo alibo rěčenьje:", 
-    key="user_input_area",
-    height=150
+    height=200,
+    placeholder="Pisz tutaj, przekład pojawi się pod spodem...",
+    key="input_area"
 )
 
-# Kontener na wynik, który będzie się aktualizował
-output_container = st.empty()
-
+# Kontener na wynik (zawsze widoczny, aktualizuje się natychmiast)
 if user_input:
-    if not translator_ready:
-        output_container.info("Trwa ładowanie silnika...")
-    else:
-        result, matches = custom_translate(user_input)
-        
-        # Wyświetlamy wynik natychmiast
-        with output_container.container():
-            st.markdown("### Vynik perklada:")
-            st.success(result)
-            
-            if matches:
-                with st.expander("Užito žerdlo jiz Twojej podstawy (osnova.json)"):
-                    unique_matches = {m['slovian']: m for m in matches}.values()
-                    for m in unique_matches:
-                        st.write(f"**{m['polish']}** → `{m['slovian']}`")
+    result, matches = custom_translate(user_input)
+    st.markdown("### Vynik perklada:")
+    st.success(result)
+    
+    if matches:
+        with st.expander("Užito žerdlo jiz Twojej podstawy (osnova.json)"):
+            unique_matches = {m['slovian']: m for m in matches}.values()
+            for m in unique_matches:
+                st.write(f"**{m['polish']}** → `{m['slovian']}`")
+else:
+    st.info("Czekam na tekst do tłumaczenia...")
