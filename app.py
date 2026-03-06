@@ -128,7 +128,6 @@ ZASADY BEZWZGLĘDNE:
 2. Wyjątek: Przyimki (np. "w", "na", "z") i spójniki tłumacz automatycznie (np. w -> vu).
 3. SZYK: Przymiotniki (oznaczone są one jako: adjective - pridavьnik) i przysłówki (oznaczone są one jako: adverb - prislovok) zawsze są przed rzeczownikami (oznaczone są one jako: noun - jimenьnik).
 4. FORMAT: Zachowaj interpunkcję, odwzorowanie, wielkość liter, spacje, odstępy, znaki matematyczne, linkowanie i brak dodatkowego komentarza."""
-"""
 
         try:
             # Używamy modelu gpt-4o lub llama-3 (zależnie od tego co masz w Groq)
@@ -153,6 +152,7 @@ ZASADY BEZWZGLĘDNE:
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
