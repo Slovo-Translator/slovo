@@ -142,19 +142,6 @@ Podziel tekst na tokeny:
 - interpunkcję
 
 --------------------------------------------------
-MAPOWANIE PRZYIMKÓW
---------------------------------------------------
-
-w → vu  
-z → iz  
-ze → iz  
-do → do  
-od → od  
-na → na  
-po → po  
-przy → pri  
-
---------------------------------------------------
 ROZPOZNAWANIE PRZYPADKU Z POLSKIEJ FORMY
 --------------------------------------------------
 
@@ -214,6 +201,7 @@ Dla każdego słowa:
 3. znajdź słowo z podobnym rdzeniem/odmianą w pliku vuzor.json
 4. określ przypadek
 5. określ liczbę
+6. rodzaj i w tym żywotność
 6. znajdź końcówkę w pliku vuzor.json
 
 vuzor → liczba → przypadek
@@ -299,6 +287,7 @@ Vu obgordě.
             with st.expander("Użyte mapowanie z bazy"):
                 for m in matches:
                     st.write(f"'{m['polish']}' → `{m['slovian']}`")
+
 
 
 
