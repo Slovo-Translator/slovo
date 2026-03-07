@@ -31,21 +31,20 @@ for entry in osnova:
         dictionary[pl].append(entry)
 
 DECLENSION_RULES = """
-MĘSKI o-temat twardy (gord / obgord):
-Sg loc: gordě | Pl loc: gorděh
+=== DOKŁADNE WZORY ===
+ludzie (ljudьje) – męski animate, loc pl: ljudih
+W ludziach = vu ljudih
 
-MĘSKI animate (slověnin - Słowianin):
-Sg loc: slověnině | Pl loc: slověnih
-Przykład: "W Słowianach" = "vu slověnih"
+nadzieja → naděja (żeński, loc sg: naději ale tutaj nom: naděja)
 
-ŻEŃSKIE a-temat: Sg loc -i | Pl loc -ah
-ŻEŃSKIE i-temat: Sg loc -i | Pl loc -ih
+jest → estь
+w → vu (przyimek + loc)
 """
 
 def get_context(text, dic):
     words = re.findall(r'\w+', text.lower())
     entries = []
-    endings = ['ie','u','em','ach','om','ami','ów','a','y','i','ego','emu','ej','ą','e','owie','inach']
+    endings = ['ie','u','em','ach','om','ami','ów','a','y','i','ego','emu','ej','ą','e','iach','dziach']
     for w in words:
         if w in dic:
             entries.extend(dic[w])
@@ -56,18 +55,15 @@ def get_context(text, dic):
                 if stem in dic:
                     entries.extend(dic[stem])
                     break
-                if stem + 'in' in dic:          # Słowianach → słowianin
-                    entries.extend(dic[stem + 'in'])
-                    break
-        if 'słowian' in w and 'słowianin' in dic:
-            entries.extend(dic['słowianin'])
-        if 'miast' in w and 'miasto' in dic:
-            entries.extend(dic['miasto'])
+        if any(x in w for x in ['ludz','ludzi','ludzie']) and 'ludzie' in dic:
+            entries.extend(dic['ludzie'])
+        if 'nadziej' in w and 'nadzieja' in dic:
+            entries.extend(dic['nadzieja'])
     seen = {(e['polish'].lower(), e['slovian'].lower()) for e in entries}
     return [e for e in entries if (e['polish'].lower(), e['slovian'].lower()) in seen]
 
 st.title("Perkladačь slověnьskogo ęzyka")
-user_input = st.text_area("Vupiši slovo alibo rěčenьje:", placeholder="Np. W Słowianach siła.", height=150)
+user_input = st.text_area("Vupiši slovo alibo rěčenьje:", placeholder="Np. W ludziach jest nadzieja.", height=150)
 
 if user_input:
     with st.spinner("Przetwarzanie..."):
@@ -76,27 +72,30 @@ if user_input:
 
         system_prompt = f"""
 Jesteś precyzyjnym tłumaczem na prasłowiański.
-Używaj TYLKO osnova.json + wzorów poniżej.
+Używaj TYLKO tych form:
 
-WZORY (używaj ściśle):
+WZORY:
 {DECLENSION_RULES}
 
 ALGORYTM:
-1. Znajdź bazę w osnova.json
-2. Określ przypadek/liczbę
-3. Zastosuj wzór
-4. Brak → (ne najdeno slova)
+1. Rozpoznaj "w" + loc → vu + loc
+2. "ludziach" → ljudih
+3. "jest" → estь
+4. "nadzieja" → naděja
 
 DANE:
 {mapping}
 
-Zachowaj szyk i interpunkcję. Bez komentarzy.
+Tylko czysty wynik. Bez komentarzy.
 """
 
         try:
             chat = client.chat.completions.create(
                 model="openai/gpt-oss-120b",
-                messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": f"Tekst: {user_input}"}],
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"Przetłumacz: {user_input}"}
+                ],
                 temperature=0.0,
                 max_tokens=1024
             )
