@@ -83,7 +83,7 @@ Output: Vu mojimь gordě.
 ZASADY BEZWZGLĘDNE:
 1. Jeśli nie ma odmiany słowiańskiego słowa (lub jego podstawowej odmiany), to wtedy napisz w jego miejscu (ne najdeno slova) i tłumacz dalej to co możesz.
 2. SZYK: Przymiotniki (oznaczone są one jako: adjective - pridavьnik) i przysłówki (oznaczone są one jako: adverb - prislovok) zawsze są przed rzeczownikami (oznaczone są one jako: noun - jimenьnik).
-3. FORMAT: Zachowaj interpunkcję, odwzorowanie, wielkość liter, spacje, odstępy, znaki matematyczne, linkowanie i brak dodatkowego komentarza.
+3. FORMAT: Zachowaj: interpunkcję, odwzorowanie wielkość liter w słowach, spacje, odstępy, znaki matematyczne, linkowanie i brak dodatkowego komentarza.
 
 TWOJE ZADANIE: Przetłumacz zdanie użytkownika, zachowując powyższe zasady."""
 
@@ -107,3 +107,4 @@ TWOJE ZADANIE: Przetłumacz zdanie użytkownika, zachowując powyższe zasady.""
     with st.expander("Zobacz bazę gramatyczną użytą do tego tłumaczenia"):
         st.write("Te dane zostały wysłane do AI jako jedyne źródło prawdy:")
         st.table(dictionary_context)
+
