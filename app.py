@@ -15,91 +15,86 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Klient Groq (pobierany ze st.secrets)
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
-# ================== ŁADOWANIE DANYCH ==================
+# ================== ŁADOWANIE I FILTROWANIE DANYCH ==================
 @st.cache_data
-def load_all_data():
+def load_data():
     def load_json(name):
         if not os.path.exists(name): return []
         with open(name, "r", encoding="utf-8") as f: return json.load(f)
-    
-    # Ładujemy wszystko: osnova i vuzor
     return load_json("vuzor.json") + load_json("osnova.json")
 
-DATA = load_all_data()
+DATA = load_data()
 
-# ================== PRZYGOTOWANIE KONTEKSTU DLA LLM ==================
-
-def get_smart_context(text):
-    words = re.findall(r'\w+', text.lower())
-    relevant_entries = []
-    seen = set()
-
-    for w in words:
-        # Szukamy wszystkiego, co pasuje do słowa lub jego rdzenia
-        stem = w[:4] if len(w) >= 4 else w
+def get_filtered_context(text):
+    tokens = re.findall(r'\w+', text.lower())
+    context_chunks = []
+    
+    # Mapowanie przyimków na oczekiwany tag gramatyczny
+    prep_map = {"w": "locative", "we": "locative", "na": "locative", "do": "genitive"}
+    
+    for i, word in enumerate(tokens):
+        # Określamy wymagany przypadek na podstawie poprzedniego słowa
+        required_case = prep_map.get(tokens[i-1]) if i > 0 else None
+        
+        relevant = []
+        stem = word[:4] if len(word) >= 4 else word
+        
         for entry in DATA:
             pl = entry.get("polish", "").lower()
-            # Dodajemy tylko jeśli polskie słowo pasuje lub zaczyna się tak samo
-            if w == pl or (len(w) >= 4 and pl.startswith(stem)):
-                # Tworzymy unikalny klucz, by nie dublować identycznych wpisów
-                key = (entry['polish'], entry['slovian'], entry.get('type and case', ''))
-                if key not in seen:
-                    relevant_entries.append(entry)
-                    seen.add(key)
-    return relevant_entries
+            if word == pl or (len(word) >= 4 and pl.startswith(stem)):
+                # Jeśli mamy przyimek, dajemy priorytet rzeczownikom w danym przypadku
+                entry_info = entry.get("type and case", "").lower()
+                if required_case and required_case in entry_info and "noun" in entry_info:
+                    relevant.insert(0, entry) # Priorytet na górę listy
+                else:
+                    relevant.append(entry)
+        
+        context_chunks.extend(relevant[:10]) # Ograniczamy szum
+    return context_chunks
 
-# ================== INTERFEJS I LOGIKA HYBRYDOWA ==================
-
+# ================== INTERFEJS ==================
 st.title("Perkladačь slověnьskogo ęzyka")
-st.subheader("Silnik Hybrydowy: Baza danych + Groq AI")
-
-user_input = st.text_area("Vupiši rěčenьje:", placeholder="Np. W moim ogrodzie są ludzie.", height=150)
+user_input = st.text_area("Vupiši rěčenьje:", placeholder="W moim ogrodzie.", height=150)
 
 if user_input:
-    with st.spinner("Analiza gramatyczna i tłumaczenie..."):
-        # 1. Wyciągamy pasujące rekordy z Twoich plików JSON
-        matches = get_smart_context(user_input)
+    with st.spinner("Generowanie precyzyjnego tłumaczenia..."):
+        matches = get_filtered_context(user_input)
         
-        # 2. Formatujemy dane dla AI tak, by wiedziało o częściach mowy
+        # Formatowanie danych z wyraźnym zaznaczeniem części mowy
         mapping = "\n".join([
-            f"- PL: '{m['polish']}' -> SL: '{m['slovian']}' ({m.get('type and case', 'podstawowy')})"
-            for m in matches
+            f"ID:{idx} | PL: {m['polish']} | SL: {m['slovian']} | TAG: {m.get('type and case', '')}"
+            for idx, m in enumerate(matches)
         ])
 
-        system_prompt = f""" Jesteś ekspertem języka prasłowiańskiego.
-Twoim zadaniem jest przetłumaczyć zdanie używając WYŁĄCZNIE form podanych w poniższych danych.
+        system_prompt = f"""Jesteś rygorystycznym tłumaczem.
+ZASADY BEZWZGLĘDNE:
+1. Używaj TYLKO słów z sekcji SL w dostarczonych danych.
+2. Po słowie 'Vu' (w) MUSISZ użyć formy oznaczonej jako 'noun' i 'locative' (np. obgordě).
+3. ZAKAZ: Nigdy nie używaj słów kończących się na '-ti' (np. obgordjati) jako miejsca/rzeczownika. To są czasowniki.
+4. Słowo 'są' to 'sǫtь'.
+5. Jeśli brakuje dokładnej formy, użyj najbardziej zbliżonej znaczeniowo formy rzeczownikowej, nie czasownikowej.
 
-DANE SŁOWNIKOWE (użyj odpowiedniej formy gramatycznej):
+DANE DOSTĘPNE:
 {mapping}
 
-ZASADY:
-1. Słowo 'w' tłumacz jako 'Vu'.
-2. Wybieraj RZECZOWNIKI (noun) dla obiektów, a nie CZASOWNIKI (verb) o podobnym rdzeniu.
-3. Jeśli w danych jest forma z 'locative' dla słowa po przyimku 'w', użyj jej (np. obgordě).
-4. Jeśli słowa nie ma w danych, napisz (ne najdeno slova).
-5. Wynik ma zawierać TYLKO przetłumaczone zdanie, bez komentarzy. """
+Przetłumacz zdanie użytkownika, dbając o poprawność gramatyczną zgodnie z TAG-ami."""
 
         try:
             chat = client.chat.completions.create(
-                model="llama-3.3-70b-versatile", # Najlepszy model na Groq do języków słowiańskich
+                model="llama-3.3-70b-versatile",
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Przetłumacz: {user_input}"}
+                    {"role": "user", "content": user_input}
                 ],
-                temperature=0 # Zerowa kreatywność = trzymanie się Twoich tabel
+                temperature=0
             )
-
-            result = chat.choices[0].message.content.strip()
-
             st.markdown("### Vynik perklada:")
-            st.success(result)
-
+            st.success(chat.choices[0].message.content.strip())
         except Exception as e:
-            st.error(f"Błąd API: {e}")
+            st.error(f"Błąd: {e}")
 
-    with st.expander("Zobacz dane przekazane do AI"):
-        st.write("To są rekordy, które AI dostało do wyboru z Twoich plików JSON:")
+    with st.expander("Weryfikacja filtrów gramatycznych"):
+        st.write("Dostarczone do AI przefiltrowane rekordy (z priorytetem dla noun/locative):")
         st.json(matches)
