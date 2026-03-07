@@ -136,7 +136,7 @@ TEKST DO PRZETŁUMACZENIA:
         try:
             # Używamy najnowszego modelu Llama 3.3 dla najlepszej logiki
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="openai/gpt-oss-120b",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_input}
@@ -160,3 +160,4 @@ TEKST DO PRZETŁUMACZENIA:
 # Stopka danych
 st.divider()
 st.caption(f"Baza danych: {len(osnova_raw)} słów podstawowych | {len(vuzor_list)} form gramatycznych.")
+
