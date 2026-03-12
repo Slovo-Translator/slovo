@@ -2,76 +2,61 @@ import streamlit as st
 import json
 import os
 import re
-from collections import defaultdict
-from difflib import get_close_matches
 
-# ===============================
-# KONFIGURACJA STRONY
-# ===============================
+st.set_page_config(page_title="Perkladačь slověnьskogo ęzyka", layout="wide")
 
-st.set_page_config(
-    page_title="Perkladačь slověnьskogo ęzyka",
-    layout="wide"
-)
+# =========================
+# STYL (biały jak DeepL)
+# =========================
 
 st.markdown("""
 <style>
 
-.main {
-background:#0e1117;
-color:white;
+body {
+background:white;
+color:black;
 }
 
 textarea {
-background:#1a1a1a !important;
-color:#dcdcdc !important;
-font-size:18px !important;
+background:white !important;
+color:black !important;
+border:1px solid #ccc !important;
+}
+
+input {
+background:white !important;
+color:black !important;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ===============================
-# ŁADOWANIE PLIKÓW
-# ===============================
+# =========================
+# ŁADOWANIE JSON
+# =========================
 
 @st.cache_data
-def load_json(filename):
+def load_json(file):
 
-    if not os.path.exists(filename):
-        return []
+    if not os.path.exists(file):
+        return {}
 
-    with open(filename, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-osnova = load_json("osnova.json")
-vuzor = load_json("vuzor.json")
-
-
-# ===============================
-# MEMORY (SAMOUCZENIE)
-# ===============================
-
-def load_memory():
-
-    if os.path.exists("memory.json"):
-
-        with open("memory.json", encoding="utf-8") as f:
+    try:
+        with open(file, encoding="utf-8") as f:
             return json.load(f)
+    except:
+        return {}
 
-    return {}
+# =========================
+# ZAPIS DO MEMORY
+# =========================
 
-
-def learn(source, target):
+def save_memory(source, target):
 
     if os.path.exists("memory.json"):
-
         with open("memory.json", encoding="utf-8") as f:
             data = json.load(f)
-
     else:
-
         data = {}
 
     data[source] = target
@@ -79,183 +64,127 @@ def learn(source, target):
     with open("memory.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+# =========================
+# ŁADOWANIE DANYCH
+# =========================
 
-memory = load_memory()
+osnova = load_json("osnova.json")
+vuzor = load_json("vuzor.json")
+memory = load_json("memory.json")
 
-# ===============================
-# BUDOWA SŁOWNIKA
-# ===============================
+dictionary = {}
 
-@st.cache_data
-def build_dictionary(data):
+if isinstance(osnova, list):
+    for item in osnova:
+        if "polish" in item and "slovian" in item:
+            dictionary[item["polish"].lower()] = item["slovian"]
 
-    dic = defaultdict(list)
+dictionary.update(memory)
 
-    for entry in data:
+# =========================
+# WIELKIE LITERY
+# =========================
 
-        key = entry.get("polish", "").lower().strip()
+def match_case(source, target):
 
-        if key:
-            dic[key].append(entry)
+    if source.isupper():
+        return target.upper()
 
-    return dic
+    if source and source[0].isupper():
+        return target.capitalize()
 
+    return target
 
-dictionary = build_dictionary(osnova)
-
-# ===============================
-# TOKENIZER
-# ===============================
+# =========================
+# TOKENIZACJA
+# =========================
 
 def tokenize(text):
+    return re.findall(r"\w+|[^\w\s]|\s+", text, re.UNICODE)
 
-    return re.findall(r'\w+|\S', text)
+# =========================
+# TŁUMACZENIE
+# =========================
 
+def translate(text):
 
-# ===============================
-# TŁUMACZENIE PL → PS
-# ===============================
-
-def translate_pl_ps(text):
-
-    words = tokenize(text)
-
+    tokens = tokenize(text)
     result = []
 
-    for w in words:
+    for token in tokens:
 
-        key = w.lower()
+        word = token.lower()
 
-        if key in memory:
+        if word in dictionary:
 
-            result.append(memory[key])
-            continue
+            t = dictionary[word]
+            t = match_case(token, t)
 
-        if key in dictionary:
-
-            entry = dictionary[key][0]
-            result.append(entry["slovian"])
-            continue
-
-        sim = get_close_matches(key, dictionary.keys(), n=1, cutoff=0.8)
-
-        if sim:
-
-            entry = dictionary[sim[0]][0]
-            result.append(entry["slovian"])
+            result.append(t)
 
         else:
+            result.append(token)
 
-            result.append("(ne najdeno slova)")
+    return "".join(result)
 
-    return " ".join(result)
-
-
-# ===============================
-# TŁUMACZENIE PS → PL
-# ===============================
-
-def translate_ps_pl(text):
-
-    words = tokenize(text)
-
-    result = []
-
-    reverse_dict = {}
-
-    for entry in osnova:
-        reverse_dict[entry["slovian"]] = entry["polish"]
-
-    for w in words:
-
-        if w in reverse_dict:
-
-            result.append(reverse_dict[w])
-
-        else:
-
-            result.append("(nieznane)")
-
-    return " ".join(result)
-
-
-# ===============================
+# =========================
 # INTERFEJS
-# ===============================
+# =========================
 
 st.title("Perkladačь slověnьskogo ęzyka")
 
 col1, col2 = st.columns(2)
 
 with col1:
-
     source_lang = st.selectbox(
         "Język źródłowy",
-        [
-            "polski",
-            "prasłowiański"
-        ]
+        ["polski", "prasłowiański"]
     )
-
-    user_input = st.text_area(
-        "Tekst",
-        height=300,
-        placeholder="Np. W miastach jest siła."
-    )
-
 
 with col2:
-
     target_lang = st.selectbox(
         "Język docelowy",
-        [
-            "prasłowiański",
-            "polski"
-        ]
+        ["prasłowiański", "polski"]
     )
 
-    result = ""
+text = st.text_area("Tekst", height=200)
 
-    if user_input:
+if st.button("Tłumacz"):
+    translation = translate(text)
+else:
+    translation = ""
 
-        if source_lang == "polski" and target_lang == "prasłowiański":
+st.text_area("Tłumaczenie", translation, height=200)
 
-            result = translate_pl_ps(user_input)
-
-        elif source_lang == "prasłowiański" and target_lang == "polski":
-
-            result = translate_ps_pl(user_input)
-
-        else:
-
-            result = "Nieobsługiwane tłumaczenie."
-
-    st.text_area(
-        "Tłumaczenie",
-        value=result,
-        height=300
-    )
-
-
-# ===============================
-# POPRAWIANIE TŁUMACZEŃ
-# ===============================
+# =========================
+# POPRAWKI (HASŁO)
+# =========================
 
 st.markdown("---")
-st.markdown("### Popraw tłumaczenie (samouczenie)")
 
-correct = st.text_input(
-    "Jeśli tłumaczenie jest złe — wpisz poprawne:"
-)
+st.subheader("Popraw tłumaczenie (samouczenie)")
 
-if st.button("Zapisz poprawkę"):
+password = st.text_input("Hasło", type="password")
 
-    if user_input and correct:
+if password == "Rozeta*8":
 
-        learn(user_input.lower(), correct)
+    col1, col2 = st.columns(2)
 
-        st.success("Zapisano w memory.json")
+    with col1:
+        src = st.text_input("Słowo źródłowe")
 
-    else:
+    with col2:
+        trg = st.text_input("Poprawne tłumaczenie")
 
-        st.warning("Wpisz tekst i poprawkę.")
+    if st.button("Dodaj do bazy"):
+
+        if src and trg:
+
+            save_memory(src.lower(), trg)
+
+            st.success("Dodano do pamięci")
+
+else:
+
+    if password != "":
+        st.error("Błędne hasło")
