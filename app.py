@@ -7,7 +7,7 @@ import base64
 from collections import defaultdict
 
 # --- KONFIGURACJA GITHUB (Wypełnij to!) ---
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "MYTOKEN"
 REPO_OWNER = "Slovian-nss"
 REPO_NAME = "slovian-translator"
 FILE_PATH = "selflearning.json"
