@@ -16,10 +16,9 @@
         textarea:focus { border-color: var(--primary); }
         .btn-small { background: #eee; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
         .main-btn { grid-column: span 2; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .admin-panel { margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee; }
+        .admin-panel { margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee; width: 100%; }
         .admin-grid { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 10px; margin-top: 10px; }
         .input-admin { padding: 10px; border: 1px solid var(--border); border-radius: 8px; }
-        .status { padding: 10px; border-radius: 8px; margin-top: 10px; display: none; }
     </style>
 </head>
 <body>
@@ -28,8 +27,8 @@
     <h1>🌐 Perkladačь slověnьskogo ęzyka</h1>
 
     <div style="margin-bottom: 20px; text-align: center;">
-        <label><input type="radio" name="dir" value="pl_sl" checked id="dir_pl_sl"> PL ➔ SL</label>
-        <label style="margin-left: 20px;"><input type="radio" name="dir" value="sl_pl" id="dir_sl_pl"> SL ➔ PL</label>
+        <label><input type="radio" name="dir" value="pl_sl" checked> PL ➔ SL</label>
+        <label style="margin-left: 20px;"><input type="radio" name="dir" value="sl_pl"> SL ➔ PL</label>
     </div>
 
     <div class="translator-grid">
@@ -49,7 +48,7 @@
             <textarea id="resText" readonly></textarea>
         </div>
 
-        <button class="main-btn" id="btnTranslate">🚀 TŁUMACZ</button>
+        <button class="main-btn" id="runTranslate">🚀 TŁUMACZ</button>
     </div>
 
     <div class="admin-panel">
@@ -69,83 +68,97 @@ let osnova = [];
 let vuzor = {};
 let memory = {};
 
-// ŁADOWANIE DANYCH
-async function loadAllData() {
+// Ładowanie plików JSON z Twojego repozytorium
+async function loadData() {
     try {
-        const [o, v, m] = await Promise.all([
-            fetch('osnova.json').then(r => r.json()),
-            fetch('vuzor.json').then(r => r.json()),
-            fetch('memory.json').then(r => r.json()).catch(() => ({}))
-        ]);
-        osnova = o; vuzor = v; memory = m;
-        console.log("Dane załadowane");
-    } catch (e) { console.error("Błąd bazy:", e); }
+        const fetchJSON = async (url) => {
+            const r = await fetch(url + '?nocache=' + new Date().getTime());
+            return r.ok ? await r.json() : null;
+        };
+
+        osnova = await fetchJSON('osnova.json') || [];
+        vuzor = await fetchJSON('vuzor.json') || {};
+        memory = await fetchJSON('memory.json') || {};
+        
+        console.log("Dane załadowane pomyślnie.");
+    } catch (e) {
+        console.error("Błąd podczas ładowania JSON:", e);
+    }
 }
 
-loadAllData();
-
-// RDZEŃ TŁUMACZENIA
-function translateWord(word, direction) {
-    let lowWord = word.toLowerCase();
+// Funkcja odnajdująca i odmieniająca słowo
+function processWord(word, direction) {
+    let low = word.toLowerCase();
     
-    // 1. Pamięć podręczna
-    if (memory[lowWord]) return memory[lowWord];
+    // 1. Sprawdź pamięć podręczną
+    if (memory[low]) return memory[low];
 
-    // 2. Szukanie w osnova.json
+    // 2. Szukaj w osnova
     for (let item of osnova) {
         let src = direction === 'pl_sl' ? item.polish : item.slovian;
         let trg = direction === 'pl_sl' ? item.slovian : item.polish;
 
-        if (src && src.toLowerCase() === lowWord) {
-            let result = trg;
-            
-            // Jeśli tłumaczymy na SL i jest wzór odmiany (np. F1, M1)
+        if (src && src.toLowerCase() === low) {
+            let res = trg;
+            // Odmiana vuzor (tylko dla kierunku na słowiański)
             if (direction === 'pl_sl' && item.vuzor && vuzor[item.vuzor]) {
-                // Dodajemy końcówkę (domyślnie mianownik 'nom', chyba że rozbudujesz logikę)
                 let suffix = vuzor[item.vuzor].nom || "";
-                result = result + suffix;
+                res = res + suffix;
             }
-            return result;
+            return res;
         }
     }
     return word;
 }
 
-// URUCHOMIENIE TŁUMACZENIA
-document.getElementById('btnTranslate').onclick = () => {
+// Główna funkcja tłumacząca
+document.getElementById('runTranslate').onclick = function() {
     const text = document.getElementById('srcText').value;
-    const direction = document.querySelector('input[name="dir"]:checked').value;
+    const dir = document.querySelector('input[name="dir"]:checked').value;
     
-    // Split zachowujący spacje i interpunkcję
+    // Rozbijanie na słowa i znaki, by zachować interpunkcję
     const tokens = text.split(/(\W+)/);
-    const result = tokens.map(t => {
-        if (/^\W+$/.test(t)) return t; // Zostaw spacje/znaki
+    const translated = tokens.map(t => {
+        if (/^\W+$/.test(t)) return t; 
         
-        let trans = translateWord(t, direction);
+        let result = processWord(t, dir);
         
-        // Wielkość liter
-        if (t === t.toUpperCase()) return trans.toUpperCase();
-        if (t[0] === t[0].toUpperCase()) return trans.charAt(0).toUpperCase() + trans.slice(1);
-        return trans;
+        // Zachowanie wielkości liter
+        if (t === t.toUpperCase()) return result.toUpperCase();
+        if (t[0] === t[0].toUpperCase()) return result.charAt(0).toUpperCase() + result.slice(1);
+        return result;
     });
 
-    document.getElementById('resText').value = result.join("");
+    document.getElementById('resText').value = translated.join("");
 };
 
-// POMOCNICZE
+// Funkcje pomocnicze
 document.getElementById('btnCopy').onclick = () => {
-    navigator.clipboard.writeText(document.getElementById('resText').value);
+    const el = document.getElementById('resText');
+    el.select();
+    document.execCommand('copy');
     alert("Skopiowano!");
 };
 
 document.getElementById('btnPaste').onclick = async () => {
-    const text = await navigator.clipboard.readText();
-    document.getElementById('srcText').value = text;
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('srcText').value = text;
+    } catch (err) {
+        alert("Wklej tekst ręcznie (Ctrl+V)");
+    }
 };
 
 document.getElementById('btnLogin').onclick = () => {
-    if (document.getElementById('pass').value === "Rozeta*8") document.getElementById('adminForm').style.display = "grid";
+    if (document.getElementById('pass').value === "Rozeta*8") {
+        document.getElementById('adminForm').style.display = "grid";
+    } else {
+        alert("Błędne hasło");
+    }
 };
+
+// Start
+loadData();
 </script>
 
 </body>
