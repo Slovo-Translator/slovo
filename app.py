@@ -22,7 +22,6 @@ h1 {color:#93c5fd;font-weight:700;}
 .main {background:#f8fafd;}
 .stTextArea textarea {background:#ffffff !important;color:#0f172a !important;font-size:1.15rem;border-radius:16px;border:1px solid #94a3b8;}
 .translate-btn {background:linear-gradient(90deg,#2563eb,#1e40af);color:white;font-size:1.35rem;font-weight:700;padding:18px;border-radius:50px;border:none;width:100%;margin:12px 0;}
-.translate-btn:hover {background:linear-gradient(90deg,#3b82f6,#2563eb);}
 h1 {color:#1e3a8a;font-weight:700;}
 </style>"""
 
@@ -60,12 +59,12 @@ col1, colm, col2 = st.columns([5,1.1,5])
 
 with col1:
     src = st.selectbox("Z:", ["Polski", "Prasłowiański"], key="src")
-    txt = st.text_area("Tekst źródłowy", height=440, placeholder="Wpisz tekst...", key="in")
+    input_text = st.text_area("Tekst źródłowy", height=440, placeholder="Wpisz tekst...", key="input_text")
 
 with colm:
     st.write(""); st.write(""); st.write("")
     if st.button("⇄", key="sw", use_container_width=True):
-        st.session_state.in, st.session_state.output = st.session_state.get("output",""), st.session_state.get("in","")
+        st.session_state.input_text, st.session_state.output = st.session_state.get("output",""), st.session_state.get("input_text","")
         st.session_state.src = "Prasłowiański" if src == "Polski" else "Polski"
         st.rerun()
 
@@ -75,9 +74,9 @@ with col2:
     st.text_area("Tłumaczenie", value=st.session_state.output, height=440, disabled=True)
 
 if st.button("**Przełóż**", type="primary", use_container_width=True):
-    if txt.strip():
+    if st.session_state.get("input_text","").strip():
         d = "pl→sl" if src == "Polski" else "sl→pl"
-        st.session_state.output = translate(txt, d)
+        st.session_state.output = translate(st.session_state.input_text, d)
         st.rerun()
 
 st.caption("Dla innych języków najpierw przetłumacz na polski (pośrednik zawsze polski)")
