@@ -40,31 +40,32 @@ font-weight:800;
 text-align:center;
 font-size:2.2rem;
 margin-top:-20px;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
-/* SELECT I TEXTAREA */
-.stTextArea textarea,
+/* SELECT */
 div[data-baseweb="select"]{
 border:2px solid #2d3748 !important;
 border-radius:10px !important;
 background:white !important;
 }
 
-/* KONTAINER PRZYCISKU ZAMIANY */
-.swap-container{
-display:flex;
-align-items:center;
-justify-content:center;
-height:42px;
-margin-top:4px;
+/* TEXTAREA */
+.stTextArea textarea{
+border:2px solid #2d3748 !important;
+border-radius:10px !important;
+background:white !important;
 }
 
-/* PRZYCISK ⇄ */
-.swap-container button{
+/* PRZYCISK ZAMIANY */
+.swap-btn{
+margin-top:28px;
+}
+
+.swap-btn button{
 height:42px !important;
-padding:0px !important;
-font-size:18px !important;
+width:100%;
+font-size:18px;
 }
 
 /* PRZYCISKI */
@@ -74,14 +75,6 @@ color:white !important;
 border-radius:8px;
 border:none;
 font-weight:bold;
-}
-
-/* COPY */
-.copy-label{
-font-size:0.85rem;
-font-weight:600;
-color:#4a5568;
-margin-bottom:5px;
 }
 
 </style>
@@ -115,17 +108,17 @@ if "tgt_lang" not in st.session_state:
 
 def swap_languages():
     st.session_state.src_lang, st.session_state.tgt_lang = \
-    st.session_state.tgt_lang, st.session_state.src_lang
+        st.session_state.tgt_lang, st.session_state.src_lang
 
 
-# --- UI ---
-
+# --- TYTUŁ ---
 st.markdown(
 '<h1 class="title-text">Tłumacz Języka Słowiańskiego (Prasłowiańskiego)</h1>',
 unsafe_allow_html=True
 )
 
-# WYBÓR JĘZYKÓW
+
+# --- WYBÓR JĘZYKA ---
 col_l, col_s, col_r = st.columns([10,1.2,10])
 
 with col_l:
@@ -133,12 +126,11 @@ with col_l:
         "Źródło",
         options=list(LANGUAGES.keys()),
         format_func=lambda x: LANGUAGES[x],
-        key="src_lang",
-        label_visibility="collapsed"
+        key="src_lang"
     )
 
 with col_s:
-    st.markdown('<div class="swap-container">', unsafe_allow_html=True)
+    st.markdown('<div class="swap-btn">', unsafe_allow_html=True)
     st.button("⇄", on_click=swap_languages, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -147,15 +139,14 @@ with col_r:
         "Cel",
         options=list(LANGUAGES.keys()),
         format_func=lambda x: LANGUAGES[x],
-        key="tgt_lang",
-        label_visibility="collapsed"
+        key="tgt_lang"
     )
 
 
 st.write("")
 
 
-# PRZYCISKI KOPIOWANIA
+# --- PRZYCISKI KOPIOWANIA ---
 cp_l, cp_mid, cp_r = st.columns([10,1.2,10])
 
 with cp_l:
@@ -165,7 +156,7 @@ with cp_r:
     st.button("📋 Kopiuj wynik", key="copy_out")
 
 
-# POLA TEKSTOWE
+# --- POLA TEKSTOWE ---
 t_l, t_mid, t_r = st.columns([10,1.2,10])
 
 with t_l:
@@ -173,7 +164,6 @@ with t_l:
         "in",
         value=st.session_state.input_text,
         height=350,
-        label_visibility="collapsed",
         placeholder="Wpisz tekst do przetłumaczenia..."
     )
 
@@ -192,8 +182,7 @@ with t_r:
     st.text_area(
         "out",
         value=wynik,
-        height=350,
-        label_visibility="collapsed"
+        height=350
     )
 
 
