@@ -4,39 +4,40 @@ import re
 
 
 def load_json(file_name):
-    """Bezpieczne wczytywanie JSON."""
     try:
         base_path = os.path.dirname(os.path.abspath(__file__))
-        full_path = os.path.join(base_path, file_name)
+        path = os.path.join(base_path, file_name)
 
-        if not os.path.exists(full_path):
-            return {}
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
 
-        with open(full_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        if isinstance(data, dict):
-            return data
-
-        return {}
-
-    except Exception:
+    except Exception as e:
+        print("Błąd wczytywania:", e)
         return {}
 
 
-def translate_word(word, dictionary):
-    """Tłumaczy pojedyncze słowo."""
-    lower = word.lower()
+def find_translation(word, osnova):
 
-    if lower in dictionary:
-        translated = dictionary[lower]
+    w = word.lower()
 
-        if word[0].isupper():
-            translated = translated.capitalize()
+    for key, value in osnova.items():
 
-        return translated
+        # przypadek 1
+        if key == w:
+            if isinstance(value, str):
+                return value
 
-    return word
+            if isinstance(value, dict):
+                if "sl" in value:
+                    return value["sl"]
+
+        # przypadek 2 (lista znaczeń)
+        if isinstance(value, dict):
+            if "pl" in value and isinstance(value["pl"], list):
+                if w in value["pl"]:
+                    return key
+
+    return None
 
 
 def translate_text(text, src_lang, tgt_lang):
@@ -46,36 +47,39 @@ def translate_text(text, src_lang, tgt_lang):
 
     osnova = load_json("osnova.json")
 
-    if tgt_lang != "sl":
-        return "Tłumaczenie dostępne obecnie tylko na Prasłowiański."
-
     if not osnova:
-        return "Błąd: Nie wczytano bazy osnova.json."
+        return "Błąd: osnova.json nie została wczytana"
 
-    # tokenizacja (obsługuje polskie litery)
     tokens = re.findall(r"\w+|[^\w\s]", text, re.UNICODE)
 
     result = []
 
     for token in tokens:
 
-        # interpunkcja
         if re.match(r"[^\w\s]", token):
             result.append(token)
             continue
 
-        translated = translate_word(token, osnova)
-        result.append(translated)
+        translated = find_translation(token, osnova)
 
-    # składanie zdania
+        if translated:
+
+            if token[0].isupper():
+                translated = translated.capitalize()
+
+            result.append(translated)
+
+        else:
+            result.append(token)
+
     output = ""
+
     for i, token in enumerate(result):
 
         if i == 0:
             output += token
             continue
 
-        # brak spacji przed interpunkcją
         if re.match(r"[.,!?;:]", token):
             output += token
         else:
