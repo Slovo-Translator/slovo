@@ -3,66 +3,62 @@ import os
 import re
 
 def load_json(file_name):
-    """Wczytuje plik JSON z gwarancją zwrócenia słownika."""
+    """Bezpieczne wczytywanie JSON z gwarancją zwrotu słownika."""
     try:
-        # Pobieramy ścieżkę do katalogu, w którym znajduje się logic.py
-        base_path = os.path.dirname(__file__)
+        # Ustalenie ścieżki bezwzględnej do folderu ze skryptem
+        base_path = os.path.dirname(os.path.abspath(__file__))
         full_path = os.path.join(base_path, file_name)
         
         if os.path.exists(full_path):
             with open(full_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                if data is None:
-                    return {}
-                return data
+                return data if isinstance(data, dict) else {}
         return {}
-    except Exception as e:
-        # W razie błędu zwracamy pusty słownik, żeby .get() nie wywaliło apki
+    except Exception:
         return {}
 
 def translate_text(text, src_lang, tgt_lang):
-    if not text.strip():
+    if not text or not text.strip():
         return ""
 
-    # Wczytanie baz - teraz zawsze będą słownikami (pustymi lub nie)
+    # Wczytanie baz - gwarantowane słowniki
     osnova = load_json('osnova.json')
     vuzor = load_json('vuzor.json')
 
     if tgt_lang == "sl":
-        # Jeśli osnova jest pusta, wyświetlamy komunikat diagnostyczny
         if not osnova:
-            return "Błąd: Słownik osnova.json nie został wczytany. Sprawdź czy plik jest w repozytorium."
+            return "Błąd: Nie wczytano bazy osnova.json. Sprawdź pliki w repozytorium."
 
-        # Rozbijanie tekstu na słowa i interpunkcję
-        words = re.findall(r"[\w']+|[.,!?;]", text)
+        # Rozbijanie na słowa i znaki interpunkcyjne
+        tokens = re.findall(r"[\w']+|[.,!?;]", text)
         translated_result = []
 
-        for word in words:
-            if word in ".,!?;":
-                translated_result.append(word)
+        for token in tokens:
+            if token in ".,!?;":
+                translated_result.append(token)
                 continue
 
-            word_lower = word.lower()
-            
-            # Bezpieczne pobieranie ze słownika
-            found_word = osnova.get(word_lower)
+            lower_token = token.lower()
+            # Szukanie w słowniku
+            replacement = osnova.get(lower_token)
 
-            if found_word:
-                if word[0].isupper():
-                    found_word = found_word.capitalize()
-                translated_result.append(found_word)
+            if replacement:
+                # Zachowanie wielkości liter
+                if token[0].isupper():
+                    replacement = replacement.capitalize()
+                translated_result.append(replacement)
             else:
-                translated_result.append(word) # Jeśli nie ma, zostaw oryginał
+                # Jeśli nie ma w bazie, zostawiamy oryginał
+                translated_result.append(token)
 
-        # Składanie zdania
-        final_sentence = " ".join(translated_result)
-        # Poprawka spacji przed znakami interpunkcyjnymi
+        # Składanie tekstu i naprawa spacji przed interpunkcją
+        output = " ".join(translated_result)
         for char in ".,!?;":
-            final_sentence = final_sentence.replace(f" {char}", char)
+            output = output.replace(f" {char}", char)
         
-        return final_sentence
+        return output
 
-    return "Tłumaczenie dostępne tylko na Prasłowiański."
+    return "Tłumaczenie dostępne obecnie tylko na Prasłowiański."
 
 def get_languages():
     return {
