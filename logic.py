@@ -4,71 +4,70 @@ import re
 
 class SlovianLogic:
     def __init__(self):
-        self.osnova = self._load_json('osnova.json')
-        self.vuzor = self._load_json('vuzor.json')
+        self.osnova = self._load_data('osnova.json')
+        self.vuzor = self._load_data('vuzor.json')
         
-        # Reguły fonetyczne (tzw. Sound Laws) - fundament pod ML
-        self.sound_laws = [
-            (r'ą', 'ǫ'), (r'ę', 'ę'), (r'rz', 'rь'), 
-            (r'sz', 'š'), (r'cz', 'č'), (r'ż', 'ž'),
-            (r'ć', 'cь'), (r'ś', 'sь'), (r'ź', 'zь'),
-            (r'y', 'y'), (r'u', 'u')
+        # Zaawansowane reguły fonetyczne (rekonstrukcja prę-słowiańska)
+        self.phonetic_rules = [
+            (r'ą', 'ǫ'), (r'ę', 'ę'), (r'rz', 'rь'), (r'sz', 'š'),
+            (r'cz', 'č'), (r'ż', 'ž'), (r'ć', 'cь'), (r'ś', 'sь'),
+            (r'ź', 'zь'), (r'dz', 'dz'), (r'io', 'je'), (r'ia', 'ě')
         ]
 
-    def _load_json(self, path):
-        if os.path.exists(path):
-            with open(path, 'r', encoding='utf-8') as f:
+    def _load_data(self, filename):
+        if os.path.exists(filename):
+            with open(filename, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return {}
 
-    def get_form(self, vuzor_id, form_type="m1"):
-        """Pobiera końcówkę z vuzor.json (domyślnie m1 - mianownik)"""
-        pattern = self.vuzor.get(vuzor_id, {})
-        return pattern.get(form_type, "")
-
-    def apply_sound_laws(self, word):
-        """Rekonstrukcja fonetyczna dla słów spoza bazy"""
-        for pattern, replacement in self.sound_laws:
-            word = re.sub(pattern, replacement, word)
+    def apply_vuzor(self, entry, form="m1"):
+        """Łączy rdzeń z odpowiednią końcówką z vuzor.json"""
+        root = entry.get("osnova", "")
+        v_id = entry.get("vuzor", "")
         
-        # Prasłowiański "jer" na końcu, jeśli słowo kończy się spółgłoską
-        if re.search(r'[^aeiouyǫęьъ]$', word):
-            word += "ъ"
-        return word
+        # Pobieranie końcówki z vuzor.json
+        suffix = self.vuzor.get(v_id, {}).get(form, "")
+        return root + suffix
+
+    def reconstruct(self, word):
+        """Algorytmiczne 'zgadywanie' formy dla słów spoza bazy"""
+        res = word.lower()
+        for pattern, repl in self.phonetic_rules:
+            res = re.sub(pattern, repl, res)
+        
+        # Reguła końcowego jera (ъ) dla rzeczowników twardych
+        if res[-1] not in "aeiouyǫęьъě":
+            res += "ъ"
+        return res
 
     def translate_word(self, word):
-        # 1. Standaryzacja
-        w = word.lower().strip(".,!?:;()")
-        if not w: return word
+        clean = word.lower().strip(".,!?:;()")
+        if not clean: return word
 
-        # 2. Sprawdzenie w bazie osnova.json
-        if w in self.osnova:
-            entry = self.osnova[w]
-            
-            # Jeśli wpis jest słownikiem (ma rdzeń i wzorzec)
-            if isinstance(entry, dict):
-                root = entry.get("osnova", "")
-                v_id = entry.get("vuzor", "")
-                # Tu w przyszłości AI będzie decydować o 'form_type'
-                suffix = self.get_form(v_id, "m1") 
-                return root + suffix
-            
-            # Jeśli wpis to gotowe słowo (string)
+        # 1. Sprawdzenie bezpośrednie
+        if clean in self.osnova:
+            entry = self.osnova[clean]
+            if isinstance(entry, dict) and "osnova" in entry:
+                return self.apply_vuzor(entry)
             return entry
 
-        # 3. Jeśli słowa nie ma w bazie - 'inteligentna' rekonstrukcja
-        return self.apply_sound_laws(w)
+        # 2. Próba znalezienia rdzenia po początku słowa (prosty stemming)
+        for pl_key, data in self.osnova.items():
+            if clean.startswith(pl_key[:4]) and isinstance(data, dict):
+                return self.apply_vuzor(data)
 
-    def translate_text(self, text):
-        # Rozbijanie na słowa z zachowaniem interpunkcji (prosty regex)
+        # 3. Fallback: Rekonstrukcja fonetyczna
+        return self.reconstruct(clean)
+
+    def process_text(self, text):
+        # Rozbijanie na słowa z zachowaniem znaków interpunkcyjnych
         tokens = re.findall(r"[\w]+|[^\s\w]", text)
         result = []
-        for token in tokens:
-            if token.isalnum():
-                result.append(self.translate_word(token))
+        for t in tokens:
+            if t.isalnum():
+                result.append(self.translate_word(t))
             else:
-                result.append(token)
-        return " ".join(result).replace(" .", ".").replace(" ,", ",")
+                result.append(t)
+        return "".join([" " + x if not re.match(r"[.,!?:;]", x) else x for x in result]).strip()
 
-# Eksport instancji
-translator_logic = SlovianLogic()
+translator = SlovianLogic()
