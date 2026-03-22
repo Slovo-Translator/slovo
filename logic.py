@@ -1,98 +1,67 @@
 import json
-import os
 import re
 
+class SlovianLogic:
+    def __init__(self):
+        self.osnova = self._load_json('osnova.json')
+        self.vuzor = self._load_json('vuzor.json')
+        
+        # Reguły transformacji fonetycznej (tzw. Sound Changes)
+        # Służą jako "fallback" dla algorytmu ML
+        self.phonetic_rules = {
+            'ą': 'ǫ', 'ę': 'ę', 'rz': 'rь', 'sz': 'š', 'cz': 'č', 
+            'ż': 'ž', 'ć': 'cь', 'ś': 'sь', 'ź': 'zь', 'y': 'y'
+        }
 
-def load_json(file_name):
-    try:
-        base_path = os.path.dirname(os.path.abspath(__file__))
-        path = os.path.join(base_path, file_name)
+    def _load_json(self, path):
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Błąd ładowania {path}: {e}")
+            return {}
 
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-
-    except Exception as e:
-        print("Błąd wczytywania:", e)
-        return {}
-
-
-def find_translation(word, osnova):
-
-    w = word.lower()
-
-    for key, value in osnova.items():
-
-        # przypadek 1
-        if key == w:
-            if isinstance(value, str):
-                return value
-
-            if isinstance(value, dict):
-                if "sl" in value:
-                    return value["sl"]
-
-        # przypadek 2 (lista znaczeń)
-        if isinstance(value, dict):
-            if "pl" in value and isinstance(value["pl"], list):
-                if w in value["pl"]:
-                    return key
-
-    return None
-
-
-def translate_text(text, src_lang, tgt_lang):
-
-    if not text.strip():
+    def get_inflection(self, root_info, form_type="m1"):
+        """
+        Pobiera odpowiednią końcówkę z vuzor.json na podstawie wzorca.
+        """
+        pattern_name = root_info.get("vuzor")  # np. "v1"
+        if pattern_name in self.vuzor:
+            # Szukamy konkretnej formy (np. mianownik, 1 os. l.p.)
+            return self.vuzor[pattern_name].get(form_type, "")
         return ""
 
-    osnova = load_json("osnova.json")
+    def reconstruct_phonetically(self, word):
+        """Algorytm heurystyczny dla słów spoza bazy"""
+        word = word.lower()
+        for pl, psl in self.phonetic_rules.items():
+            word = word.replace(pl, psl)
+        return word
 
-    if not osnova:
-        return "Błąd: osnova.json nie została wczytana"
+    def translate_word(self, word):
+        word_clean = word.lower().strip(",.!?:")
+        
+        # 1. Szukanie bezpośrednie w osnova
+        if word_clean in self.osnova:
+            entry = self.osnova[word_clean]
+            if isinstance(entry, dict) and "osnova" in entry:
+                # Jeśli mamy zdefiniowany rdzeń i wzorzec (vuzor)
+                root = entry["osnova"]
+                suffix = self.get_inflection(entry, "m1") # domyślnie mianownik
+                return root + suffix
+            return entry # Jeśli to prosty string
+            
+        # 2. Próba znalezienia rdzenia (jeśli słowo jest odmienione w PL)
+        for pl_word, data in self.osnova.items():
+            if word_clean.startswith(pl_word[:3]): # Bardzo uproszczony stemming
+                 if isinstance(data, dict):
+                     return data.get("osnova", word_clean)
+        
+        # 3. Fallback: Fonetyczna rekonstrukcja (Machine Learning Baseline)
+        return self.reconstruct_phonetically(word_clean)
 
-    tokens = re.findall(r"\w+|[^\w\s]", text, re.UNICODE)
+    def translate_text(self, text):
+        words = text.split()
+        return " ".join([self.translate_word(w) for w in words])
 
-    result = []
-
-    for token in tokens:
-
-        if re.match(r"[^\w\s]", token):
-            result.append(token)
-            continue
-
-        translated = find_translation(token, osnova)
-
-        if translated:
-
-            if token[0].isupper():
-                translated = translated.capitalize()
-
-            result.append(translated)
-
-        else:
-            result.append(token)
-
-    output = ""
-
-    for i, token in enumerate(result):
-
-        if i == 0:
-            output += token
-            continue
-
-        if re.match(r"[.,!?;:]", token):
-            output += token
-        else:
-            output += " " + token
-
-    return output
-
-
-def get_languages():
-    return {
-        "pl": "Polski",
-        "sl": "Prasłowiański",
-        "en": "Angielski",
-        "de": "Niemiecki",
-        "ru": "Rosyjski"
-    }
+translator_logic = SlovianLogic()
