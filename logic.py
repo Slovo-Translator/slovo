@@ -2,54 +2,56 @@ import json
 import os
 
 class SlovianLogic:
-    def __init__(self):
-        self.osnova = self._load_data('osnova.json')
-        self.vuzor = self._load_data('vuzor.json')
+    def __init__(self, osnova_path='osnova.json', vuzor_path='vuzor.json'):
+        self.osnova = self._load_json(osnova_path)
+        self.vuzor = self._load_json(vuzor_path)
         
-        # Mapowanie fonetyczne do "zgadywania" słów spoza bazy
-        self.phonetic_map = {
+        # Mapa fonetyczna dla słów spoza bazy (symulacja reguł językowych)
+        self.rules = {
             'ą': 'ǫ', 'ę': 'ę', 'rz': 'rь', 'sz': 'š', 
             'cz': 'č', 'ż': 'ž', 'ć': 'cь', 'ś': 'sь'
         }
 
-    def _load_data(self, filename):
-        if os.path.exists(filename):
-            with open(filename, 'r', encoding='utf-8') as f:
+    def _load_json(self, path):
+        if os.path.exists(path):
+            with open(path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return {}
 
-    def get_inflection(self, pattern_id, form_key="m1"):
-        """Pobiera końcówkę z vuzor.json (np. mianownik m1)"""
-        pattern = self.vuzor.get(pattern_id, {})
-        return pattern.get(form_key, "")
+    def get_suffix(self, vuzor_id, form="m1"):
+        """Pobiera końcówkę (np. mianownik m1) z vuzor.json"""
+        pattern = self.vuzor.get(vuzor_id, {})
+        return pattern.get(form, "")
 
     def translate_word(self, word):
-        w = word.lower().strip(".,!?:")
+        # Czyszczenie słowa z interpunkcji
+        clean_word = word.lower().strip(".,!?:;()")
         
-        # 1. Dokładne dopasowanie
-        if w in self.osnova:
-            data = self.osnova[w]
-            if isinstance(data, dict):
-                root = data.get("osnova", "")
-                vuzor_id = data.get("vuzor", "")
-                suffix = self.get_inflection(vuzor_id)
+        # 1. Sprawdzenie w osnova.json
+        if clean_word in self.osnova:
+            entry = self.osnova[clean_word]
+            if isinstance(entry, dict):
+                root = entry.get("osnova", "")
+                v_id = entry.get("vuzor", "")
+                suffix = self.get_suffix(v_id)
                 return root + suffix
-            return data # Jeśli to prosty string
+            return entry # Jeśli to zwykły string
 
-        # 2. Inteligentne zgadywanie (Phonetic Reconstruction)
-        # To jest uproszczony model 'zero-shot' dla nowych słów
-        reconstructed = w
-        for pl, psl in self.phonetic_map.items():
+        # 2. Jeśli nie ma w bazie - rekonstrukcja fonetyczna (Machine Learning Baseline)
+        reconstructed = clean_word
+        for pl, psl in self.rules.items():
             reconstructed = reconstructed.replace(pl, psl)
-        
-        # Dodanie twardego znaku na końcu rzeczowników (stylizacja na prasłowiański)
+            
+        # Dodanie twardego znaku na końcu, jeśli kończy się spółgłoską
         if reconstructed[-1] not in "aeiouyǫęьъ":
             reconstructed += "ъ"
             
         return reconstructed
 
-    def full_translate(self, text):
+    def translate_sentence(self, text):
+        if not text: return ""
         words = text.split()
         return " ".join([self.translate_word(w) for w in words])
 
+# Inicjalizacja do użycia w app.py
 translator = SlovianLogic()
