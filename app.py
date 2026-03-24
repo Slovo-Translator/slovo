@@ -10,12 +10,12 @@ try:
 except ImportError:
     browser_lang = "pl"
 
-st.set_page_config(page_title="Slovo Translator", layout="centered")
+st.set_page_config(page_title="Tłumacz", layout="centered")
 
 # ================== TRANSLATIONS ==================
 translations = {
     "pl": {
-        "title": "Tłumacz Słowo",
+        "title": "Tłumacz",
         "from_lang": "Z języka:",
         "to_lang": "Na język:",
         "input": "Wpisz tekst do tłumaczenia:",
@@ -23,7 +23,7 @@ translations = {
         "result": "### Wynik tłumaczenia:"
     },
     "en": {
-        "title": "Slovo Translator",
+        "title": "Translator",
         "from_lang": "From language:",
         "to_lang": "To language:",
         "input": "Write word or text for translation:",
@@ -31,7 +31,7 @@ translations = {
         "result": "### Translation result:"
     },
     "de": {
-        "title": "Slovo Übersetzer",
+        "title": "Übersetzer",
         "from_lang": "Von Sprache:",
         "to_lang": "In Sprache:",
         "input": "Text zum Übersetzen eingeben:",
@@ -39,7 +39,7 @@ translations = {
         "result": "### Übersetzungsergebnis:"
     },
     "fr": {
-        "title": "Traducteur Slovo",
+        "title": "Traducteur",
         "from_lang": "De la langue :",
         "to_lang": "Vers la langue :",
         "input": "Saisissez le texte à traduire :",
@@ -47,7 +47,7 @@ translations = {
         "result": "### Résultat de la traduction :"
     },
     "es": {
-        "title": "Traductor Slovo",
+        "title": "Traductor",
         "from_lang": "Del idioma:",
         "to_lang": "Al idioma:",
         "input": "Escribe el texto para traducir:",
@@ -55,7 +55,7 @@ translations = {
         "result": "### Resultado de la traducción:"
     },
     "ru": {
-        "title": "Переводчик Slovo",
+        "title": "Переводчик",
         "from_lang": "С языка:",
         "to_lang": "На язык:",
         "input": "Введите текст для перевода:",
@@ -64,11 +64,10 @@ translations = {
     }
 }
 
-# Default to browser language or fallback to Polish
 ui_lang = browser_lang if browser_lang in translations else "pl"
 t = translations[ui_lang]
 
-# Google languages (all common + "slo")
+# Google languages
 google_langs = {
     "Auto": "auto",
     "Polski": "pl",
@@ -78,10 +77,9 @@ google_langs = {
     "Hiszpański": "es",
     "Rosyjski": "ru",
     "Słowiański": "slo"
-    # Dodaj więcej jeśli chcesz (np. "Włoski": "it", "Ukraiński": "uk" itd.)
 }
 
-# ================== LOAD & DICT (bez zmian) ==================
+# ================== LOAD & DICT ==================
 @st.cache_data
 def load_json(filename):
     try:
@@ -111,7 +109,7 @@ def build_dict(osnova, vuzor):
 
 pl_to_slo, slo_to_pl = build_dict(osnova, vuzor)
 
-# ================== TRANSLATE FUNCTIONS (bez zmian) ==================
+# ================== TRANSLATE FUNCTIONS ==================
 def translate_pl_to_slo(text):
     tokens = re.findall(r'\w+|[^\w\s]|\s+', text)
     result = []
@@ -156,6 +154,8 @@ def google_translate(text, source, target):
         return f"(błąd: {e})"
 
 # ================== UI ==================
+st.markdown("### Slovo")  # Logo w lewym górnym rogu
+
 st.title(t["title"])
 
 col1, col2 = st.columns(2)
