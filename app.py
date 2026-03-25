@@ -11,17 +11,13 @@ def get_all_languages():
         langs = GoogleTranslator().get_supported_languages(as_dict=True)
         return {name.capitalize(): code for name, code in langs.items()}
     except:
-        # Fallback, gdyby API Google miało problem
         return {"Polish": "pl", "English": "en", "German": "de"}
 
 GOOGLE_LANGS = get_all_languages()
-ALL_OPTIONS = {"Auto": "auto", "Słowiański (Slo)": "slo", **GOOGLE_LANGS}
+ALL_OPTIONS = {"Auto": "auto", "Słowiański": "slo", **GOOGLE_LANGS}
 
-# ================== 2. DETEKCJA JĘZYKA UI (JavaScript) ==================
-# Pobieramy język bezpośrednio z przeglądarki użytkownika
+# ================== 2. DETEKCJA JĘZYKA UI ==================
 st_lang = st_javascript("window.navigator.language")
-
-# Baza tłumaczeń interfejsu
 UI_TRANSLATIONS = {
     "pl": {"title": "Tłumacz", "from": "Z języka:", "to": "Na język:", "input": "Wpisz tekst:", "btn": "🔄 Tłumacz", "res": "Wynik:", "warn": "⚠️ Wpisz tekst."},
     "en": {"title": "Translator", "from": "From:", "to": "To:", "input": "Enter text:", "btn": "🔄 Translate", "res": "Result:", "warn": "⚠️ Please enter text."},
@@ -30,18 +26,26 @@ UI_TRANSLATIONS = {
     "es": {"title": "Traductor", "from": "De:", "to": "A:", "input": "Ingrese texto:", "btn": "🔄 Traducir", "res": "Resultado:", "warn": "⚠️ Ingrese texto."}
 }
 
-# Logika wyboru języka UI
 if st_lang:
     detected_code = st_lang[:2].lower()
     lang_code = detected_code if detected_code in UI_TRANSLATIONS else "en"
 else:
-    lang_code = "pl" # Domyślnie polski, dopóki JS nie odpowie
-
+    lang_code = "pl"
 ui = UI_TRANSLATIONS[lang_code]
 
-# ================== 3. KONFIGURACJA STRONY ==================
-st.set_page_config(page_title=ui["title"], layout="wide")
+# ================== 3. PERSISTENCJA W LOCAL STORAGE ==================
+def get_persisted_target():
+    code = st_javascript("""
+        let val = localStorage.getItem('slovo_target_lang');
+        return val !== null ? val : 'slo';
+    """)
+    return code if code in ALL_OPTIONS.values() else 'slo'
 
+def save_target(lang_code):
+    st_javascript(f"localStorage.setItem('slovo_target_lang', '{lang_code}');")
+
+# ================== 4. KONFIGURACJA STRONY ==================
+st.set_page_config(page_title=ui["title"], layout="wide")
 st.markdown("""
     <style>
     .main { max-width: 900px; margin: 0 auto; }
@@ -52,7 +56,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# ================== 4. LOGIKA SŁOWIAŃSKA & DICT ==================
+# ================== 5. LOGIKA SŁOWIAŃSKA ==================
 @st.cache_data
 def load_json_safe(filename):
     try:
@@ -98,20 +102,25 @@ def google_translate(text, src, tgt):
     except Exception as e:
         return f"(Error: {e})"
 
-# ================== 5. INTERFEJS UŻYTKOWNIKA ==================
+# ================== 6. INTERFEJS ==================
 st.write(f"### 🌐 Slovo")
 st.title(ui["title"])
 
 col1, col2 = st.columns(2)
+
 with col1:
     src_label = st.selectbox(ui["from"], list(ALL_OPTIONS.keys()), index=0)
+
 with col2:
-    # Próba inteligentnego ustawienia celu na Polski
+    persisted = get_persisted_target()
     try:
-        p_idx = list(ALL_OPTIONS.values()).index("pl")
-    except:
-        p_idx = 1
-    tgt_label = st.selectbox(ui["to"], list(ALL_OPTIONS.keys()), index=p_idx)
+        default_idx = list(ALL_OPTIONS.values()).index(persisted)
+    except ValueError:
+        default_idx = list(ALL_OPTIONS.values()).index("slo")
+    tgt_label = st.selectbox(ui["to"], list(ALL_OPTIONS.keys()), index=default_idx, key="target_lang")
+
+if "target_lang" in st.session_state:
+    save_target(ALL_OPTIONS[st.session_state.target_lang])
 
 user_input = st.text_area(ui["input"], height=150, placeholder="...")
 
@@ -119,21 +128,16 @@ if st.button(ui["btn"], type="primary"):
     if user_input.strip():
         src_code = ALL_OPTIONS[src_label]
         tgt_code = ALL_OPTIONS[tgt_label]
-        
         with st.spinner('...'):
             if tgt_code == "slo":
-                # Do Słowiańskiego zawsze przez Polski dla precyzji słownika
                 pl_text = google_translate(user_input, src_code, "pl") if src_code != "pl" else user_input
                 result = translate_pl_to_slo(pl_text)
             elif src_code == "slo":
-                # Ze Słowiańskiego na dowolny przez Polski
                 tokens = re.findall(r'\w+|[^\w\s]|\s+', user_input)
                 pl_text = "".join([slo_to_pl.get(t.lower(), t) for t in tokens])
                 result = google_translate(pl_text, "pl", tgt_code)
             else:
-                # Normalne Google -> Google
                 result = google_translate(user_input, src_code, tgt_code)
-            
             st.divider()
             st.markdown(f"### {ui['res']}")
             st.success(result)
