@@ -16,7 +16,7 @@ def get_all_languages():
 GOOGLE_LANGS = get_all_languages()
 ALL_OPTIONS = {"Auto": "auto", "Słowiański": "slo", **GOOGLE_LANGS}
 
-# ================== 2. DETEKCJA JĘZYKA UI ==================
+# ================== 2. DETEKCJA JĘZYKA UI (naprawiona) ==================
 st_lang = st_javascript("window.navigator.language")
 UI_TRANSLATIONS = {
     "pl": {"title": "Tłumacz", "from": "Z języka:", "to": "Na język:", "input": "Wpisz tekst:", "btn": "🔄 Tłumacz", "res": "Wynik:", "warn": "⚠️ Wpisz tekst."},
@@ -44,18 +44,16 @@ def save_target(lang_code):
 
 # ================== 4. KONFIGURACJA + CSS ==================
 st.set_page_config(page_title=ui["title"], layout="wide")
-
 st.markdown("""
     <style>
     .main { max-width: 900px; margin: 0 auto; }
     .stTextArea textarea { font-size: 1.1rem; }
-    div[data-testid="stHorizontalBlock"] > div:nth-child(1) { flex: 1; }
-    div[data-testid="stHorizontalBlock"] > div:nth-child(2) { flex: 1; }
-    label { font-weight: 500 !important; }
+    label { font-weight: 500 !important; margin-bottom: 0.2rem !important; }
+    div[data-testid="stHorizontalBlock"] > div { gap: 0.8rem; }
     </style>
     """, unsafe_allow_html=True)
 
-# ================== 5. LOGIKA TŁUMACZENIA (bez zmian) ==================
+# ================== 5. LOGIKA TŁUMACZENIA ==================
 @st.cache_data
 def load_json_safe(filename):
     try:
