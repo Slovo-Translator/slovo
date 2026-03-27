@@ -16,15 +16,12 @@
         .lang-combobox { position: relative; width: 100%; }
         .lang-input { width: 100%; padding: 12px 40px 12px 12px; border: 2px solid #eef0f2; border-radius: 12px; font-size: 16px; background: #fff; color: #333; cursor: pointer; }
         .lang-input:focus { outline: none; border-color: var(--primary); }
-        .dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 2px solid #eef0f2; border-radius: 12px; max-height: 300px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin-top: 4px; }
+        .dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 2px solid #eef0f2; border-radius: 12px; max-height: 320px; overflow-y: auto; z-index: 100; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.15); margin-top: 4px; }
         .dropdown.show { display: block; }
         .dropdown ul { list-style: none; padding: 4px 0; margin: 0; }
         .dropdown li { padding: 10px 16px; cursor: pointer; font-size: 16px; }
         .dropdown li:hover { background: #f0f7ff; }
-        select, textarea { width: 100%; padding: 12px; border: 2px solid #eef0f2; border-radius: 12px; font-size: 16px; transition: 0.3s; background: #fff; color: #333; }
-        .swap-btn { background: #f8f9fa; border: 2px solid #eef0f2; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; transition: 0.2s; font-size: 20px; }
-        .swap-btn:hover { border-color: var(--primary); color: var(--primary); background: #fff; }
-        textarea { height: 180px; resize: none; line-height: 1.5; margin-top: 10px; }
+        textarea { width: 100%; padding: 12px; border: 2px solid #eef0f2; border-radius: 12px; font-size: 16px; height: 180px; resize: none; line-height: 1.5; margin-top: 10px; }
         .action-bar { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
         .icon-btn { background: #fff; border: 2px solid #eef0f2; border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .icon-btn:hover { border-color: var(--primary); background: #f0f7ff; }
@@ -41,7 +38,7 @@
         <div class="field-group">
             <label id="ui-label-from">From:</label>
             <div class="lang-combobox">
-                <input type="text" id="srcDisplay" class="lang-input" placeholder="Search language..." onfocus="showDropdown('src')" oninput="filterDropdown('src')">
+                <input type="text" id="srcDisplay" class="lang-input" placeholder="Search language..." readonly onfocus="showDropdown('src')" onclick="showDropdown('src')">
                 <input type="hidden" id="srcLang">
                 <div id="srcDropdown" class="dropdown">
                     <ul id="srcOptions"></ul>
@@ -54,7 +51,7 @@
         <div class="field-group">
             <label id="ui-label-to">To:</label>
             <div class="lang-combobox">
-                <input type="text" id="tgtDisplay" class="lang-input" placeholder="Search language..." onfocus="showDropdown('tgt')" oninput="filterDropdown('tgt')">
+                <input type="text" id="tgtDisplay" class="lang-input" placeholder="Search language..." readonly onfocus="showDropdown('tgt')" onclick="showDropdown('tgt')">
                 <input type="hidden" id="tgtLang">
                 <div id="tgtDropdown" class="dropdown">
                     <ul id="tgtOptions"></ul>
@@ -79,48 +76,50 @@
     let plToSlo = {}, sloToPl = {};
    
     const languageData = [
-        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angolьsky', de: 'Englisch' },
-        { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slověnьsky', de: 'Slawisch' },
-        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Polьsky', de: 'Polnisch' },
-        { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemьčьsky', de: 'Deutsch' },
-        { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češьsky', de: 'Tschechisch' },
-        { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačьsky', de: 'Slowakisch' },
-        { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Rusьsky', de: 'Russisch' },
-        { code: 'fr', pl: 'Francuski', en: 'French', slo: 'Franьsky', de: 'Französisch' },
-        { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
-        { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
-        { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
         { code: 'af', pl: 'Afrikaans', en: 'Afrikaans', slo: 'Afrikańsky', de: 'Afrikaans' },
         { code: 'ar', pl: 'Arabski', en: 'Arabic', slo: 'Arabsky', de: 'Arabisch' },
         { code: 'be', pl: 'Białoruski', en: 'Belarusian', slo: 'Bělorusьsky', de: 'Weißrussisch' },
         { code: 'bg', pl: 'Bułgarski', en: 'Bulgarian', slo: 'Bъlgarsky', de: 'Bulgarisch' },
         { code: 'ca', pl: 'Kataloński', en: 'Catalan', slo: 'Katalańsky', de: 'Katalanisch' },
+        { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češьsky', de: 'Tschechisch' },
         { code: 'da', pl: 'Duński', en: 'Danish', slo: 'Dańsky', de: 'Dänisch' },
+        { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemьčьsky', de: 'Deutsch' },
         { code: 'el', pl: 'Grecki', en: 'Greek', slo: 'Grěčьsky', de: 'Griechisch' },
+        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angolьsky', de: 'Englisch' },
+        { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
         { code: 'fi', pl: 'Fiński', en: 'Finnish', slo: 'Finskьsky', de: 'Finnisch' },
+        { code: 'fr', pl: 'Francuski', en: 'French', slo: 'Franьsky', de: 'Französisch' },
         { code: 'he', pl: 'Hebrajski', en: 'Hebrew', slo: 'Hebrejsky', de: 'Hebräisch' },
         { code: 'hi', pl: 'Hindi', en: 'Hindi', slo: 'Hindsky', de: 'Hindi' },
         { code: 'hu', pl: 'Węgierski', en: 'Hungarian', slo: 'Mad\'arsky', de: 'Ungarisch' },
         { code: 'id', pl: 'Indonezyjski', en: 'Indonesian', slo: 'Indonezijsky', de: 'Indonesisch' },
+        { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
         { code: 'ja', pl: 'Japoński', en: 'Japanese', slo: 'Japońsky', de: 'Japanisch' },
         { code: 'ko', pl: 'Koreański', en: 'Korean', slo: 'Korejsky', de: 'Koreanisch' },
         { code: 'lt', pl: 'Litewski', en: 'Lithuanian', slo: 'Litovьsky', de: 'Litauisch' },
         { code: 'lv', pl: 'Łotewski', en: 'Latvian', slo: 'Latvьsky', de: 'Lettisch' },
         { code: 'nl', pl: 'Holenderski', en: 'Dutch', slo: 'Niderlandьsky', de: 'Niederländisch' },
         { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežsky', de: 'Norwegisch' },
+        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Polьsky', de: 'Polnisch' },
         { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugalьsky', de: 'Portugiesisch' },
         { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: 'Rumunьsky', de: 'Rumänisch' },
+        { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Rusьsky', de: 'Russisch' },
+        { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačьsky', de: 'Slowakisch' },
+        { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slověnьsky', de: 'Slawisch' },
         { code: 'sv', pl: 'Szwedzki', en: 'Swedish', slo: 'Švedьsky', de: 'Schwedisch' },
         { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turecьky', de: 'Türkisch' },
+        { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
         { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'V\'etnamsky', de: 'Vietnamesisch' },
         { code: 'zh', pl: 'Chiński', en: 'Chinese', slo: 'Kitajsky', de: 'Chinesisch' }
     ];
+
     const uiTranslations = {
         pl: { title: "🌐 Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst...", search: "Szukaj języka..." },
         en: { title: "🌐 Slovo Translator", from: "From language:", to: "To language:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here...", search: "Search language..." },
         slo: { title: "🌐 Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu...", search: "Išči ęzyk..." },
         de: { title: "🌐 Slovo Übersetzer", from: "Von:", to: "Nach:", paste: "Einfügen", clear: "Löschen", copy: "Kopieren", placeholder: "Text eingeben...", search: "Sprache suchen..." }
     };
+
     async function init() {
         const sysLang = navigator.language.split('-')[0];
         const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
@@ -130,6 +129,7 @@
        
         let defaultSrc = languageData.some(l => l.code === sysLang) ? sysLang : 'en';
         let defaultTgt = 'slo';
+        
         const savedSrc = localStorage.getItem('srcLang') || defaultSrc;
         const savedTgt = localStorage.getItem('tgtLang') || defaultTgt;
        
@@ -139,16 +139,14 @@
         await loadDictionaries();
        
         document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 300));
-        document.getElementById('srcLang').onchange = () => translate();
-        document.getElementById('tgtLang').onchange = () => translate();
        
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.lang-combobox')) {
-                hideDropdown('src');
-                hideDropdown('tgt');
+                hideAllDropdowns();
             }
         });
     }
+
     function applyUI(lang) {
         const ui = uiTranslations[lang] || uiTranslations.en;
         document.getElementById('ui-title').innerText = ui.title;
@@ -158,16 +156,19 @@
         document.getElementById('ui-clear').innerText = ui.clear;
         document.getElementById('ui-copy').innerText = ui.copy;
         document.getElementById('userInput').placeholder = ui.placeholder;
-        document.getElementById('srcDisplay').placeholder = ui.search;
-        document.getElementById('tgtDisplay').placeholder = ui.search;
+        document.getElementById('srcDisplay').placeholder = ui.search || "Search language...";
+        document.getElementById('tgtDisplay').placeholder = ui.search || "Search language...";
     }
+
     function populateDropdowns(uiLang) {
         const srcUl = document.getElementById('srcOptions');
         const tgtUl = document.getElementById('tgtOptions');
         srcUl.innerHTML = '';
         tgtUl.innerHTML = '';
+        
         languageData.forEach(lang => {
             const name = lang[uiLang] || lang.en;
+            
             const liSrc = document.createElement('li');
             liSrc.textContent = name;
             liSrc.dataset.code = lang.code;
@@ -181,36 +182,32 @@
             tgtUl.appendChild(liTgt);
         });
     }
+
     function setLanguage(prefix, code, uiLang) {
-        const langObj = languageData.find(l => l.code === code) || languageData.find(l => l.code === 'en');
+        const langObj = languageData.find(l => l.code === code) || languageData[0];
         const name = langObj[uiLang] || langObj.en;
         document.getElementById(prefix + 'Display').value = name;
         document.getElementById(prefix + 'Lang').value = code;
     }
+
     function selectLanguage(prefix, code, name) {
         document.getElementById(prefix + 'Display').value = name;
         document.getElementById(prefix + 'Lang').value = code;
-        hideDropdown(prefix);
+        hideAllDropdowns();
         localStorage.setItem(prefix + 'Lang', code);
         translate();
     }
+
     function showDropdown(prefix) {
-        const dd = document.getElementById(prefix + 'Dropdown');
-        dd.classList.add('show');
-        const ul = document.getElementById(prefix + 'Options');
-        Array.from(ul.children).forEach(li => li.style.display = '');
+        hideAllDropdowns();
+        document.getElementById(prefix + 'Dropdown').classList.add('show');
     }
-    function hideDropdown(prefix) {
-        const dd = document.getElementById(prefix + 'Dropdown');
-        dd.classList.remove('show');
+
+    function hideAllDropdowns() {
+        document.getElementById('srcDropdown').classList.remove('show');
+        document.getElementById('tgtDropdown').classList.remove('show');
     }
-    function filterDropdown(prefix) {
-        const input = document.getElementById(prefix + 'Display').value.toLowerCase();
-        const ul = document.getElementById(prefix + 'Options');
-        Array.from(ul.children).forEach(li => {
-            li.style.display = li.textContent.toLowerCase().includes(input) ? '' : 'none';
-        });
-    }
+
     async function loadDictionaries() {
         const status = document.getElementById('dbStatus');
         try {
@@ -230,12 +227,18 @@
             status.innerText = "Engine Ready.";
         } catch (e) { status.innerText = "Dict Error."; }
     }
+
     async function translate() {
         const text = document.getElementById('userInput').value.trim();
         const src = document.getElementById('srcLang').value;
         const tgt = document.getElementById('tgtLang').value;
         const out = document.getElementById('resultOutput');
-        if (!text) { out.innerText = ""; return; }
+        
+        if (!text) {
+            out.innerText = "";
+            return;
+        }
+        
         try {
             let finalResult = "";
             if (src === 'slo' && tgt === 'pl') {
@@ -251,17 +254,23 @@
             } else {
                 finalResult = await google(text, src, tgt);
             }
-            out.innerText = finalResult || "";
-        } catch (e) { out.innerText = "Translation error..."; }
+            out.innerText = finalResult || text;
+        } catch (e) {
+            out.innerText = "Translation error...";
+        }
     }
+
     async function google(text, s, t) {
         try {
             const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
             const res = await fetch(url);
             const data = await res.json();
             return data[0].map(x => x[0]).join('');
-        } catch (e) { return text; }
+        } catch (e) {
+            return text;
+        }
     }
+
     function dictReplace(text, dict) {
         return text.replace(/[a-ząćęłńóśźżěьъ]+/gi, (m) => {
             const low = m.toLowerCase();
@@ -274,34 +283,45 @@
             return m;
         });
     }
+
     function swapLanguages() {
         const srcCode = document.getElementById('srcLang').value;
         const tgtCode = document.getElementById('tgtLang').value;
         const srcName = document.getElementById('srcDisplay').value;
         const tgtName = document.getElementById('tgtDisplay').value;
+
+        // Zamiana
         document.getElementById('srcLang').value = tgtCode;
         document.getElementById('srcDisplay').value = tgtName;
         document.getElementById('tgtLang').value = srcCode;
         document.getElementById('tgtDisplay').value = srcName;
+
         localStorage.setItem('srcLang', tgtCode);
         localStorage.setItem('tgtLang', srcCode);
+        
         translate();
     }
+
     async function pasteText() {
         try {
             const text = await navigator.clipboard.readText();
             document.getElementById('userInput').value = text;
             translate();
-        } catch(e) { alert("Please allow clipboard access"); }
+        } catch(e) { 
+            alert("Please allow clipboard access"); 
+        }
     }
+
     function copyText() {
         const text = document.getElementById('resultOutput').innerText;
         navigator.clipboard.writeText(text);
     }
+
     function clearText() {
         document.getElementById('userInput').value = "";
         document.getElementById('resultOutput').innerText = "";
     }
+
     function debounce(func, wait) {
         let timeout;
         return function() {
@@ -309,6 +329,7 @@
             timeout = setTimeout(() => func.apply(this, arguments), wait);
         };
     }
+
     window.onload = init;
 </script>
 </body>
