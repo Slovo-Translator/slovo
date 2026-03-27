@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +36,6 @@
 <body>
 <div class="app-container">
     <h1 id="ui-title">Slovo Translator</h1>
-  
     <div class="controls">
         <div class="field-group">
             <label id="ui-label-from">From:</label>
@@ -48,9 +47,7 @@
                 </div>
             </div>
         </div>
-      
         <button class="swap-btn" onclick="swapLanguages()" title="Swap languages">⇄</button>
-      
         <div class="field-group">
             <label id="ui-label-to">To:</label>
             <div class="lang-combobox">
@@ -62,11 +59,8 @@
             </div>
         </div>
     </div>
-    
     <div class="google-info">🔗 Using Google Translate API</div>
-  
     <textarea id="userInput" placeholder="..."></textarea>
-  
     <div class="action-bar">
         <button class="icon-btn" onclick="pasteText()">📋 <span id="ui-paste">Paste</span></button>
         <button class="icon-btn" onclick="clearText()">🗑️ <span id="ui-clear">Clear</span></button>
@@ -78,45 +72,47 @@
         <div>Slovo Engine v4.0</div>
     </div>
 </div>
+
 <script>
     let plToSlo = {}, sloToPl = {};
   
+    // POPRAWIONE: Usunięto błędy w nazwach (cudzysłowy wewnątrz stringów)
     const languageData = [
-        { code: 'af', pl: 'Afrikaans', en: 'Afrikaans', slo: 'Afrikanьsky', de: 'Afrikaans' },
-        { code: 'ar', pl: 'Arabski', en: 'Arabic', slo: 'Arabьsky', de: 'Arabisch' },
-        { code: 'be', pl: 'Białoruski', en: 'Belarusian', slo: 'Bělorusьsky', de: 'Weißrussisch' },
-        { code: 'bg', pl: 'Bułgarski', en: 'Bulgarian', slo: 'Bulgar'ьsky', de: 'Bulgarisch' },
-        { code: 'ca', pl: 'Kataloński', en: 'Catalan', slo: 'Katalonьsky', de: 'Katalanisch' },
-        { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češьsky', de: 'Tschechisch' },
-        { code: 'da', pl: 'Duński', en: 'Danish', slo: 'Dunьsky', de: 'Dänisch' },
-        { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemьčьsky', de: 'Deutsch' },
-        { code: 'el', pl: 'Grecki', en: 'Greek', slo: 'Grečьsky', de: 'Griechisch' },
-        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angol'ьsky', de: 'Englisch' },
-        { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
-        { code: 'fi', pl: 'Fiński', en: 'Finnish', slo: 'Finьsky', de: 'Finnisch' },
-        { code: 'fr', pl: 'Francuski', en: 'French', slo: 'Franьsky', de: 'Französisch' },
-        { code: 'he', pl: 'Hebrajski', en: 'Hebrew', slo: 'Židovьsky', de: 'Hebräisch' },
-        { code: 'hi', pl: 'Hindi', en: 'Hindi', slo: 'Hindusьsky', de: 'Hindi' },
-        { code: 'hu', pl: 'Węgierski', en: 'Hungarian', slo: 'Ǫgrinьsky', de: 'Ungarisch' },
-        { code: 'id', pl: 'Indonezyjski', en: 'Indonesian', slo: 'Indonezijьsky', de: 'Indonesisch' },
-        { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
-        { code: 'ja', pl: 'Japoński', en: 'Japanese', slo: 'Japonьsky', de: 'Japanisch' },
-        { code: 'ko', pl: 'Koreański', en: 'Korean', slo: 'Koreanьsky', de: 'Koreanisch' },
-        { code: 'lt', pl: 'Litewski', en: 'Lithuanian', slo: 'Litovьsky', de: 'Litauisch' },
-        { code: 'lv', pl: 'Łotewski', en: 'Latvian', slo: 'Lotyšьsky', de: 'Lettisch' },
-        { code: 'nl', pl: 'Holenderski', en: 'Dutch', slo: 'Niderlandьsky', de: 'Niederländisch' },
-        { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežьsky', de: 'Norwegisch' },
-        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Pol'ьsky', de: 'Polnisch' },
-        { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugal'ьsky', de: 'Portugiesisch' },
-        { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: 'Rumunьsky', de: 'Rumänisch' },
-        { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Rusьsky', de: 'Russisch' },
-        { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačьsky', de: 'Slowakisch' },
-        { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slověnьsky', de: 'Slawisch' },
-        { code: 'sv', pl: 'Szwedzki', en: 'Swedish', slo: 'Švedьsky', de: 'Schwedisch' },
-        { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' },
-        { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
-        { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Větnamьsky', de: 'Vietnamesisch' },
-        { code: 'zh', pl: 'Chiński', en: 'Chinese', slo: 'Kitajьsky', de: 'Chinesisch' }
+        { code: 'af', pl: 'Afrikaans', en: 'Afrikaans', slo: 'Afrikansky', de: 'Afrikaans' },
+        { code: 'ar', pl: 'Arabski', en: 'Arabic', slo: 'Arabsky', de: 'Arabisch' },
+        { code: 'be', pl: 'Białoruski', en: 'Belarusian', slo: 'Bělorussky', de: 'Weißrussisch' },
+        { code: 'bg', pl: 'Bułgarski', en: 'Bulgarian', slo: 'Bulgarsky', de: 'Bulgarisch' },
+        { code: 'ca', pl: 'Kataloński', en: 'Catalan', slo: 'Katalonsky', de: 'Katalanisch' },
+        { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češsky', de: 'Tschechisch' },
+        { code: 'da', pl: 'Duński', en: 'Danish', slo: 'Dunsky', de: 'Dänisch' },
+        { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemsky', de: 'Deutsch' },
+        { code: 'el', pl: 'Grecki', en: 'Greek', slo: 'Grečsky', de: 'Griechisch' },
+        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angolsky', de: 'Englisch' },
+        { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Špansky', de: 'Spanisch' },
+        { code: 'fi', pl: 'Fiński', en: 'Finnish', slo: 'Finsky', de: 'Finnisch' },
+        { code: 'fr', pl: 'Francuski', en: 'French', slo: 'Fransky', de: 'Französisch' },
+        { code: 'he', pl: 'Hebrajski', en: 'Hebrew', slo: 'Židovsky', de: 'Hebräisch' },
+        { code: 'hi', pl: 'Hindi', en: 'Hindi', slo: 'Hindusky', de: 'Hindi' },
+        { code: 'hu', pl: 'Węgierski', en: 'Hungarian', slo: 'Ogrinsky', de: 'Ungarisch' },
+        { code: 'id', pl: 'Indonezyjski', en: 'Indonesian', slo: 'Indonezijsky', de: 'Indonesisch' },
+        { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volssky', de: 'Italienisch' },
+        { code: 'ja', pl: 'Japoński', en: 'Japanese', slo: 'Japonsky', de: 'Japanisch' },
+        { code: 'ko', pl: 'Koreański', en: 'Korean', slo: 'Koreansky', de: 'Koreanisch' },
+        { code: 'lt', pl: 'Litewski', en: 'Lithuanian', slo: 'Litovsky', de: 'Litauisch' },
+        { code: 'lv', pl: 'Łotewski', en: 'Latvian', slo: 'Lotyšsky', de: 'Lettisch' },
+        { code: 'nl', pl: 'Holenderski', en: 'Dutch', slo: 'Niderlandsky', de: 'Niederländisch' },
+        { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežsky', de: 'Norwegisch' },
+        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Polsky', de: 'Polnisch' },
+        { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugalsky', de: 'Portugiesisch' },
+        { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: 'Rumunsky', de: 'Rumänisch' },
+        { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Russky', de: 'Russisch' },
+        { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačsky', de: 'Slowakisch' },
+        { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slovensky', de: 'Slawisch' },
+        { code: 'sv', pl: 'Szwedzki', en: 'Swedish', slo: 'Svedsky', de: 'Schwedisch' },
+        { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečsky', de: 'Türkisch' },
+        { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinsky', de: 'Ukrainisch' },
+        { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Vetnamsky', de: 'Vietnamesisch' },
+        { code: 'zh', pl: 'Chiński', en: 'Chinese', slo: 'Kitajsky', de: 'Chinesisch' }
     ];
 
     const uiTranslations = {
@@ -164,7 +160,6 @@
         const name = langObj[uiLang] || langObj.en || code;
         document.getElementById(prefix + 'Lang').value = code;
         document.getElementById(prefix + 'Display').value = name;
-        localStorage.setItem(prefix + 'Lang', code);
     }
 
     function selectLanguage(prefix, code, name) {
@@ -177,9 +172,7 @@
 
     function showDropdown(prefix) {
         hideAllDropdowns();
-        const dropdown = document.getElementById(prefix + 'Dropdown');
-        dropdown.classList.add('show');
-        filterDropdown(prefix);
+        document.getElementById(prefix + 'Dropdown').classList.add('show');
     }
 
     function hideAllDropdowns() {
@@ -205,7 +198,6 @@
             sloToPl = await sloRes.json();
             document.getElementById('dbStatus').textContent = 'Google Translate API + Dictionaries';
         } catch (e) {
-            console.warn('Dictionaries not loaded', e);
             document.getElementById('dbStatus').textContent = 'Google Translate API';
         }
     }
@@ -216,6 +208,7 @@
         const tgt = document.getElementById('tgtLang').value;
         const out = document.getElementById('resultOutput');
         if (!text) { out.innerText = ""; return; }
+        
         try {
             let finalResult = "";
             if (src === 'slo' && tgt === 'pl') {
@@ -242,7 +235,11 @@
             const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
             const res = await fetch(url);
             const data = await res.json();
-            return data[0].map(x => x[0]).join('');
+            // POPRAWIONE: Bezpieczniejsze łączenie wyników
+            if (data && data[0]) {
+                return data[0].map(x => x[0]).join('');
+            }
+            return text;
         } catch (e) { return text; }
     }
 
@@ -261,18 +258,18 @@
         const tgtCode = document.getElementById('tgtLang').value;
         const srcName = document.getElementById('srcDisplay').value;
         const tgtName = document.getElementById('tgtDisplay').value;
+
         document.getElementById('srcLang').value = tgtCode;
         document.getElementById('srcDisplay').value = tgtName;
         document.getElementById('tgtLang').value = srcCode;
         document.getElementById('tgtDisplay').value = srcName;
+
         const inputEl = document.getElementById('userInput');
         const resultEl = document.getElementById('resultOutput');
-        const temp = inputEl.value;
-        inputEl.value = resultEl.innerText;
-        resultEl.innerText = "";
-        localStorage.setItem('srcLang', tgtCode);
-        localStorage.setItem('tgtLang', srcCode);
-        translate();
+        if (resultEl.innerText) {
+            inputEl.value = resultEl.innerText;
+            translate();
+        }
     }
 
     async function pasteText() {
@@ -306,13 +303,15 @@
         const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
         applyUI(uiKey);
         populateDropdowns(uiKey);
-        let defaultSrc = languageData.some(l => l.code === sysLang) ? sysLang : 'en';
-        let defaultTgt = 'slo';
-        const savedSrc = localStorage.getItem('srcLang') || defaultSrc;
-        const savedTgt = localStorage.getItem('tgtLang') || defaultTgt;
-        setLanguage('src', savedSrc, uiKey);
-        setLanguage('tgt', savedTgt, uiKey);
+        
+        let defaultSrc = localStorage.getItem('srcLang') || (languageData.some(l => l.code === sysLang) ? sysLang : 'en');
+        let defaultTgt = localStorage.getItem('tgtLang') || 'slo';
+        
+        setLanguage('src', defaultSrc, uiKey);
+        setLanguage('tgt', defaultTgt, uiKey);
+        
         await loadDictionaries();
+        
         document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 400));
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.lang-combobox')) hideAllDropdowns();
