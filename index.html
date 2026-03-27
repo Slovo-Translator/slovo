@@ -29,14 +29,14 @@
         .status-bar { display: flex; justify-content: space-between; margin-top: 20px; font-size: 11px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px; }
         .swap-btn { background: #f8f9fa; border: 2px solid #eef0f2; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; transition: 0.3s; font-size: 26px; box-shadow: 0 4px 12px rgba(0,123,255,0.2); }
         .swap-btn:hover { border-color: var(--primary); color: var(--primary); background: #fff; transform: rotate(180deg); }
-        .engine-select { margin-top: 8px; padding: 6px 10px; border: 2px solid #eef0f2; border-radius: 8px; font-size: 13px; }
+        .google-info { margin: 8px 0; padding: 6px 12px; background: #f0f7ff; border-radius: 8px; font-size: 13px; color: #007bff; text-align: center; font-weight: 600; }
         @media (max-width: 600px) { .controls { flex-direction: column; } .field-group { width: 100%; } .swap-btn { transform: rotate(90deg); align-self: center; } }
     </style>
 </head>
 <body>
 <div class="app-container">
     <h1 id="ui-title">Slovo Translator</h1>
-   
+  
     <div class="controls">
         <div class="field-group">
             <label id="ui-label-from">From:</label>
@@ -48,9 +48,9 @@
                 </div>
             </div>
         </div>
-       
-        <button class="swap-btn" onclick="swapLanguages()" title="Zamień języki">⇄</button>
-       
+      
+        <button class="swap-btn" onclick="swapLanguages()" title="Swap languages">⇄</button>
+      
         <div class="field-group">
             <label id="ui-label-to">To:</label>
             <div class="lang-combobox">
@@ -62,16 +62,11 @@
             </div>
         </div>
     </div>
-
-    <div style="margin: 8px 0;">
-        <select id="engineSelect" class="engine-select" onchange="translate()">
-            <option value="google">Google Translate</option>
-            <option value="deepl">DeepL (Free)</option>
-        </select>
-    </div>
-
+    
+    <div class="google-info">🔗 Using Google Translate API</div>
+  
     <textarea id="userInput" placeholder="..."></textarea>
-   
+  
     <div class="action-bar">
         <button class="icon-btn" onclick="pasteText()">📋 <span id="ui-paste">Paste</span></button>
         <button class="icon-btn" onclick="clearText()">🗑️ <span id="ui-clear">Clear</span></button>
@@ -79,24 +74,24 @@
     </div>
     <div id="resultOutput" class="result-display"></div>
     <div class="status-bar">
-        <div id="dbStatus">Loading...</div>
+        <div id="dbStatus">Google Translate API</div>
         <div>Slovo Engine v4.0</div>
     </div>
 </div>
 <script>
     let plToSlo = {}, sloToPl = {};
-   
-    const languageData = [ /* pełna lista z poprzedniej wersji - bez zmian */ 
+  
+    const languageData = [
         { code: 'af', pl: 'Afrikaans', en: 'Afrikaans', slo: 'Afrikanьsky', de: 'Afrikaans' },
         { code: 'ar', pl: 'Arabski', en: 'Arabic', slo: 'Arabьsky', de: 'Arabisch' },
         { code: 'be', pl: 'Białoruski', en: 'Belarusian', slo: 'Bělorusьsky', de: 'Weißrussisch' },
-        { code: 'bg', pl: 'Bułgarski', en: 'Bulgarian', slo: 'Bulgar'ьsky', de: 'Bulgarisch' },
+        { code: 'bg', pl: 'Bułgarski', en: 'Bulgarian', slo: 'Bulgarьsky', de: 'Bulgarisch' },
         { code: 'ca', pl: 'Kataloński', en: 'Catalan', slo: 'Katalonьsky', de: 'Katalanisch' },
         { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češьsky', de: 'Tschechisch' },
         { code: 'da', pl: 'Duński', en: 'Danish', slo: 'Dunьsky', de: 'Dänisch' },
         { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemьčьsky', de: 'Deutsch' },
         { code: 'el', pl: 'Grecki', en: 'Greek', slo: 'Grěčьsky', de: 'Griechisch' },
-        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angol'ьsky', de: 'Englisch' },
+        { code: 'en', pl: 'Angielski', en: 'English', slo: 'Angolьsky', de: 'Englisch' },
         { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
         { code: 'fi', pl: 'Fiński', en: 'Finnish', slo: 'Finьsky', de: 'Finnisch' },
         { code: 'fr', pl: 'Francuski', en: 'French', slo: 'Franьsky', de: 'Französisch' },
@@ -111,8 +106,8 @@
         { code: 'lv', pl: 'Łotewski', en: 'Latvian', slo: 'Lotyšьsky', de: 'Lettisch' },
         { code: 'nl', pl: 'Holenderski', en: 'Dutch', slo: 'Niderlandьsky', de: 'Niederländisch' },
         { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežьsky', de: 'Norwegisch' },
-        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Pol'ьsky', de: 'Polnisch' },
-        { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugal'ьsky', de: 'Portugiesisch' },
+        { code: 'pl', pl: 'Polski', en: 'Polish', slo: 'Polьsky', de: 'Polnisch' },
+        { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugalьsky', de: 'Portugiesisch' },
         { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: 'Rumunьsky', de: 'Rumänisch' },
         { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Rusьsky', de: 'Russisch' },
         { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačьsky', de: 'Slowakisch' },
@@ -127,75 +122,103 @@
     const uiTranslations = {
         slo: { title: "🌐 Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu...", search: "Jišči ęzyka..." },
         pl: { title: "🌐 Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst...", search: "Szukaj języka..." },
-        en: { title: "🌐 Slovo Translator", from: "From language:", to: "To language:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here...", search: "Search language..." },
+        en: { title: "🌐 Slovo Translator", from: "From:", to: "To:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here...", search: "Search language..." },
         de: { title: "🌐 Slovo Übersetzer", from: "Von:", to: "Nach:", paste: "Einfügen", clear: "Löschen", copy: "Kopieren", placeholder: "Text eingeben...", search: "Sprache suchen..." }
     };
 
-    // === DEEPL CONFIG ===
-    // Wstaw tutaj swój klucz DeepL Free (jeśli masz). Inaczej zostanie użyty Google.
-    const DEEPL_AUTH_KEY = ""; // ← wpisz swój klucz DeepL Free tutaj
+    function applyUI(lang) {
+        const t = uiTranslations[lang] || uiTranslations.en;
+        document.getElementById('ui-title').innerHTML = t.title;
+        document.getElementById('ui-label-from').textContent = t.from;
+        document.getElementById('ui-label-to').textContent = t.to;
+        document.getElementById('ui-paste').textContent = t.paste;
+        document.getElementById('ui-clear').textContent = t.clear;
+        document.getElementById('ui-copy').textContent = t.copy;
+        const searchPh = t.search || "Search language...";
+        document.getElementById('srcDisplay').placeholder = searchPh;
+        document.getElementById('tgtDisplay').placeholder = searchPh;
+        document.getElementById('userInput').placeholder = t.placeholder || "...";
+    }
 
-    async function init() {
-        const sysLang = navigator.language.split('-')[0];
-        const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
-       
-        applyUI(uiKey);
-        populateDropdowns(uiKey);
-       
-        let defaultSrc = languageData.some(l => l.code === sysLang) ? sysLang : 'en';
-        let defaultTgt = 'slo';
-        
-        const savedSrc = localStorage.getItem('srcLang') || defaultSrc;
-        const savedTgt = localStorage.getItem('tgtLang') || defaultTgt;
-       
-        setLanguage('src', savedSrc, uiKey);
-        setLanguage('tgt', savedTgt, uiKey);
-       
-        await loadDictionaries();
-       
-        document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 400));
-       
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.lang-combobox')) hideAllDropdowns();
+    function populateDropdowns(uiLang) {
+        const ulSrc = document.getElementById('srcOptions');
+        const ulTgt = document.getElementById('tgtOptions');
+        ulSrc.innerHTML = '';
+        ulTgt.innerHTML = '';
+        languageData.forEach(l => {
+            const name = l[uiLang] || l.en || l.code.toUpperCase();
+            const liSrc = document.createElement('li');
+            liSrc.textContent = name;
+            liSrc.onclick = () => selectLanguage('src', l.code, name);
+            ulSrc.appendChild(liSrc);
+            const liTgt = document.createElement('li');
+            liTgt.textContent = name;
+            liTgt.onclick = () => selectLanguage('tgt', l.code, name);
+            ulTgt.appendChild(liTgt);
         });
     }
 
-    // ... (applyUI, populateDropdowns, setLanguage, selectLanguage, showDropdown, hideAllDropdowns, filterDropdown - bez zmian jak w poprzedniej wersji)
+    function setLanguage(prefix, code, uiLang) {
+        const langObj = languageData.find(l => l.code === code);
+        if (!langObj) return;
+        const name = langObj[uiLang] || langObj.en || code;
+        document.getElementById(prefix + 'Lang').value = code;
+        document.getElementById(prefix + 'Display').value = name;
+        localStorage.setItem(prefix + 'Lang', code);
+    }
 
-    function applyUI(lang) { /* bez zmian */ }
-    function populateDropdowns(uiLang) { /* bez zmian */ }
-    function setLanguage(prefix, code, uiLang) { /* bez zmian */ }
-    function selectLanguage(prefix, code, name) { /* bez zmian */ }
-    function showDropdown(prefix) { /* bez zmian */ }
-    function hideAllDropdowns() { /* bez zmian */ }
-    function filterDropdown(prefix) { /* bez zmian */ }
+    function selectLanguage(prefix, code, name) {
+        document.getElementById(prefix + 'Lang').value = code;
+        document.getElementById(prefix + 'Display').value = name;
+        hideAllDropdowns();
+        localStorage.setItem(prefix + 'Lang', code);
+        translate();
+    }
 
-    async function loadDictionaries() { /* bez zmian */ }
+    function showDropdown(prefix) {
+        hideAllDropdowns();
+        const dropdown = document.getElementById(prefix + 'Dropdown');
+        dropdown.classList.add('show');
+        filterDropdown(prefix);
+    }
+
+    function hideAllDropdowns() {
+        document.getElementById('srcDropdown').classList.remove('show');
+        document.getElementById('tgtDropdown').classList.remove('show');
+    }
+
+    function filterDropdown(prefix) {
+        const val = document.getElementById(prefix + 'Display').value.toLowerCase().trim();
+        const ul = document.getElementById(prefix + 'Options');
+        Array.from(ul.children).forEach(li => {
+            li.style.display = li.textContent.toLowerCase().includes(val) ? '' : 'none';
+        });
+    }
+
+    async function loadDictionaries() {
+        document.getElementById('dbStatus').textContent = 'Google Translate API';
+    }
 
     async function translate() {
         const text = document.getElementById('userInput').value.trim();
         const src = document.getElementById('srcLang').value;
         const tgt = document.getElementById('tgtLang').value;
-        const engine = document.getElementById('engineSelect').value;
         const out = document.getElementById('resultOutput');
         if (!text) { out.innerText = ""; return; }
-
         try {
             let finalResult = "";
-            const useDeepL = (engine === "deepl" && DEEPL_AUTH_KEY);
-
             if (src === 'slo' && tgt === 'pl') {
                 finalResult = dictReplace(text, sloToPl);
             } else if (src === 'pl' && tgt === 'slo') {
                 finalResult = dictReplace(text, plToSlo);
             } else if (src === 'slo') {
                 const bridge = dictReplace(text, sloToPl);
-                finalResult = useDeepL ? await deeplTranslate(bridge, 'PL', tgt.toUpperCase()) : await google(bridge, 'pl', tgt);
+                finalResult = await google(bridge, 'pl', tgt);
             } else if (tgt === 'slo') {
-                const bridge = useDeepL ? await deeplTranslate(text, src.toUpperCase(), 'PL') : await google(text, src, 'pl');
+                const bridge = await google(text, src, 'pl');
                 finalResult = dictReplace(bridge, plToSlo);
             } else {
-                finalResult = useDeepL ? await deeplTranslate(text, src.toUpperCase(), tgt.toUpperCase()) : await google(text, src, tgt);
+                finalResult = await google(text, src, tgt);
             }
             out.innerText = finalResult || text;
         } catch (e) {
@@ -212,57 +235,78 @@
         } catch (e) { return text; }
     }
 
-    async function deeplTranslate(text, sourceLang, targetLang) {
-        if (!DEEPL_AUTH_KEY) return text;
-        try {
-            const url = "https://api-free.deepl.com/v2/translate";
-            const formData = new URLSearchParams();
-            formData.append("auth_key", DEEPL_AUTH_KEY);
-            formData.append("text", text);
-            formData.append("target_lang", targetLang);
-            if (sourceLang && sourceLang !== "AUTO") formData.append("source_lang", sourceLang);
-
-            const res = await fetch(url, {
-                method: "POST",
-                body: formData
-            });
-            const data = await res.json();
-            return data.translations && data.translations[0] ? data.translations[0].text : text;
-        } catch (e) {
-            console.warn("DeepL error, fallback to Google");
-            return text;
-        }
+    function dictReplace(text, dict) {
+        if (!dict || Object.keys(dict).length === 0) return text;
+        let result = text;
+        Object.keys(dict).forEach(key => {
+            const regex = new RegExp('\\b' + key.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\b', 'gi');
+            result = result.replace(regex, dict[key]);
+        });
+        return result;
     }
 
-    function dictReplace(text, dict) { /* bez zmian */ }
-
-    function swapLanguages() { /* bez zmian z poprzedniej wersji (zamiana pól + treści) */ 
+    function swapLanguages() {
         const srcCode = document.getElementById('srcLang').value;
         const tgtCode = document.getElementById('tgtLang').value;
         const srcName = document.getElementById('srcDisplay').value;
         const tgtName = document.getElementById('tgtDisplay').value;
-
         document.getElementById('srcLang').value = tgtCode;
         document.getElementById('srcDisplay').value = tgtName;
         document.getElementById('tgtLang').value = srcCode;
         document.getElementById('tgtDisplay').value = srcName;
-
         const inputEl = document.getElementById('userInput');
         const resultEl = document.getElementById('resultOutput');
         const temp = inputEl.value;
         inputEl.value = resultEl.innerText;
         resultEl.innerText = "";
-
         localStorage.setItem('srcLang', tgtCode);
         localStorage.setItem('tgtLang', srcCode);
-        
         translate();
     }
 
-    async function pasteText() { /* bez zmian */ }
-    function copyText() { /* bez zmian */ }
-    function clearText() { /* bez zmian */ }
-    function debounce(func, wait) { /* bez zmian */ }
+    async function pasteText() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('userInput').value = text;
+            translate();
+        } catch(e) {}
+    }
+
+    function copyText() {
+        const text = document.getElementById('resultOutput').innerText;
+        if (text) navigator.clipboard.writeText(text);
+    }
+
+    function clearText() {
+        document.getElementById('userInput').value = '';
+        document.getElementById('resultOutput').innerText = '';
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(func, wait);
+        };
+    }
+
+    async function init() {
+        const sysLang = navigator.language.split('-')[0];
+        const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
+        applyUI(uiKey);
+        populateDropdowns(uiKey);
+        let defaultSrc = languageData.some(l => l.code === sysLang) ? sysLang : 'en';
+        let defaultTgt = 'slo';
+        const savedSrc = localStorage.getItem('srcLang') || defaultSrc;
+        const savedTgt = localStorage.getItem('tgtLang') || defaultTgt;
+        setLanguage('src', savedSrc, uiKey);
+        setLanguage('tgt', savedTgt, uiKey);
+        await loadDictionaries();
+        document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 400));
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-combobox')) hideAllDropdowns();
+        });
+    }
 
     window.onload = init;
 </script>
