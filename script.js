@@ -43,15 +43,15 @@ const languageData = [
     { code: 'lt', pl: 'Litewski', en: 'Lithuanian', slo: 'Litovьsky', de: 'Litauisch' },
     { code: 'mk', pl: 'Macedoński', en: 'Macedonian', slo: 'Makedonьsky', de: 'Mazedonisch' },
     { code: 'ms', pl: 'Malajski', en: 'Malay', slo: 'Malajьsky', de: 'Malaiisch' },
-    { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežьky', de: 'Norwegisch' },
-    { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: 'Portugalski', de: 'Portugiesisch' },
-    { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: 'Rumunьsky', de: 'Rumänisch' },
+    { code: 'no', pl: 'Norweski', en: 'Norwegian', slo: 'Norvežьsky', de: 'Norwegisch' },
+    { code: 'pt', pl: 'Portugalski', en: 'Portuguese', slo: "Portugal'ьsky", de: 'Portugiesisch' },
+    { code: 'ro', pl: 'Rumuński', en: 'Romanian', slo: "Rumunьsky", de: 'Rumänisch' },
     { code: 'sr', pl: 'Serbski', en: 'Serbian', slo: 'Sirbьsky', de: 'Serbisch' },
-    { code: 'sl', pl: 'Słoweński', en: 'Slovenian', slo: 'Slovenski', de: 'Slowenisch' },
-    { code: 'sv', pl: 'Szwedzki', en: 'Swedish', slo: 'Švedski', de: 'Schwedisch' },
-    { code: 'th', pl: 'Tajski', en: 'Thai', slo: 'Tajski', de: 'Thailändisch' },
-    { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turski', de: 'Türkisch' },
-    { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Vijetnamski', de: 'Vietnamesisch' }
+    { code: 'sl', pl: 'Słoweński', en: 'Slovenian', slo: 'Slovenečьsky', de: 'Slowenisch' },
+    { code: 'sv', pl: 'Szwedzki', en: 'Swedish', slo: 'Švedьsky', de: 'Schwedisch' },
+    { code: 'th', pl: 'Tajski', en: 'Thai', slo: 'Tajьsky', de: 'Thailändisch' },
+    { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' },
+    { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Větnamьsky', de: 'Vietnamesisch' }
 ];
 
 const uiTranslations = {
