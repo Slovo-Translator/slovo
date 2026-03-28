@@ -1,5 +1,4 @@
 let plToSlo = {}, sloToPl = {};
-
 const languageData = [
     { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slověnьsky', de: 'Slawisch' },
     { code: 'en', pl: 'Angielski', en: 'English', slo: "Angol'ьsky", de: 'Englisch' },
@@ -12,8 +11,6 @@ const languageData = [
     { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
     { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
     { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
-
-    // Wszystkie języki Google Translate z tłumaczeniami nazw
     { code: 'af', pl: 'Afrikaans', en: 'Afrikaans', slo: 'Južьnozemьsky', de: 'Afrikaans' },
     { code: 'sq', pl: 'Albański', en: 'Albanian', slo: 'Albanьsky', de: 'Albanisch' },
     { code: 'am', pl: 'Amharski', en: 'Amharic', slo: 'Amharьsky', de: 'Amharisch' },
@@ -53,7 +50,6 @@ const languageData = [
     { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' },
     { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Větnamьsky', de: 'Vietnamesisch' }
 ];
-
 const uiTranslations = {
     slo: { title: "Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu..." },
     pl: { title: "Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst..." },
@@ -68,52 +64,111 @@ const uiTranslations = {
     no: { title: "Slovo Oversetter", from: "Fra:", to: "Til:", paste: "Lim inn", clear: "Fjern", copy: "Kopier", placeholder: "Skriv tekst..." },
     da: { title: "Slovo Oversætter", from: "Fra:", to: "Til:", paste: "Indsæt", clear: "Ryd", copy: "Kopiér", placeholder: "Indtast tekst..." },
     fi: { title: "Slovo Kääntäjä", from: "Lähde:", to: "Kohde:", paste: "Liitä", clear: "Tyhjennä", copy: "Kopioi", placeholder: "Kirjoita teksti..." },
-
     ru: { title: "Slovo Переводчик", from: "С языка:", to: "На язык:", paste: "Вставить", clear: "Очистить", copy: "Копировать", placeholder: "Введите текст..." },
     uk: { title: "Slovo Перекладач", from: "З мови:", to: "На мову:", paste: "Вставити", clear: "Очистити", copy: "Копіювати", placeholder: "Введіть текст..." },
     cs: { title: "Slovo Překladač", from: "Z jazyka:", to: "Do jazyka:", paste: "Vložit", clear: "Vymazat", copy: "Kopírovat", placeholder: "Zadejte text..." },
-    sk: { title: "Slovo Prekladač", from: "Z jazyka:", to: "Do jazyka:", paste: "Vložiť", clear: "Vymazať", copy: "Kopírovať", placeholder: "Zadajte text..." },
+    sk: { title: "Slovo Prekladač", from: "Z jazyka:", to: "Do jazyka:", paste: "Vložiť", clear: "Vymazať", copy: "Kopírovat", placeholder: "Zadajte text..." },
     sl: { title: "Slovo Prevajalnik", from: "Iz:", to: "V:", paste: "Prilepi", clear: "Počisti", copy: "Kopiraj", placeholder: "Vnesi besedilo..." },
     hr: { title: "Slovo Prevoditelj", from: "Iz:", to: "U:", paste: "Zalijepi", clear: "Obriši", copy: "Kopiraj", placeholder: "Unesi tekst..." },
     sr: { title: "Slovo Преводилац", from: "Са:", to: "На:", paste: "Налепи", clear: "Обриши", copy: "Копирај", placeholder: "Унеси текст..." },
     bg: { title: "Slovo Преводач", from: "От:", to: "На:", paste: "Постави", clear: "Изчисти", copy: "Копирай", placeholder: "Въведи текст..." },
-
     tr: { title: "Slovo Çevirici", from: "Dilden:", to: "Dile:", paste: "Yapıştır", clear: "Temizle", copy: "Kopyala", placeholder: "Metin gir..." },
     el: { title: "Slovo Μεταφραστής", from: "Από:", to: "Προς:", paste: "Επικόλληση", clear: "Καθαρισμός", copy: "Αντιγραφή", placeholder: "Εισάγετε κείμενο..." },
     ro: { title: "Traducător Slovo", from: "Din:", to: "În:", paste: "Lipește", clear: "Șterge", copy: "Copiază", placeholder: "Introdu text..." },
     hu: { title: "Slovo Fordító", from: "Erről:", to: "Erre:", paste: "Beillesztés", clear: "Törlés", copy: "Másolás", placeholder: "Írj szöveget..." },
-
     zh: { title: "Slovo 翻译器", from: "从:", to: "到:", paste: "粘贴", clear: "清除", copy: "复制", placeholder: "输入文本..." },
     ja: { title: "Slovo 翻訳", from: "元の言語:", to: "翻訳先:", paste: "貼り付け", clear: "クリア", copy: "コピー", placeholder: "テキストを入力..." },
     ko: { title: "Slovo 번역기", from: "출발:", to: "도착:", paste: "붙여넣기", clear: "지우기", copy: "복사", placeholder: "텍스트 입력..." },
-
-    ar: { title: "مترجم Slovo", from: "من:", to: "إلى:", paste: "لصق", clear: "مسح", copy: "نسخ", placeholder: "أدخل النص..." },
-    he: { title: "מתרגם Slovo", from: "מ:", to: "ל:", paste: "הדבק", clear: "נקה", copy: "העתק", placeholder: "הקלד טקסט..." },
-
-    hi: { title: "Slovo अनुवादक", from: "से:", to: "तक:", paste: "चिपकाएँ", clear: "साफ़ करें", copy: "कॉपी", placeholder: "पाठ लिखें..." },
-    id: { title: "Slovo Penerjemah", from: "Dari:", to: "Ke:", paste: "Tempel", clear: "Hapus", copy: "Salin", placeholder: "Masukkan teks..." },
-    th: { title: "Slovo นักแปล", from: "จาก:", to: "เป็น:", paste: "วาง", clear: "ล้าง", copy: "คัดลอก", placeholder: "พิมพ์ข้อความ..." },
+    ar: { title: "مترجم Slovo", from: "من:", to: "إلى:", paste: "لصق", clear: "مسح", copy: "نسخ", placeholder: "أدخل النص..." }
 };
+
+function dictReplace(text, dict) {
+    return text.replace(/[a-ząćęłńóśźżěьъ]+/gi, (m) => {
+        const low = m.toLowerCase();
+        if (dict[low]) {
+            const r = dict[low];
+            if (m === m.toUpperCase()) return r.toUpperCase();
+            if (m[0] === m[0].toUpperCase()) return r.charAt(0).toUpperCase() + r.slice(1);
+            return r;
+        }
+        return m;
+    });
+}
+
+function reorderAdjNumBeforeNoun(slovianText) {
+    return slovianText.replace(/(\b\w+(?:ьsky|ьska|ьsko|ьscy|ьskich|ьskimi)\b)\s+(\b\w+\b)/gi, '$2 $1')
+                      .replace(/(\b(?:nekoliko|raz|razy|pirvy|drugo|treti|četvrty|peti|šesti|sedmi|osmi|devęty|desęty|jedin|dva|tri)\b)\s+(\b\w+\b)/gi, '$2 $1');
+}
+
+async function translate() {
+    const text = document.getElementById('userInput').value.trim();
+    const src = document.getElementById('srcLang').value;
+    const tgt = document.getElementById('tgtLang').value;
+    const out = document.getElementById('resultOutput');
+    if (!text) { out.innerText = ""; return; }
+    try {
+        let finalResult = "";
+        if (src === 'slo' && tgt === 'pl') {
+            finalResult = dictReplace(text, sloToPl);
+        } else if (src === 'pl' && tgt === 'slo') {
+            let temp = dictReplace(text, plToSlo);
+            finalResult = reorderAdjNumBeforeNoun(temp);
+        } else if (src === 'slo') {
+            const bridge = dictReplace(text, sloToPl);
+            finalResult = await google(bridge, 'pl', tgt);
+        } else if (tgt === 'slo') {
+            const bridge = await google(text, src, 'pl');
+            let temp = dictReplace(bridge, plToSlo);
+            finalResult = reorderAdjNumBeforeNoun(temp);
+        } else {
+            finalResult = await google(text, src, tgt);
+        }
+        out.innerText = finalResult || "";
+    } catch (e) { out.innerText = "Translation error..."; }
+}
+
+async function google(text, s, t) {
+    try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        return data[0].map(x => x[0]).join('');
+    } catch (e) { return text; }
+}
+
+async function loadDictionaries() {
+    const status = document.getElementById('dbStatus');
+    try {
+        const files = ['osnova.json', 'vuzor.json'];
+        for (const file of files) {
+            const res = await fetch(file);
+            if (res.ok) {
+                const data = await res.json();
+                data.forEach(item => {
+                    if (item.polish && item.slovian) {
+                        plToSlo[item.polish.toLowerCase().trim()] = item.slovian.trim();
+                        sloToPl[item.slovian.toLowerCase().trim()] = item.polish.trim();
+                    }
+                });
+            }
+        }
+        status.innerText = "Engine Ready.";
+    } catch (e) { status.innerText = "Dict Error."; }
+}
 
 async function init() {
     const sysLang = navigator.language.split('-')[0];
     const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
-   
     applyUI(uiKey);
     populateLanguageLists(uiKey);
-   
     let defaultSrc = 'en';
     let defaultTgt = 'slo';
     if (sysLang === 'pl') defaultSrc = 'pl';
-   
     const savedSrc = localStorage.getItem('srcLang') || defaultSrc;
     const savedTgt = localStorage.getItem('tgtLang') || defaultTgt;
-   
     document.getElementById('srcLang').value = savedSrc;
     document.getElementById('tgtLang').value = savedTgt;
-   
     await loadDictionaries();
-   
     document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 300));
     document.getElementById('srcLang').onchange = (e) => { localStorage.setItem('srcLang', e.target.value); translate(); };
     document.getElementById('tgtLang').onchange = (e) => { localStorage.setItem('tgtLang', e.target.value); translate(); };
@@ -139,73 +194,6 @@ function populateLanguageLists(uiLang) {
         const name = lang[uiLang] || lang.en;
         srcSelect.add(new Option(name, lang.code));
         tgtSelect.add(new Option(name, lang.code));
-    });
-}
-
-async function loadDictionaries() {
-    const status = document.getElementById('dbStatus');
-    try {
-        const files = ['osnova.json', 'vuzor.json'];
-        for (const file of files) {
-            const res = await fetch(file);
-            if (res.ok) {
-                const data = await res.json();
-                data.forEach(item => {
-                    if (item.polish && item.slovian) {
-                        plToSlo[item.polish.toLowerCase().trim()] = item.slovian.trim();
-                        sloToPl[item.slovian.toLowerCase().trim()] = item.polish.trim();
-                    }
-                });
-            }
-        }
-        status.innerText = "Engine Ready.";
-    } catch (e) { status.innerText = "Dict Error."; }
-}
-
-async function translate() {
-    const text = document.getElementById('userInput').value.trim();
-    const src = document.getElementById('srcLang').value;
-    const tgt = document.getElementById('tgtLang').value;
-    const out = document.getElementById('resultOutput');
-    if (!text) { out.innerText = ""; return; }
-    try {
-        let finalResult = "";
-        if (src === 'slo' && tgt === 'pl') {
-            finalResult = dictReplace(text, sloToPl);
-        } else if (src === 'pl' && tgt === 'slo') {
-            finalResult = dictReplace(text, plToSlo);
-        } else if (src === 'slo') {
-            const bridge = dictReplace(text, sloToPl);
-            finalResult = await google(bridge, 'pl', tgt);
-        } else if (tgt === 'slo') {
-            const bridge = await google(text, src, 'pl');
-            finalResult = dictReplace(bridge, plToSlo);
-        } else {
-            finalResult = await google(text, src, tgt);
-        }
-        out.innerText = finalResult || "";
-    } catch (e) { out.innerText = "Translation error..."; }
-}
-
-async function google(text, s, t) {
-    try {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        return data[0].map(x => x[0]).join('');
-    } catch (e) { return text; }
-}
-
-function dictReplace(text, dict) {
-    return text.replace(/[a-ząćęłńóśźżěьъ]+/gi, (m) => {
-        const low = m.toLowerCase();
-        if (dict[low]) {
-            const r = dict[low];
-            if (m === m.toUpperCase()) return r.toUpperCase();
-            if (m[0] === m[0].toUpperCase()) return r.charAt(0).toUpperCase() + r.slice(1);
-            return r;
-        }
-        return m;
     });
 }
 
