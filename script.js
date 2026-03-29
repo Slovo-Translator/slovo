@@ -1,6 +1,6 @@
 /**
- * SLOVO TRANSLATOR ENGINE v5.2
- * Naprawione błędy: undefined UI, domyślne języki, szyk frazy nominalnej.
+ * SLOVO TRANSLATOR ENGINE v5.3
+ * Poprawki: Wielkość liter na początku zdania, szyk nominalny, naprawa UI.
  */
 
 let plToSlo = {}, sloToPl = {};
@@ -23,27 +23,34 @@ const uiTranslations = {
     en: { title: "Slovo Translator", from: "From language:", to: "To language:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here..." }
 };
 
-// --- LOGIKA SORTOWANIA (SZYK ROSYJSKI) ---
+// --- LOGIKA SORTOWANIA I WIELKOŚCI LITER ---
 
 function findType(word) {
     const clean = word.toLowerCase().replace(/[.!?,\s'‘’\u0300-\u036f]/g, '');
     if (!clean) return 99;
-
     const entry = dictionaryData.find(d => d.slovian && d.slovian.toLowerCase() === clean);
-    
     if (entry && entry['type and case']) {
         const t = entry['type and case'].toLowerCase();
-        if (t.includes('pronoun')) return 0;   // Mojь
-        if (t.includes('numeral')) return 1;   // pirvy
-        if (t.includes('adjective')) return 2; // moskal'ьsky
-        if (t.includes('noun')) return 3;      // ęzyk
+        if (t.includes('pronoun')) return 0;
+        if (t.includes('numeral')) return 1;
+        if (t.includes('adjective')) return 2;
+        if (t.includes('noun')) return 3;
     }
     return 99;
+}
+
+function fixSentenceCase(text) {
+    if (!text) return text;
+    // Znajduje pierwszą literę w zdaniu i robi ją wielką, resztę zostawia jak jest
+    return text.replace(/^(\s*)([a-ząćęłńóśźżěьъǫ])/, (match, p1, p2) => p1 + p2.toUpperCase());
 }
 
 function smartReorder(text) {
     return text.split(/([.!?\n]+)/).map(segment => {
         if (/^[.!?\n]+$/.test(segment) || !segment.trim()) return segment;
+
+        // Zapamiętujemy czy oryginalny segment zaczynał się wielką literą
+        const startsWithUpper = /^[A-ZĄĆĘŁŃÓŚŹŻĚЬЪǪ]/.test(segment.trim());
 
         const tokens = segment.split(/(\s+)/);
         let result = [];
@@ -57,10 +64,9 @@ function smartReorder(text) {
                 while (i < tokens.length) {
                     let t = tokens[i];
                     let w = /[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(t) ? findType(t) : 100;
-
                     if (w <= 3 || (t.trim() === "" && group.length > 0)) {
                         if (/[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(t)) {
-                            group.push({ text: t, weight: w });
+                            group.push({ text: t.toLowerCase(), weight: w });
                         }
                         i++;
                     } else break;
@@ -72,17 +78,20 @@ function smartReorder(text) {
                 result.push(token);
             }
         }
-        return result.join('');
+
+        let finalSegment = result.join('');
+        return startsWithUpper ? fixSentenceCase(finalSegment) : finalSegment;
     }).join('');
 }
 
-// --- TŁUMACZENIE I SŁOWNIK ---
+// --- TŁUMACZENIE ---
 
 function dictReplace(text, dict) {
     return text.replace(/[a-ząćęłńóśźżěьъǫ\u0300-\u036f'‘’]+/gi, (m) => {
         const low = m.toLowerCase();
         if (dict[low]) {
             const r = dict[low];
+            // Zachowanie wielkości liter dla pojedynczych słów
             if (m === m.toUpperCase()) return r.toUpperCase();
             if (m[0] === m[0].toUpperCase()) return r.charAt(0).toUpperCase() + r.slice(1);
             return r;
@@ -128,7 +137,7 @@ async function google(text, s, t) {
     } catch (e) { return text; }
 }
 
-// --- SYSTEM I INTERFEJS ---
+// --- SYSTEM ---
 
 async function loadDictionaries() {
     const status = document.getElementById('dbStatus');
@@ -147,26 +156,18 @@ async function loadDictionaries() {
                 });
             }
         }
-        if(status) status.innerText = "Slovo Engine v5.2 Ready.";
+        if(status) status.innerText = "Slovo Engine v5.3 Ready.";
     } catch (e) { if(status) status.innerText = "Dict Error."; }
 }
 
 function applyUI(lang) {
     const ui = uiTranslations[lang] || uiTranslations.en;
-    const map = {
-        'ui-title': ui.title,
-        'ui-label-from': ui.from,
-        'ui-label-to': ui.to,
-        'ui-paste': ui.paste,
-        'ui-clear': ui.clear,
-        'ui-copy': ui.copy
-    };
-    Object.keys(map).forEach(id => {
+    const ids = ['ui-title', 'ui-label-from', 'ui-label-to', 'ui-paste', 'ui-clear', 'ui-copy'];
+    ids.forEach(id => {
         const el = document.getElementById(id);
-        if(el) el.innerText = map[id];
+        if(el) el.innerText = ui[id.replace('ui-', '')];
     });
-    const input = document.getElementById('userInput');
-    if(input) input.placeholder = ui.placeholder;
+    if(document.getElementById('userInput')) document.getElementById('userInput').placeholder = ui.placeholder;
 }
 
 function populateLanguageLists(uiLang) {
@@ -189,21 +190,14 @@ async function init() {
     populateLanguageLists(uiKey);
     applyUI(uiKey);
 
-    // Domyślne języki: jeśli PL to pl->slo, jeśli inne to en->slo
     const defaultSrc = sysLang === 'pl' ? 'pl' : 'en';
     document.getElementById('srcLang').value = localStorage.getItem('srcLang') || defaultSrc;
     document.getElementById('tgtLang').value = localStorage.getItem('tgtLang') || 'slo';
 
     await loadDictionaries();
 
-    const input = document.getElementById('userInput');
-    if(input) input.addEventListener('input', debounce(translate, 400));
-    
-    document.getElementById('srcLang').onchange = (e) => { localStorage.setItem('srcLang', e.target.value); translate(); };
-    document.getElementById('tgtLang').onchange = (e) => { localStorage.setItem('tgtLang', e.target.value); translate(); };
+    document.getElementById('userInput').addEventListener('input', debounce(translate, 400));
 }
-
-// --- FUNKCJE POMOCNICZE ---
 
 function debounce(func, wait) {
     let timeout;
@@ -219,8 +213,6 @@ function swapLanguages() {
     const tmp = src.value;
     src.value = tgt.value;
     tgt.value = tmp;
-    localStorage.setItem('srcLang', src.value);
-    localStorage.setItem('tgtLang', tgt.value);
     translate();
 }
 
@@ -230,16 +222,7 @@ function clearText() {
 }
 
 function copyText() {
-    const out = document.getElementById('resultOutput').innerText;
-    if(out) navigator.clipboard.writeText(out);
-}
-
-async function pasteText() {
-    try {
-        const text = await navigator.clipboard.readText();
-        const input = document.getElementById('userInput');
-        if(input) { input.value = text; translate(); }
-    } catch(e) {}
+    navigator.clipboard.writeText(document.getElementById('resultOutput').innerText);
 }
 
 window.onload = init;
