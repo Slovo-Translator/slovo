@@ -1,74 +1,8 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slovo Translator</title>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #3498db;
-            --bg: #f4f7f6;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 800px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: var(--primary); margin-bottom: 25px; }
-        .controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-        select { padding: 10px; border-radius: 6px; border: 1px solid #ddd; flex: 1; min-width: 150px; }
-        .swap-btn { background: var(--accent); color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; font-weight: bold; }
-        .text-areas { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        textarea { width: 100%; height: 150px; padding: 15px; border-radius: 8px; border: 1px solid #eee; resize: none; font-size: 16px; box-sizing: border-box; }
-        #resultOutput { min-height: 150px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #eee; white-space: pre-wrap; font-size: 16px; }
-        .button-group { margin-top: 15px; display: flex; gap: 10px; }
-        button.action { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; background: #ecf0f1; transition: 0.3s; }
-        button.action:hover { background: #dfe6e9; }
-        #dbStatus { font-size: 12px; text-align: center; margin-top: 20px; color: #95a5a6; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h1 id="ui-title">Slovo Translator</h1>
-    
-    <div class="controls">
-        <div style="flex: 1;">
-            <label id="ui-label-from" style="display:block; font-size: 12px; margin-bottom: 5px;">Z języka:</label>
-            <select id="srcLang"></select>
-        </div>
-        
-        <button class="swap-btn" onclick="swapLanguages()">⇄</button>
-        
-        <div style="flex: 1;">
-            <label id="ui-label-to" style="display:block; font-size: 12px; margin-bottom: 5px;">Na język:</label>
-            <select id="tgtLang"></select>
-        </div>
-    </div>
-
-    <div class="text-areas">
-        <div>
-            <textarea id="userInput" placeholder="Wpisz tekst..."></textarea>
-            <div class="button-group">
-                <button class="action" id="ui-paste" onclick="pasteText()">Wklej</button>
-                <button class="action" id="ui-clear" onclick="clearText()">Usuń</button>
-            </div>
-        </div>
-        <div>
-            <div id="resultOutput"></div>
-            <div class="button-group">
-                <button class="action" id="ui-copy" onclick="copyText()">Kopiuj</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="dbStatus">Ładowanie silnika...</div>
-</div>
-
-<script>
 /**
  * Logika sortowania słów: numeral -> adjective -> noun
  */
 let plToSlo = {}, sloToPl = {};
-let dictionaryData = []; // Baza do sprawdzania typów części mowy
+let dictionaryData = []; 
 
 const weights = { 'numeral': 1, 'adjective': 2, 'noun': 3 };
 
@@ -92,7 +26,7 @@ const languageData = [
     { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
     { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
     { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
-    { code: 'zh-CN', pl: 'Chiński (upraszczony)', en: 'Chinese (Simplified)', slo: 'Kitajьsky (Uproščeny)', de: 'Chinesisch' }
+    { code: 'zh-CN', pl: 'Chiński (uproszczony)', en: 'Chinese (Simplified)', slo: 'Kitajьsky (Uproščeny)', de: 'Chinesisch' }
 ];
 
 const uiTranslations = {
@@ -103,7 +37,6 @@ const uiTranslations = {
 };
 
 function dictReplace(text, dict) {
-    // Regex uwzględniający szeroką gamę znaków słowiańskich
     return text.replace(/[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/gi, (m) => {
         const low = m.toLowerCase();
         if (dict[low]) {
@@ -117,7 +50,6 @@ function dictReplace(text, dict) {
 }
 
 function smartReorder(text) {
-    // Rozbijamy tekst na zdania/segmenty, by nie mieszać całego tekstu naraz
     return text.split(/([.!?\s,]+)/).map(segment => {
         if (/^[.!?\s,]+$/.test(segment) || segment.trim() === "") return segment;
         
@@ -193,8 +125,8 @@ async function loadDictionaries() {
                 });
             }
         }
-        status.innerText = "Engine Ready.";
-    } catch (e) { status.innerText = "Dict Error. Check JSON files."; }
+        if(status) status.innerText = "Engine Ready.";
+    } catch (e) { if(status) status.innerText = "Dict Error."; }
 }
 
 async function init() {
@@ -215,18 +147,19 @@ async function init() {
 
 function applyUI(lang) {
     const ui = uiTranslations[lang] || uiTranslations.en;
-    document.getElementById('ui-title').innerText = ui.title;
-    document.getElementById('ui-label-from').innerText = ui.from;
-    document.getElementById('ui-label-to').innerText = ui.to;
-    document.getElementById('ui-paste').innerText = ui.paste;
-    document.getElementById('ui-clear').innerText = ui.clear;
-    document.getElementById('ui-copy').innerText = ui.copy;
-    document.getElementById('userInput').placeholder = ui.placeholder;
+    if(document.getElementById('ui-title')) document.getElementById('ui-title').innerText = ui.title;
+    if(document.getElementById('ui-label-from')) document.getElementById('ui-label-from').innerText = ui.from;
+    if(document.getElementById('ui-label-to')) document.getElementById('ui-label-to').innerText = ui.to;
+    if(document.getElementById('ui-paste')) document.getElementById('ui-paste').innerText = ui.paste;
+    if(document.getElementById('ui-clear')) document.getElementById('ui-clear').innerText = ui.clear;
+    if(document.getElementById('ui-copy')) document.getElementById('ui-copy').innerText = ui.copy;
+    if(document.getElementById('userInput')) document.getElementById('userInput').placeholder = ui.placeholder;
 }
 
 function populateLanguageLists(uiLang) {
     const srcSelect = document.getElementById('srcLang');
     const tgtSelect = document.getElementById('tgtLang');
+    if(!srcSelect || !tgtSelect) return;
     languageData.forEach(lang => {
         const name = lang[uiLang] || lang.en;
         srcSelect.add(new Option(name, lang.code));
@@ -248,7 +181,7 @@ async function pasteText() {
         const text = await navigator.clipboard.readText();
         document.getElementById('userInput').value = text;
         translate();
-    } catch(e) { alert("Clipboard access denied."); }
+    } catch(e) { console.error("Clipboard error"); }
 }
 
 function copyText() {
@@ -270,6 +203,3 @@ function debounce(func, wait) {
 }
 
 window.onload = init;
-</script>
-</body>
-</html>
