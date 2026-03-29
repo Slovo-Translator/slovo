@@ -1,28 +1,5 @@
 let plToSlo = {}, sloToPl = {};
 let wordTypes = {};
-let wordCases = {};
-
-// DODANE: Obiekt z tłumaczeniami interfejsu (bez tego kod wyrzuca błąd)
-const uiTranslations = {
-    pl: {
-        title: "Tłumacz Międzysłowiański",
-        from: "Z języka:",
-        to: "Na język:",
-        paste: "Wklej",
-        clear: "Wyczyść",
-        copy: "Kopiuj",
-        placeholder: "Wpisz tekst..."
-    },
-    en: {
-        title: "Interslavic Translator",
-        from: "From:",
-        to: "To:",
-        paste: "Paste",
-        clear: "Clear",
-        copy: "Copy",
-        placeholder: "Type something..."
-    }
-};
 
 const languageData = [
     { code: 'slo', pl: 'Słowiański', en: 'Slovian (Slavic)', slo: 'Slověnьsky', de: 'Slawisch' },
@@ -36,65 +13,107 @@ const languageData = [
     { code: 'es', pl: 'Hiszpański', en: 'Spanish', slo: 'Španьsky', de: 'Spanisch' },
     { code: 'it', pl: 'Włoski', en: 'Italian', slo: 'Volšьsky', de: 'Italienisch' },
     { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky', de: 'Ukrainisch' },
-    { code: 'ja', pl: 'Japoński', en: 'Japanese', slo: 'Japonьsky', de: 'Japanisch' },
-    { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' }
-    // ... reszta Twoich języków ...
+    { code: 'ja', pl: 'Japoński', en: 'Japanese', slo: 'Japonьsky', de: 'Japanisch' }
 ];
 
-function reorderSmart(text) {
-    if (!text) return "";
-    const words = text.split(/\s+/);
-    const result = [];
-    let i = 0;
-    while (i < words.length) {
-        let group = { numeral: null, modifiers: [], adjectives: [], noun: null };
-        
-        // Naprawa: Bezpieczne sprawdzanie słowa
-        let w = words[i] ? words[i].toLowerCase() : "";
+const uiTranslations = {
+    slo: { title: "Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu..." },
+    pl: { title: "Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst..." },
+    en: { title: "Slovo Translator", from: "From language:", to: "To language:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here..." }
+};
 
-        while (i < words.length && ["bardzo", "velmi"].includes(words[i].toLowerCase())) {
-            group.modifiers.push(words[i]);
-            i++;
-        }
-
-        if (i < words.length && wordTypes[words[i].toLowerCase()] === "numeral") {
-            group.numeral = words[i++];
-        }
-
-        while (i < words.length && wordTypes[words[i].toLowerCase()] === "adjective") {
-            group.adjectives.push(words[i++]);
-        }
-
-        if (i < words.length && wordTypes[words[i].toLowerCase()] === "noun") {
-            group.noun = words[i++];
-        }
-
-        if (group.noun) {
-            if (group.numeral) result.push(group.numeral);
-            if (group.modifiers.length) result.push(...group.modifiers);
-            if (group.adjectives.length) result.push(...group.adjectives);
-            result.push(group.noun);
-        } else {
-            if (words[i]) result.push(words[i]);
-            i++; // Kluczowe: zapobiega nieskończonej pętli
-        }
-    }
-    return result.join(" ");
+// Funkcja pomocnicza do zachowania wielkości liter
+function preserveCase(original, translated) {
+    if (!translated) return original;
+    if (original === original.toUpperCase() && original.length > 1) return translated.toUpperCase();
+    if (original[0] === original[0].toUpperCase()) return translated.charAt(0).toUpperCase() + translated.slice(1);
+    return translated.toLowerCase();
 }
 
 function dictReplace(text, dict) {
     if (!text) return "";
-    // Rozszerzony regex o znaki słowiańskie
-    return text.replace(/[a-ząćęłńóśźżěьъ]+|([0-9]+)/gi, (m) => {
-        const low = m.toLowerCase();
-        if (dict[low]) {
-            const r = dict[low];
-            if (m === m.toUpperCase()) return r.toUpperCase();
-            if (m[0] === m[0].toUpperCase()) return r.charAt(0).toUpperCase() + r.slice(1);
-            return r;
+    // Regex wyłapuje słowa (w tym te z apostrofami i znakami specjalnymi słowiańskimi)
+    return text.replace(/[a-ząćęłńóśźżěьъ']+/gi, (word) => {
+        const lowWord = word.toLowerCase();
+        if (dict[lowWord]) {
+            return preserveCase(word, dict[lowWord]);
         }
-        return m;
+        return word;
     });
+}
+
+function reorderSmart(text) {
+    if (!text) return "";
+    
+    // Rozbijamy tekst na części (słowa + separatory/interpunkcja)
+    const tokens = text.split(/(\s+|[.,!?;:()]+)/);
+    const result = [];
+    
+    for (let i = 0; i < tokens.length; i++) {
+        let token = tokens[i];
+        if (!token || token.trim() === "" || /[.,!?;:()]+/.test(token)) {
+            result.push(token);
+            continue;
+        }
+
+        let currentLow = token.toLowerCase();
+        let nextIdx = i + 1;
+        
+        // Szukamy następnego "prawdziwego" słowa (pomijając spacje)
+        while (nextIdx < tokens.length && tokens[nextIdx].trim() === "") nextIdx++;
+        
+        if (nextIdx < tokens.length) {
+            let nextToken = tokens[nextIdx];
+            let nextLow = nextToken.toLowerCase();
+
+            // LOGIKA ZAMIANY: Jeśli mamy Rzeczownik + Przymiotnik (np. Język Polski)
+            if (wordTypes[currentLow] === "noun" && wordTypes[nextLow] === "adjective") {
+                // Zamień miejscami
+                result.push(nextToken); // Przymiotnik pierwszy
+                
+                // Dodaj to, co było między nimi (np. spację)
+                for (let j = i + 1; j < nextIdx; j++) result.push(tokens[j]);
+                
+                result.push(token); // Rzeczownik drugi
+                i = nextIdx; // Przesuń licznik
+                continue;
+            }
+        }
+        result.push(token);
+    }
+    return result.join("");
+}
+
+async function translate() {
+    const input = document.getElementById('userInput');
+    const out = document.getElementById('resultOutput');
+    if (!input || !out) return;
+
+    const text = input.value;
+    const src = document.getElementById('srcLang').value;
+    const tgt = document.getElementById('tgtLang').value;
+
+    if (!text.trim()) { out.innerText = ""; return; }
+
+    try {
+        let finalResult = "";
+        if (src === 'slo' && tgt === 'pl') {
+            finalResult = dictReplace(text, sloToPl);
+        } else if (src === 'pl' && tgt === 'slo') {
+            let translated = dictReplace(text, plToSlo);
+            finalResult = reorderSmart(translated);
+        } else if (src === 'slo') {
+            const bridge = dictReplace(text, sloToPl);
+            finalResult = await google(bridge, 'pl', tgt);
+        } else if (tgt === 'slo') {
+            const bridge = await google(text, src, 'pl');
+            let translated = dictReplace(bridge, plToSlo);
+            finalResult = reorderSmart(translated);
+        } else {
+            finalResult = await google(text, src, tgt);
+        }
+        out.innerText = finalResult;
+    } catch (e) { out.innerText = "Error..."; }
 }
 
 async function google(text, s, t) {
@@ -103,44 +122,7 @@ async function google(text, s, t) {
         const res = await fetch(url);
         const data = await res.json();
         return data[0].map(x => x[0]).join('');
-    } catch (e) { 
-        console.error("Google API error:", e);
-        return text; 
-    }
-}
-
-async function translate() {
-    const inputEl = document.getElementById('userInput');
-    const outEl = document.getElementById('resultOutput');
-    if (!inputEl || !outEl) return;
-
-    const text = inputEl.value.trim();
-    const src = document.getElementById('srcLang').value;
-    const tgt = document.getElementById('tgtLang').value;
-
-    if (!text) { outEl.innerText = ""; return; }
-
-    try {
-        let finalResult = "";
-        if (src === 'slo' && tgt === 'pl') {
-            finalResult = dictReplace(text, sloToPl);
-        } else if (src === 'pl' && tgt === 'slo') {
-            let temp = dictReplace(text, plToSlo);
-            finalResult = reorderSmart(temp);
-        } else if (src === 'slo') {
-            const bridge = dictReplace(text, sloToPl);
-            finalResult = await google(bridge, 'pl', tgt);
-        } else if (tgt === 'slo') {
-            const bridge = await google(text, src, 'pl');
-            let temp = dictReplace(bridge, plToSlo);
-            finalResult = reorderSmart(temp);
-        } else {
-            finalResult = await google(text, src, tgt);
-        }
-        outEl.innerText = finalResult || "";
-    } catch (e) {
-        outEl.innerText = "Błąd tłumaczenia...";
-    }
+    } catch (e) { return text; }
 }
 
 async function loadDictionaries() {
@@ -152,49 +134,50 @@ async function loadDictionaries() {
             if (res.ok) {
                 const data = await res.json();
                 data.forEach(item => {
-                    // Dopasowanie do Twoich kluczy w pliku JSON
-                    const plWord = item.polish || item.pl;
-                    const sloWord = item.slovian || item.slo;
+                    if (item.polish && item.slovian) {
+                        const pl = item.polish.toLowerCase().trim();
+                        const slo = item.slovian.toLowerCase().trim();
+                        plToSlo[pl] = item.slovian.trim();
+                        sloToPl[slo] = item.polish.trim();
 
-                    if (plWord && sloWord) {
-                        const pl = plWord.toLowerCase().trim();
-                        const slo = sloWord.toLowerCase().trim();
-                        plToSlo[pl] = sloWord.trim();
-                        sloToPl[slo] = plWord.trim();
-
-                        const typeInfo = item["type and case"] || "";
-                        const info = typeInfo.toLowerCase();
-                        if (info.includes("noun")) wordTypes[slo] = "noun";
-                        if (info.includes("adjective")) wordTypes[slo] = "adjective";
-                        if (info.includes("numeral")) wordTypes[slo] = "numeral";
-                        wordCases[slo] = info;
+                        if (item["type and case"]) {
+                            const info = item["type and case"].toLowerCase();
+                            if (info.includes("m.") || info.includes("f.") || info.includes("n.")) wordTypes[slo] = "noun";
+                            if (info.includes("adj.")) wordTypes[slo] = "adjective";
+                            if (info.includes("num.")) wordTypes[slo] = "numeral";
+                        }
                     }
                 });
             }
         }
         if (status) status.innerText = "Silnik gotowy.";
-    } catch (e) {
-        if (status) status.innerText = "Błąd słowników.";
-    }
+    } catch (e) { if (status) status.innerText = "Błąd słowników."; }
+}
+
+async function init() {
+    const sysLang = navigator.language.split('-')[0];
+    const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
+    applyUI(uiKey);
+    populateLanguageLists(uiKey);
+
+    const savedSrc = localStorage.getItem('srcLang') || (sysLang === 'pl' ? 'pl' : 'en');
+    const savedTgt = localStorage.getItem('tgtLang') || 'slo';
+
+    document.getElementById('srcLang').value = savedSrc;
+    document.getElementById('tgtLang').value = savedTgt;
+
+    await loadDictionaries();
+
+    document.getElementById('userInput').addEventListener('input', debounce(() => translate(), 300));
 }
 
 function applyUI(lang) {
     const ui = uiTranslations[lang] || uiTranslations.en;
-    // Bezpieczne sprawdzanie czy elementy istnieją w HTML
-    const elements = {
-        'ui-title': 'title',
-        'ui-label-from': 'from',
-        'ui-label-to': 'to',
-        'ui-paste': 'paste',
-        'ui-clear': 'clear',
-        'ui-copy': 'copy'
-    };
-
-    for (let [id, key] of Object.entries(elements)) {
+    const ids = ['ui-title', 'ui-label-from', 'ui-label-to', 'ui-paste', 'ui-clear', 'ui-copy'];
+    ids.forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.innerText = ui[key];
-    }
-    
+        if (el) el.innerText = ui[id.replace('ui-', '')];
+    });
     const input = document.getElementById('userInput');
     if (input) input.placeholder = ui.placeholder;
 }
@@ -203,19 +186,30 @@ function populateLanguageLists(uiLang) {
     const srcSelect = document.getElementById('srcLang');
     const tgtSelect = document.getElementById('tgtLang');
     if (!srcSelect || !tgtSelect) return;
-
-    srcSelect.options.length = 0;
-    tgtSelect.options.length = 0;
-    
+    srcSelect.options.length = 0; tgtSelect.options.length = 0;
     languageData.forEach(lang => {
         const name = lang[uiLang] || lang.en;
         srcSelect.add(new Option(name, lang.code));
         tgtSelect.add(new Option(name, lang.code));
     });
+}
 
-    // Domyślne wartości
-    srcSelect.value = 'pl';
-    tgtSelect.value = 'slo';
+function swapLanguages() {
+    const src = document.getElementById('srcLang');
+    const tgt = document.getElementById('tgtLang');
+    [src.value, tgt.value] = [tgt.value, src.value];
+    localStorage.setItem('srcLang', src.value);
+    localStorage.setItem('tgtLang', tgt.value);
+    translate();
+}
+
+function clearText() {
+    document.getElementById('userInput').value = "";
+    document.getElementById('resultOutput').innerText = "";
+}
+
+function copyText() {
+    navigator.clipboard.writeText(document.getElementById('resultOutput').innerText);
 }
 
 function debounce(func, wait) {
@@ -224,20 +218,6 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, arguments), wait);
     };
-}
-
-async function init() {
-    const sysLang = navigator.language.split('-')[0];
-    const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
-    
-    applyUI(uiKey);
-    populateLanguageLists(uiKey);
-    await loadDictionaries();
-    
-    const input = document.getElementById('userInput');
-    if (input) {
-        input.addEventListener('input', debounce(() => translate(), 300));
-    }
 }
 
 window.onload = init;
