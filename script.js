@@ -52,6 +52,7 @@ const languageData = [
     { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' },
     { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Větnamьsky', de: 'Vietnamesisch' }
 ];
+
 const uiTranslations = {
     slo: { title: "Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu..." },
     pl: { title: "Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst..." },
@@ -84,44 +85,49 @@ const uiTranslations = {
     ar: { title: "مترجم Slovo", from: "من:", to: "إلى:", paste: "لصق", clear: "مسح", copy: "نسخ", placeholder: "أدخل النص..." }
 };
 
-// Zachowuje wielkość liter (Case Sensitive)
-function preserveCase(original, translated) {
-    if (!translated) return original;
-    if (original === original.toUpperCase() && original.length > 1) return translated.toUpperCase();
-    if (original[0] === original[0].toUpperCase()) return translated.charAt(0).toUpperCase() + translated.slice(1);
-    return translated.toLowerCase();
+// --- FUNKCJE WIELKOŚCI LITER ---
+
+function getCase(word) {
+    if (!word) return "lower";
+    if (word === word.toUpperCase() && word.length > 1) return "upper";
+    if (word[0] === word[0].toUpperCase()) return "title";
+    return "lower";
 }
 
-// Tłumaczy słowa, ignorując linki, liczby i interpunkcję
+function applyCase(word, caseType) {
+    if (!word) return "";
+    switch (caseType) {
+        case "upper": return word.toUpperCase();
+        case "title": return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        default: return word.toLowerCase();
+    }
+}
+
+// --- LOGIKA TŁUMACZENIA ---
+
 function dictReplace(text, dict) {
     if (!text) return "";
-    // Wykrywa słowa (w tym z apostrofem i znakami słowiańskimi), omija linki i e-maile
     const urlRegex = /(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
     
-    // Najpierw zabezpieczamy linki
     let placeholders = [];
     let tempText = text.replace(urlRegex, (match) => {
         placeholders.push(match);
         return `__URL_PH_${placeholders.length - 1}__`;
     });
 
-    // Tłumaczymy słowa
     tempText = tempText.replace(/[a-ząćęłńóśźżěьъ']+/gi, (word) => {
         const lowWord = word.toLowerCase();
         if (dict[lowWord]) {
-            return preserveCase(word, dict[lowWord]);
+            return applyCase(dict[lowWord], getCase(word));
         }
         return word;
     });
 
-    // Przywracamy linki
     return tempText.replace(/__URL_PH_(\d+)__/g, (match, id) => placeholders[id]);
 }
 
-// Zamienia szyk: jeśli Rzeczownik + Przymiotnik -> Przymiotnik + Rzeczownik
 function reorderSmart(text) {
     if (!text) return "";
-    // Dzieli na słowa, spacje i znaki interpunkcyjne
     const tokens = text.split(/(\s+|[.,!?;:()=+\-%*/]+)/g).filter(t => t !== "" && t !== undefined);
     const result = [];
 
@@ -129,25 +135,31 @@ function reorderSmart(text) {
         let token = tokens[i];
         let lowToken = token.toLowerCase();
 
-        // Jeśli to spacja lub interpunkcja, dodaj i leć dalej
         if (/^[\s.,!?;:()=+\-%*/]+$/.test(token)) {
             result.push(token);
             continue;
         }
 
         let nextIdx = i + 1;
-        // Szukaj następnego słowa (pomiń tylko spacje)
         while (nextIdx < tokens.length && /^[\s]+$/.test(tokens[nextIdx])) nextIdx++;
 
         if (nextIdx < tokens.length) {
             let nextToken = tokens[nextIdx];
             let nextLow = nextToken.toLowerCase();
 
-            // LOGIKA ZAMIANY (Rzeczownik + Przymiotnik -> Przymiotnik + Rzeczownik)
-            if (wordTypes[lowToken] === "noun" && wordTypes[nextLow] === "adjective") {
-                result.push(nextToken); // Przymiotnik najpierw
-                for (let j = i + 1; j < nextIdx; j++) result.push(tokens[j]); // Spacje pomiędzy
-                result.push(token); // Rzeczownik potem
+            // Rzeczownik + (Przymiotnik lub Liczebnik)
+            if (wordTypes[lowToken] === "noun" && (wordTypes[nextLow] === "adjective" || wordTypes[nextLow] === "numeral")) {
+                const firstCase = getCase(token);
+                
+                // Przymiotnik na przód z wielkością liter pierwotnego pierwszego słowa
+                result.push(applyCase(nextToken, firstCase));
+                
+                // Zachowanie spacji między słowami
+                for (let j = i + 1; j < nextIdx; j++) result.push(tokens[j]);
+                
+                // Rzeczownik na drugie miejsce (małą literą, chyba że pierwotnie był ALL CAPS)
+                result.push(firstCase === "upper" ? token.toUpperCase() : token.toLowerCase());
+                
                 i = nextIdx;
                 continue;
             }
@@ -215,7 +227,6 @@ async function loadDictionaries() {
 
                         if (item["type and case"]) {
                             const info = item["type and case"].toLowerCase();
-                            // Dopasowanie do Twojego formatu: jimenьnik (noun), priloga (adj), ličьnik (num)
                             if (info.includes("jimenьnik") || info.includes("noun")) wordTypes[slo] = "noun";
                             if (info.includes("priloga") || info.includes("adjective")) wordTypes[slo] = "adjective";
                             if (info.includes("ličьnik") || info.includes("numeral")) wordTypes[slo] = "numeral";
