@@ -1,3 +1,8 @@
+/**
+ * SLOVO TRANSLATOR ENGINE v5.2
+ * Naprawione błędy: undefined UI, domyślne języki, szyk frazy nominalnej.
+ */
+
 let plToSlo = {}, sloToPl = {};
 let dictionaryData = [];
 
@@ -8,6 +13,7 @@ const languageData = [
     { code: 'de', pl: 'Niemiecki', en: 'German', slo: 'Nemьčьsky' },
     { code: 'ru', pl: 'Rosyjski', en: 'Russian', slo: 'Rusьsky' },
     { code: 'cs', pl: 'Czeski', en: 'Czech', slo: 'Češьsky' },
+    { code: 'sk', pl: 'Słowacki', en: 'Slovak', slo: 'Slovačьsky' },
     { code: 'uk', pl: 'Ukraiński', en: 'Ukrainian', slo: 'Ukrajinьsky' }
 ];
 
@@ -17,45 +23,51 @@ const uiTranslations = {
     en: { title: "Slovo Translator", from: "From language:", to: "To language:", paste: "Paste", clear: "Clear", copy: "Copy", placeholder: "Type here..." }
 };
 
-const weights = { 'numeral': 1, 'adjective': 2, 'noun': 3 };
+// --- LOGIKA SORTOWANIA (SZYK ROSYJSKI) ---
 
 function findType(word) {
-    const clean = word.toLowerCase().replace(/[.!?,\s]/g, '');
+    const clean = word.toLowerCase().replace(/[.!?,\s'‘’\u0300-\u036f]/g, '');
     if (!clean) return 99;
+
     const entry = dictionaryData.find(d => d.slovian && d.slovian.toLowerCase() === clean);
+    
     if (entry && entry['type and case']) {
         const t = entry['type and case'].toLowerCase();
-        if (t.includes('numeral')) return 1;
-        if (t.includes('adjective')) return 2;
-        if (t.includes('noun')) return 3;
+        if (t.includes('pronoun')) return 0;   // Mojь
+        if (t.includes('numeral')) return 1;   // pirvy
+        if (t.includes('adjective')) return 2; // moskal'ьsky
+        if (t.includes('noun')) return 3;      // ęzyk
     }
     return 99;
 }
 
 function smartReorder(text) {
     return text.split(/([.!?\n]+)/).map(segment => {
-        if (/^[.!?\n]+$/.test(segment)) return segment;
+        if (/^[.!?\n]+$/.test(segment) || !segment.trim()) return segment;
+
         const tokens = segment.split(/(\s+)/);
         let result = [];
+
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
-            let w = /[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(token) ? findType(token) : 100;
-            
-            if (w <= 3) {
+            let weight = /[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(token) ? findType(token) : 100;
+
+            if (weight <= 3) {
                 let group = [];
                 while (i < tokens.length) {
                     let t = tokens[i];
-                    let weight = /[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(t) ? findType(t) : 100;
-                    if (weight <= 3 || (t.trim() === "" && group.length > 0)) {
+                    let w = /[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(t) ? findType(t) : 100;
+
+                    if (w <= 3 || (t.trim() === "" && group.length > 0)) {
                         if (/[a-ząćęłńóśźżěьъǫ\u0300-\u036f]+/i.test(t)) {
-                            group.push({ text: t, weight: weight });
+                            group.push({ text: t, weight: w });
                         }
                         i++;
                     } else break;
                 }
                 group.sort((a, b) => a.weight - b.weight);
                 result.push(group.map(g => g.text).join(' '));
-                i--;
+                i--; 
             } else {
                 result.push(token);
             }
@@ -63,6 +75,8 @@ function smartReorder(text) {
         return result.join('');
     }).join('');
 }
+
+// --- TŁUMACZENIE I SŁOWNIK ---
 
 function dictReplace(text, dict) {
     return text.replace(/[a-ząćęłńóśźżěьъǫ\u0300-\u036f'‘’]+/gi, (m) => {
@@ -114,7 +128,10 @@ async function google(text, s, t) {
     } catch (e) { return text; }
 }
 
+// --- SYSTEM I INTERFEJS ---
+
 async function loadDictionaries() {
+    const status = document.getElementById('dbStatus');
     try {
         const files = ['osnova.json', 'vuzor.json'];
         for (const file of files) {
@@ -130,13 +147,32 @@ async function loadDictionaries() {
                 });
             }
         }
-        document.getElementById('dbStatus').innerText = "Slovo Engine v5.0 Ready.";
-    } catch (e) { document.getElementById('dbStatus').innerText = "Dict Error."; }
+        if(status) status.innerText = "Slovo Engine v5.2 Ready.";
+    } catch (e) { if(status) status.innerText = "Dict Error."; }
+}
+
+function applyUI(lang) {
+    const ui = uiTranslations[lang] || uiTranslations.en;
+    const map = {
+        'ui-title': ui.title,
+        'ui-label-from': ui.from,
+        'ui-label-to': ui.to,
+        'ui-paste': ui.paste,
+        'ui-clear': ui.clear,
+        'ui-copy': ui.copy
+    };
+    Object.keys(map).forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.innerText = map[id];
+    });
+    const input = document.getElementById('userInput');
+    if(input) input.placeholder = ui.placeholder;
 }
 
 function populateLanguageLists(uiLang) {
     const srcSelect = document.getElementById('srcLang');
     const tgtSelect = document.getElementById('tgtLang');
+    if(!srcSelect || !tgtSelect) return;
     srcSelect.innerHTML = "";
     tgtSelect.innerHTML = "";
     languageData.forEach(lang => {
@@ -146,17 +182,6 @@ function populateLanguageLists(uiLang) {
     });
 }
 
-function applyUI(lang) {
-    const ui = uiTranslations[lang] || uiTranslations.en;
-    document.getElementById('ui-title').innerText = ui.title;
-    document.getElementById('ui-label-from').innerText = ui.from;
-    document.getElementById( 'ui-label-to').innerText = ui.to;
-    document.getElementById('ui-paste').innerText = ui.paste;
-    document.getElementById('ui-clear').innerText = ui.clear;
-    document.getElementById('ui-copy').innerText = ui.copy;
-    document.getElementById('userInput').placeholder = ui.placeholder;
-}
-
 async function init() {
     const sysLang = navigator.language.split('-')[0];
     const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
@@ -164,18 +189,21 @@ async function init() {
     populateLanguageLists(uiKey);
     applyUI(uiKey);
 
-    const savedSrc = localStorage.getItem('srcLang') || (sysLang === 'pl' ? 'pl' : 'en');
-    const savedTgt = localStorage.getItem('tgtLang') || 'slo';
-    
-    document.getElementById('srcLang').value = savedSrc;
-    document.getElementById('tgtLang').value = savedTgt;
+    // Domyślne języki: jeśli PL to pl->slo, jeśli inne to en->slo
+    const defaultSrc = sysLang === 'pl' ? 'pl' : 'en';
+    document.getElementById('srcLang').value = localStorage.getItem('srcLang') || defaultSrc;
+    document.getElementById('tgtLang').value = localStorage.getItem('tgtLang') || 'slo';
 
     await loadDictionaries();
 
-    document.getElementById('userInput').addEventListener('input', debounce(translate, 400));
+    const input = document.getElementById('userInput');
+    if(input) input.addEventListener('input', debounce(translate, 400));
+    
     document.getElementById('srcLang').onchange = (e) => { localStorage.setItem('srcLang', e.target.value); translate(); };
     document.getElementById('tgtLang').onchange = (e) => { localStorage.setItem('tgtLang', e.target.value); translate(); };
 }
+
+// --- FUNKCJE POMOCNICZE ---
 
 function debounce(func, wait) {
     let timeout;
@@ -202,7 +230,16 @@ function clearText() {
 }
 
 function copyText() {
-    navigator.clipboard.writeText(document.getElementById('resultOutput').innerText);
+    const out = document.getElementById('resultOutput').innerText;
+    if(out) navigator.clipboard.writeText(out);
+}
+
+async function pasteText() {
+    try {
+        const text = await navigator.clipboard.readText();
+        const input = document.getElementById('userInput');
+        if(input) { input.value = text; translate(); }
+    } catch(e) {}
 }
 
 window.onload = init;
