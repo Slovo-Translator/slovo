@@ -3,13 +3,13 @@ name: Slovian Engine
 on:
   push:
     paths:
-      - '**.json' # Uruchom tylko gdy nastąpi zmiana w plikach JSON
+      - '**.json'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
-    # Niezbędne, aby bot mógł wysłać (push) zmiany do repozytorium
+    # KLUCZOWA POPRAWKA: Nadanie uprawnień do zapisu
     permissions:
       contents: write
 
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Pobiera pełną historię, co zapobiega błędom przy pushu
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,21 +37,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Konfiguracja tożsamości bota
           git config --global user.name 'SlovianBot'
           git config --global user.email 'bot@slovian.org'
           
-          # Sprawdzenie czy plik wynikowy istnieje
+          # Dodajemy zmiany, jeśli plik osnova.json istnieje
           if [ -f osnova.json ]; then
             git add osnova.json
-            
-            # Commit nastąpi tylko, jeśli w pliku osnova.json zaszły realne zmiany
-            # "|| exit 0" sprawia, że jeśli nie ma zmian, workflow nie zaświeci się na czerwono
             git commit -m "Auto-clean dictionary: $(date +'%Y-%m-%d %H:%M')" || exit 0
-            
-            # Wypchnięcie zmian przy użyciu tokenu autoryzacyjnego
+            # Bezpieczny push z tokenem
             git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
           else
-            echo "BŁĄD: Plik osnova.json nie został znaleziony po uruchomieniu skryptu."
+            echo "Nie znaleziono pliku osnova.json - sprawdź czy app.py go tworzy."
             exit 1
           fi
