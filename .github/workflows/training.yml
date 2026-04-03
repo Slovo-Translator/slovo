@@ -5,13 +5,17 @@ on:
     paths:
       - '**.json'
 
+# To jest najważniejsza część, która rozwiązuje błąd 128
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     
-    # TO JEST KLUCZ: Daje botowi prawo do robienia 'git push'
-    permissions:
-      contents: write
+    # Wymuszenie Node.js 24, o którym wspomina komunikat w logach
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
@@ -36,9 +40,10 @@ jobs:
           
           if [ -f osnova.json ]; then
             git add osnova.json
+            # Jeśli nie ma zmian, skrypt po prostu skończy pracę bez błędu
             git commit -m "Auto-clean dictionary: $(date +'%Y-%m-%d %H:%M')" || exit 0
             git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
           else
-            echo "Błąd: Nie znaleziono pliku osnova.json"
+            echo "BŁĄD: Plik osnova.json nie istnieje. Upewnij się, że app.py go tworzy."
             exit 1
           fi
