@@ -8,97 +8,91 @@ def load_json_file(filename):
             try:
                 return json.load(f)
             except json.JSONDecodeError:
-                print(f"Błąd czytania pliku: {filename}")
+                print(f"BŁĄD: Nie można odczytać pliku {filename}. Sprawdź składnię JSON.")
                 return []
     return []
 
 def save_json_file(data, filename):
-    """Zapisywanie danych do JSON z zachowaniem sortowania po polsku."""
-    # Jeśli to osnova.json, sortujemy alfabetycznie po polskim kluczu
+    """Zapisywanie danych do JSON z zachowaniem porządku."""
     if filename == 'osnova.json':
+        # Sortowanie alfabetyczne po polskim haśle
         data = sorted(data, key=lambda x: x.get('polish', '').lower())
     
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def get_stem(word):
+def extract_stem(slovian_word):
     """
-    Prosta funkcja wyciągająca rdzeń słowa prasłowiańskiego.
-    Odcina typowe końcówki mianownika (ъ, a, o, e, ь).
+    Wyciąga rdzeń słowa prasłowiańskiego (slověnьsky ęzyk).
+    Odcina typowe końcówki mianownika: ъ, a, o, e, ь.
     """
     endings = ['ъ', 'a', 'o', 'e', 'ь']
     for end in endings:
-        if word.endswith(end):
-            return word[:-len(end)]
-    return word
+        if slovian_word.endswith(end):
+            return slovian_word[:-len(end)]
+    return slovian_word
 
 def learn_from_example_sentences(example_file='example_sentences.json'):
     """
-    Główny silnik uczący. Pobiera przykłady i aktualizuje bazę osnova.json.
+    Główny proces nauki: 
+    Rozbija przykłady na rdzenie i przypisuje im kategorie z Twojej tabeli.
     """
     examples = load_json_file(example_file)
     if not examples:
-        print("Brak przykładów do nauki.")
         return
 
     osnova = load_json_file('osnova.json')
-    vuzory = load_json_file('vuzor.json')
-
-    # Tworzymy mapę istniejących słów po polsku dla szybkiego sprawdzenia
-    existing_polish = {item.get('polish', '').lower(): item for item in osnova}
-
-    new_entries_count = 0
+    
+    # Mapa istniejących haseł, żeby nie dublować
+    existing_map = {item.get('polish', '').lower(): item for item in osnova}
 
     for ex in examples:
-        p_word = ex.get('polish', '').lower().strip()
-        s_word = ex.get('slovian', '').strip()
-
-        if p_word and s_word:
-            # Jeśli słowa nie ma w osnova, dodajemy je z automatycznym rdzeniem
-            if p_word not in existing_polish:
-                stem = get_stem(s_word)
-                
-                entry = {
-                    "polish": p_word,
-                    "slovian": s_word,
-                    "stem": stem,
-                    "type": ex.get("type", "noun"), # Domyślnie rzeczownik, jeśli nie podano
-                    "context": ex.get("context", "z przykładu")
+        p_phrase = ex.get('polish', '').lower().strip()
+        s_phrase = ex.get('slovian', '').strip()
+        
+        # Logika dla pojedynczych słów (jeśli przykład to słowo) 
+        # lub próba wyciągnięcia kluczowych słów z frazy.
+        if p_phrase and s_phrase:
+            if p_phrase not in existing_map:
+                # Tworzymy nowy wpis typu 'osnova'
+                new_entry = {
+                    "polish": p_phrase,
+                    "slovian": s_phrase,
+                    "stem": extract_stem(s_phrase),
+                    "type": ex.get("type", "noun"),
+                    "case_info": ex.get("case", "nominative"),
+                    "context": ex.get("context", "")
                 }
-                
-                # Jeśli w przykładzie był podany przypadek (case), dodajemy go
-                if "case" in ex:
-                    entry["last_case"] = ex["case"]
-
-                osnova.append(entry)
-                existing_polish[p_word] = entry
-                new_entries_count += 1
+                osnova.append(new_entry)
+                existing_map[p_phrase] = new_entry
+                print(f"Silnik Slovo: Nauczyłem się rdzenia dla: {p_phrase}")
 
     save_json_file(osnova, 'osnova.json')
-    print(f"Silnik Slovo: Przetworzono przykłady. Dodano {new_entries_count} nowych baz słownikowych.")
 
-def apply_grammar(polish_word, target_case, target_number='singular'):
+def translate_word(polish_word, target_case='nom', target_num='sg'):
     """
-    FUNKCJA TRANSLATORA: 
-    Łączy rdzeń z osnova.json z końcówką z vuzor.json.
+    Funkcja, którą powinien wywoływać Twój translator na stronie.
+    Łączy rdzeń z osnova.json z wzorcem z vuzor.json.
     """
     osnova = load_json_file('osnova.json')
-    vuzory = load_json_file('vuzor.json') # Zakładamy, że vuzor to słownik wzorów
-
-    word_data = next((item for item in osnova if item['polish'] == polish_word), None)
+    vuzor = load_json_file('vuzor.json')
     
-    if not word_data or 'stem' not in word_data:
-        return polish_word # Fallback do polskiego, jeśli nie znamy rdzenia
-
-    w_type = word_data.get('type', 'noun_masc_hard')
+    # Szukaj słowa w bazie
+    entry = next((i for i in osnova if i['polish'].lower() == polish_word.lower()), None)
     
-    # Próba znalezienia końcówki we wzorcach
+    if not entry or 'stem' not in entry:
+        return polish_word # Jeśli nie znamy rdzenia, zostawiamy polski (fallback)
+
+    # Pobierz typ odmiany (np. noun_masc_hard)
+    w_type = entry.get('type', 'noun_masc_hard')
+    
     try:
-        suffix = vuzory[w_type][target_number][target_case]
-        return word_data['stem'] + suffix
+        # Próba dopasowania końcówki z vuzor.json
+        suffix = vuzor[w_type][target_num][target_case]
+        return entry['stem'] + suffix
     except (KeyError, TypeError):
-        return word_data['slovian'] # Fallback do mianownika
+        # Jeśli nie ma wzorca, zwróć formę podstawową (slovian)
+        return entry.get('slovian', polish_word)
 
 if __name__ == "__main__":
-    # Uruchomienie procesu uczenia
     learn_from_example_sentences()
