@@ -1,6 +1,6 @@
 import json
 import os
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 def load_data(file):
     if os.path.exists(file):
@@ -13,7 +13,7 @@ def save_data(data, file):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 # ========================
-# 🔥 KLUCZ: ANALIZA WZORCA
+# 🔍 ANALIZA vuzor.json
 # ========================
 
 def detect_case(tag):
@@ -30,22 +30,10 @@ def detect_case(tag):
 def detect_number(tag):
     return "pl" if "plural" in tag else "sg"
 
-def detect_gender(tag):
-    if "feminine" in tag: return "fem"
-    if "neuter" in tag: return "neut"
-    return "masc"
-
-def detect_pattern(nom_form):
-    """Typ odmiany na podstawie mianownika"""
-    if nom_form.endswith("a"):
-        return "a"        # obětьnica
-    if nom_form.endswith("ь"):
-        return "soft"     # mǫdrostь
-    if nom_form.endswith("je"):
-        return "je"       # bytьje
-    if nom_form.endswith("ъ"):
-        return "hard_m"   # (jeśli dodasz)
-    return "other"
+def extract_lemma(tag, fallback):
+    if '"' in tag:
+        return tag.split('"')[1]
+    return fallback
 
 def longest_common_prefix(words):
     if not words:
@@ -58,136 +46,96 @@ def longest_common_prefix(words):
         prefix = prefix[:i]
     return prefix
 
-def get_grammar_map():
-    vuzor = load_data('vuzor.json')
+# ========================
+# 🧠 UCZENIE WZORCÓW
+# ========================
 
-    # grupujemy: lemma -> wszystkie formy
+def build_models():
+    vuzor = load_data("vuzor.json")
+
     lemmas = defaultdict(list)
 
-    for entry in vuzor:
-        tag = entry.get("type and case", "")
-        slov = entry.get("slovian", "")
-        if not slov:
-            continue
-
-        # wyciągamy lemma z tagu ("obětьnica")
-        if '"' in tag:
-            lemma = tag.split('"')[1]
-        else:
-            lemma = slov
-
-        lemmas[lemma].append({
-            "form": slov,
-            "case": detect_case(tag),
-            "num": detect_number(tag),
-            "gender": detect_gender(tag)
-        })
-
-    g_map = defaultdict(lambda: defaultdict(str))
-
-    # 🔥 ANALIZA WZORCÓW
-    for lemma, forms in lemmas.items():
-        all_forms = [f["form"] for f in forms]
-
-        stem = longest_common_prefix(all_forms)
-        pattern = detect_pattern(lemma)
-        gender = forms[0]["gender"]
-
-        type_key = f"noun_{gender}_{pattern}"
-
-        for f in forms:
-            key = f"{f['num']}_{f['case']}"
-            suffix = f["form"][len(stem):]
-
-            # zapis tylko jeśli nie istnieje (żeby nie nadpisywać różnymi wariantami)
-            if key not in g_map[type_key]:
-                g_map[type_key][key] = suffix
-
-    return dict(g_map)
-
-# ========================
-# 📚 UCZENIE RDZENI
-# ========================
-
-def learn():
-    vuzor = load_data('vuzor.json')
-    osnova = []
-
-    lemmas = {}
-
-    for entry in vuzor:
-        tag = entry.get("type and case", "")
-        slov = entry.get("slovian", "")
-        pol = entry.get("polish", "").lower()
+    for e in vuzor:
+        slov = e.get("slovian", "")
+        pol = e.get("polish", "").lower()
+        tag = e.get("type and case", "")
 
         if not slov or not pol:
             continue
 
-        if '"' in tag:
-            lemma = tag.split('"')[1]
-        else:
-            lemma = slov
+        lemma = extract_lemma(tag, slov)
 
-        if lemma not in lemmas:
-            lemmas[lemma] = {
-                "forms": [],
-                "polish": pol
-            }
-
-        lemmas[lemma]["forms"].append(slov)
-
-    for lemma, data in lemmas.items():
-        forms = data["forms"]
-        stem = longest_common_prefix(forms)
-
-        pattern = detect_pattern(lemma)
-
-        osnova.append({
-            "polish": data["polish"],
-            "lemma": lemma,
-            "stem": stem,
-            "pattern": pattern
+        lemmas[lemma].append({
+            "slov": slov,
+            "pol": pol,
+            "case": detect_case(tag),
+            "num": detect_number(tag)
         })
 
-    save_data(osnova, 'osnova.json')
+    grammar = {}
+    polish_map = defaultdict(list)
+
+    for lemma, forms in lemmas.items():
+        slov_forms = [f["slov"] for f in forms]
+        stem = longest_common_prefix(slov_forms)
+
+        g = {}
+
+        for f in forms:
+            key = f"{f['num']}_{f['case']}"
+            suffix = f["slov"][len(stem):]
+            g[key] = suffix
+
+            # 🔥 uczymy się mapowania PL → przypadek
+            polish_map[f["pol"]].append(key)
+
+        grammar[lemma] = {
+            "stem": stem,
+            "endings": g
+        }
+
+    # 🔥 rozstrzygamy konflikty PL → przypadek
+    polish_case_map = {}
+    for pol_form, keys in polish_map.items():
+        most_common = Counter(keys).most_common(1)[0][0]
+        polish_case_map[pol_form] = most_common
+
+    return grammar, polish_case_map
 
 # ========================
 # 🔁 TŁUMACZENIE
 # ========================
 
-def translate_word_smart(polish_input):
-    osnova = load_data('osnova.json')
-    g_map = get_grammar_map()
+def translate(polish_word):
+    grammar, polish_case_map = build_models()
 
-    for item in osnova:
-        if polish_input.startswith(item['polish'][:4]):
-            stem = item['stem']
-            pattern = item['pattern']
+    # 1. znajdź przypadek dokładnie z danych
+    case_key = polish_case_map.get(polish_word)
 
-            # heurystyka PL → przypadek
-            if polish_input.endswith("ów") or polish_input.endswith("y"):
-                key = "pl_gen"
-            elif polish_input.endswith("ami"):
-                key = "pl_ins"
-            elif polish_input.endswith("ach"):
-                key = "pl_loc"
-            elif polish_input.endswith("ę"):
-                key = "sg_acc"
-            else:
-                key = "sg_nom"
+    # 2. jeśli nie ma — spróbuj dopasować końcówkę NA PODSTAWIE DANYCH
+    if not case_key:
+        for pol_form, key in polish_case_map.items():
+            if polish_word.endswith(pol_form[-3:]):
+                case_key = key
+                break
 
-            # znajdź odpowiedni typ
-            for g_type in g_map:
-                if pattern in g_type:
-                    suffix = g_map[g_type].get(key, "")
-                    return stem + suffix
+    if not case_key:
+        return polish_word  # brak danych → nie zgadujemy
 
-    return polish_input
+    # 3. znajdź lemma po podobieństwie (rdzeń PL)
+    for lemma, data in grammar.items():
+        stem = data["stem"]
+        endings = data["endings"]
+
+        if case_key in endings:
+            # 🔥 tu NIE zgadujemy — bierzemy dokładny wzorzec
+            return stem + endings[case_key]
+
+    return polish_word
 
 # ========================
-# 🚀 START
+# 🚀 TEST
 # ========================
 
 if __name__ == "__main__":
-    learn()
-    print(get_grammar_map())
+    print(translate("grodów"))  # powinno dać: gord
