@@ -1,41 +1,26 @@
 name: Slovian Engine
-
 on:
   push:
     paths:
       - '**.json'
-
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-
+      - name: Install dependencies
+        run: pip install --upgrade pip
       - name: Run Learning Script
         run: python app.py
-
-      - name: Save Changes
+      - name: Commit and Push
         run: |
-          git config --local user.name 'SlovianBot'
+          git config --global user.name 'SlovianBot'
           git config --global user.email 'bot@slovian.org'
-          
-          if [ -f osnova.json ]; then
-            git add osnova.json
-            git commit -m "Auto-clean dictionary: $(date +'%Y-%m-%d %H:%M')" || exit 0
-            git push origin HEAD:${{ github.ref_name }}
-          else
-            echo "Plik osnova.json nie istnieje!"
-            exit 1
-          fi
+          git add .
+          git commit -m "Automated update" || exit 0
+          git push
