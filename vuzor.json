@@ -7518,85 +7518,85 @@
     "slovian": "slověnьstva"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłop",
     "slovian": "holp"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopa",
     "slovian": "holpa"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopa",
     "slovian": "holpa"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopie",
     "slovian": "holpě"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopowi",
     "slovian": "holpu"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopem",
     "slovian": "holpom"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | vocative - noun - jimenьnik: \"holp\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | vocative - noun - jimenьnik: \"holp\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasant",
     "polish": "chłopie",
     "slovian": "holpe"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopi/chłopy",
     "slovian": "holpi"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopów",
     "slovian": "holpy"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopów",
     "slovian": "holp"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopach",
     "slovian": "holpěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopom",
     "slovian": "holpom"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopami",
     "slovian": "holpy"
   },
   {
-    "type and case": "noun - jimenьnik: \"holp\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"holp\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "peasants",
     "polish": "chłopi/chłopy",
     "slovian": "holpi"
@@ -7938,337 +7938,337 @@
     "slovian": "sulnica"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodyni",
     "slovian": "gospodyn'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodynię",
     "slovian": "gospodyn'ǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodyni",
     "slovian": "gospodyn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodyni",
     "slovian": "gospodyn'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodyni",
     "slovian": "gospodyn'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodynią",
     "slovian": "gospodyn'ejǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "lady, mistress",
     "polish": "gospodynio",
     "slovian": "gospodyn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodynie",
     "slovian": "gospodyn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodynie",
     "slovian": "gospodyn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodyń",
     "slovian": "gospodyn'ь"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodyniach",
     "slovian": "gospodyn'ah"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodyniom",
     "slovian": "gospodyn'am"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodyniami",
     "slovian": "gospodyn'ami"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodyn'i\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodyn'i\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "ladies, mistresses",
     "polish": "gospodynie",
     "slovian": "gospodyn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "koń",
     "slovian": "kon'ь"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "konia",
     "slovian": "kon'a"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "konia",
     "slovian": "kon'a"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "koniu",
     "slovian": "kon'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "koniowi/koniu",
     "slovian": "kon'u"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "koniem",
     "slovian": "kon'em"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horse",
     "polish": "koniu",
     "slovian": "kon'u"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "konie",
     "slovian": "kon'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "konie",
     "slovian": "kon'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "koni",
     "slovian": "kon'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "koniach",
     "slovian": "kon'ih"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "koniom",
     "slovian": "kon'em"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "koniami/końmi",
     "slovian": "kon'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"kon'ь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"kon'ь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "horses",
     "polish": "konie",
     "slovian": "kon'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wódz",
     "slovian": "vod'ь"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodza",
     "slovian": "vod'a"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodza",
     "slovian": "vod'a"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodzu",
     "slovian": "vod'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodzowi/wodzu",
     "slovian": "vod'u"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodzem",
     "slovian": "vod'em"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leader, chief, commander, chieftain, head, warlord, ruler, skipper, boss, chieftainship, figurehead, duce",
     "polish": "wodzu",
     "slovian": "vod'u"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzowie",
     "slovian": "vod'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzów",
     "slovian": "vod'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzów",
     "slovian": "vod'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzach",
     "slovian": "vod'ih"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzom",
     "slovian": "vod'em"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzami",
     "slovian": "vod'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"vod'ь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"vod'ь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "leaders, chiefs, commanders, chieftains, heads, warlords, rulers, skippers, bosses, chieftainships, figureheads, duces",
     "polish": "wodzowie",
     "slovian": "vod'i"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "pan",
     "slovian": "gospodь"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "pana",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "pana",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "panie",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "panu",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "panem",
     "slovian": "gospodim"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentleman, mr, sir, lord",
     "polish": "panie",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panowie",
     "slovian": "gospod'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panów",
     "slovian": "gospodi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panów",
     "slovian": "gospodьji"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panach",
     "slovian": "gospodih"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panom",
     "slovian": "gospodim"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panami",
     "slovian": "gospodьmi"
   },
   {
-    "type and case": "noun - jimenьnik: \"gospodь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"gospodь\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gentlemen, messrs, sirs, lords",
     "polish": "panowie",
     "slovian": "gospod'e"
@@ -10626,253 +10626,253 @@
     "slovian": "pekarьn'e"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażnik",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażnika",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażnika",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażniku",
     "slovian": "storžьniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażnikowi",
     "slovian": "storžьniku"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażnikiem",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "strażniku",
     "slovian": "storžniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażnicy",
     "slovian": "storžьnici"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażników",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażników",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażnikach",
     "slovian": "storžьnicěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażnikom",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażnikami",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "strażnicy",
     "slovian": "storžьnici"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartownik",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartownika",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartownika",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartowniku",
     "slovian": "storžьniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartownikowi",
     "slovian": "storžьniku"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartownikiem",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "wartowniku",
     "slovian": "storžniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartownicy",
     "slovian": "storžьnici"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartowników",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartowników",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartownikach",
     "slovian": "storžьnicěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartownikom",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartownikami",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "wartownicy",
     "slovian": "storžьnici"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardzista",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardzistę",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardzisty",
     "slovian": "storžьnika"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardziście",
     "slovian": "storžьniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardziście",
     "slovian": "storžьniku"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardzistą",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsman",
     "polish": "gwardzisto",
     "slovian": "storžniče"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardziści",
     "slovian": "storžьnici"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardzistów",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardzistów",
     "slovian": "storžьnik"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardzistach",
     "slovian": "storžьnicěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardzistom",
     "slovian": "storžьnikom"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardzistami",
     "slovian": "storžьniky"
   },
   {
-    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"storžьnik\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "guardsmen",
     "polish": "gwardziści",
     "slovian": "storžьnici"
@@ -11046,253 +11046,253 @@
     "slovian": "lica"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "bóg",
     "slovian": "bog"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "boga",
     "slovian": "boga"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "boga",
     "slovian": "boga"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "bogu",
     "slovian": "bodzě"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "bogu",
     "slovian": "bogu"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "bogiem",
     "slovian": "bogom"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "god",
     "polish": "boże",
     "slovian": "bože"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogowie",
     "slovian": "bogi"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogów",
     "slovian": "bogy"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogów",
     "slovian": "bog"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogach",
     "slovian": "bodzěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogom",
     "slovian": "bogom"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogami",
     "slovian": "bogy"
   },
   {
-    "type and case": "noun - jimenьnik: \"bog\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"bog\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "gods",
     "polish": "bogowie",
     "slovian": "bogi"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "druch",
     "slovian": "drug"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "drucha",
     "slovian": "druga"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "drucha",
     "slovian": "druga"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "druchu",
     "slovian": "drudzě"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "druchu",
     "slovian": "drugu"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "druchem",
     "slovian": "drugom"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "druchu",
     "slovian": "druže"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchowie",
     "slovian": "drugi"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchów",
     "slovian": "drugy"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchów",
     "slovian": "drug"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchach",
     "slovian": "drudzěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchom",
     "slovian": "drugom"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchami",
     "slovian": "drugy"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "druchowie",
     "slovian": "drugi"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "kolega",
     "slovian": "drug"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "kolegę",
     "slovian": "druga"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "kolegi",
     "slovian": "druga"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "koledze",
     "slovian": "drudzě"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "koledze",
     "slovian": "drugu"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "kolegą",
     "slovian": "drugom"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleague, comrade",
     "polish": "kolego",
     "slovian": "druže"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "koledzy",
     "slovian": "drugi"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "kolegów",
     "slovian": "drugy"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "kolegów",
     "slovian": "drug"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "kolegach",
     "slovian": "drudzěh"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "kolegom",
     "slovian": "drugom"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | instrumental - orǫdьnik (su kym? su čim? o kom? o čim?) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "kolegami",
     "slovian": "drugy"
   },
   {
-    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animacy) - rod'ajь mǫžьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"drug\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
     "context": "colleagues, comrades",
     "polish": "koledzy",
     "slovian": "drugi"
@@ -11970,85 +11970,85 @@
     "slovian": "duśi"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "mucha",
     "slovian": "muha"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "muchę",
     "slovian": "muhǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "muchy",
     "slovian": "muhy"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "musze",
     "slovian": "muśě"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "musze",
     "slovian": "muśě"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "muchą",
     "slovian": "muhojǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "fly as insect",
     "polish": "mucho",
     "slovian": "muho"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchy",
     "slovian": "muhy"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchy",
     "slovian": "muhy"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "much",
     "slovian": "muh"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchach",
     "slovian": "muhah"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchom",
     "slovian": "muham"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchami",
     "slovian": "muhami"
   },
   {
-    "type and case": "noun - jimenьnik: \"muha\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"muha\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "flies as insects",
     "polish": "muchy",
     "slovian": "muhy"
@@ -12306,256 +12306,424 @@
     "slovian": "slověne"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowianka",
     "slovian": "slověnyka"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowiankę",
     "slovian": "slověnykǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowianki",
     "slovian": "slověnyky"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowiance",
     "slovian": "slověnycě"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowiance",
     "slovian": "slověnycě"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowianką",
     "slovian": "slověnykojǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwoman/slovian woman/slavic woman/slavicwoman",
     "polish": "słowianko",
     "slovian": "slověnyko"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowianki",
     "slovian": "slověnyky"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowianki",
     "slovian": "slověnyky"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowianek",
     "slovian": "slověnyk"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowiankach",
     "slovian": "slověnykah"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowiankom",
     "slovian": "slověnykam"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowiankami",
     "slovian": "slověnykami"
   },
   {
-    "type and case": "noun - jimenьnik: \"slověnyka\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"slověnyka\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "slovianwomen/slovian women/slavic women/slavicwomen",
     "polish": "słowianki",
     "slovian": "slověnyky"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoka",
     "slovian": "zatoka"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatokę",
     "slovian": "zatokǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoki",
     "slovian": "zatoky"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoce",
     "slovian": "zatocě"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoce",
     "slovian": "zatocě"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoką",
     "slovian": "zatokojǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bay, cove, gulf (body of water (especially the sea)",
     "polish": "zatoko",
     "slovian": "zatoko"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatoki",
     "slovian": "zatoky"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatoki",
     "slovian": "zatoky"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatok",
     "slovian": "zatok"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatokach",
     "slovian": "zatokah"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatokom",
     "slovian": "zatokam"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatokami",
     "slovian": "zatokami"
   },
   {
-    "type and case": "noun - jimenьnik: \"zatoka\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"zatoka\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "bays, coves, gulfs (bodies of water (especially seas)",
     "polish": "zatoki",
     "slovian": "zatoky"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "baba",
     "slovian": "baba"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "babę",
     "slovian": "babǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "baby",
     "slovian": "baby"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "babie",
     "slovian": "babě"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "babie",
     "slovian": "babě"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "babą",
     "slovian": "babojǫ"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old woman",
     "polish": "babo",
     "slovian": "babo"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "baby",
     "slovian": "baby"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "baby",
     "slovian": "baby"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "bab",
     "slovian": "bab"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "babach",
     "slovian": "babah"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "babom",
     "slovian": "babam"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "babami",
     "slovian": "babami"
   },
   {
-    "type and case": "noun - jimenьnik: \"baba\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animacy) - rod'ajь ženьsky (životьny)",
+    "type and case": "noun - jimenьnik: \"baba\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
     "context": "old women",
     "polish": "baby",
     "slovian": "baby"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "bogini",
+    "slovian": "bogyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginię",
+    "slovian": "bogyn'ǫ"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "bogini",
+    "slovian": "bogyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "bogini",
+    "slovian": "bogyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "bogini",
+    "slovian": "bogyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginią",
+    "slovian": "bogyn'ejǫ"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginio",
+    "slovian": "bogyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginie",
+    "slovian": "bogyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginie",
+    "slovian": "bogyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "bogiń",
+    "slovian": "bogyn'ь"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginiach",
+    "slovian": "bogyn'ah"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginiom",
+    "slovian": "bogyn'am"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginiami",
+    "slovian": "bogyn'ami"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"bogyn'i\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (animate) - rod'ajь ženьsky (životьny)",
+    "context": "goddess",
+    "polish": "boginie",
+    "slovian": "bogyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinia",
+    "slovian": "ěskyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | accusative - vinьnik (kogo? čьto?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinię",
+    "slovian": "ěskyn'ǫ"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | genitive - rodilьnik (kogo? čego?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskini",
+    "slovian": "ěskyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskini",
+    "slovian": "ěskyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | dative - měrьnik (komu? čemu?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskini",
+    "slovian": "ěskyn'i"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinią",
+    "slovian": "ěskyn'ejǫ"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | vocative - zovanьnik (o!) | singular - poedinьna ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinio",
+    "slovian": "ěskyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | nominative - jimenovьnik (koto? čьto?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinie",
+    "slovian": "ěskyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | accusative - vinьnik (kogo? čьto?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinie",
+    "slovian": "ěskyn'e"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | genitive - rodilьnik (kogo? čego?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskiń",
+    "slovian": "ěskyn'ь"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | locative - městьnik (ob kom? ob čem? kude? vu? na? pri?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskiniach",
+    "slovian": "ěskyn'ah"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | dative - měrьnik (komu? čemu?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskiniom",
+    "slovian": "ěskyn'am"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | instrumental - orǫdьnik (su kymь? su čimь? su jakymь?) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskiniami",
+    "slovian": "ěskyn'ami"
+  },
+  {
+    "type and case": "noun - jimenьnik: \"jaskyn'i\" | vocative - zovanьnik (o!) | plural - munoga ličьba | type feminine (inanimate) - rod'ajь ženьsky (neživotьny)",
+    "context": "cave",
+    "polish": "jaskinie",
+    "slovian": "ěskyn'e"
   },
   {
     "type and case": "noun - jimenьnik: \"pis\" | nominative - jimenovьnik (koto? čьto?) | singular - poedinьna ličьba | type masculine (animate) - rod'ajь mǫžьsky (životьny)",
