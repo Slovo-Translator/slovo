@@ -1,4 +1,3 @@
-<script>
 let plToSlo = {}, sloToPl = {};
 let wordTypes = {};
 
@@ -366,4 +365,3 @@ function debounce(func, wait) {
 }
 
 window.onload = init;
-</script>
