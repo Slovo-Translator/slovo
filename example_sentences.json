@@ -1,13 +1,18 @@
 [
   {
-    "context": "my mother is at home",
+    "context": "My mother is at home.",
     "polish": "Moja matka jest w domu.",
     "slovian": "Moja mati estь vu domě."
   },
   {
-    "context": "how much does this bread cost",
+    "context": "What is the price of bread?",
+    "polish": "Jaka jest cena chleba?",
+    "slovian": "Jaka estь cěna hlěba?"
+  },
+  {
+    "context": "How much does this bread cost?",
     "polish": "Ile kosztuje ten chleb?",
-    "slovian": "Koliko stojitь toji hlěb?"
+    "slovian": "Jaka estь cěna hlěba?"
   },
   {
     "context": "This great burden must be borne.",
@@ -33,5 +38,10 @@
     "context": "Those who live by the sword die by the sword.",
     "polish": "Kto mieczem wojuje, ten od miecza zginie.",
     "slovian": "Koto mečemь bojujetь, toji ot meča jizgynetь."
+  },
+  {
+    "context": "Take food from them.",
+    "polish": "Bierz jedzenie od nich.",
+    "slovian": "Beri jedenьje ot njih."
   }
 ]
