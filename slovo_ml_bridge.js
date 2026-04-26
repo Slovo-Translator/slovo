@@ -530,11 +530,32 @@
                     const d = (ORDER[a.type] || 99) - (ORDER[b.type] || 99);
                     return d || a.index - b.index;
                 });
-                const words = sorted.map((g, idx) => idx === 0 ? applyCaseLike(firstCaseSource, g.target) : g.target.toLocaleLowerCase("pl"));
-                out.push(words.join(" "));
-                i = j - 1;
-                changed = true;
-                continue;
+                const words = sorted.map((g, idx) =>
+    idx === 0
+        ? applyCaseLike(firstCaseSource, g.target)
+        : g.target.toLocaleLowerCase("pl")
+);
+
+out.push(words.join(" "));
+
+/*
+ * Jeżeli po przestawionej grupie stoi kolejne słowo,
+ * trzeba ręcznie oddać spację, bo podczas zbierania grupy
+ * spacje między wyrazami zostały pominięte.
+ *
+ * Bez tego wychodziło:
+ * Dobry pisestь
+ *
+ * zamiast:
+ * Dobry pis estь
+ */
+if (j < tokens.length && isWord(tokens[j])) {
+    out.push(" ");
+}
+
+i = j - 1;
+changed = true;
+continue;
             }
 
             // 3. Pojedynczy wyraz.
