@@ -1,6 +1,6 @@
 /* slovo_ml_bridge.js
  * Stabilna warstwa ML + JSON + odmiana + szyk części mowy.
- * v6: tłumaczy także tekst wklejany i układa grupy: liczebnik → przymiotnik → rzeczownik.
+ * v8: lepsze rozpoznawanie przypadków przez całą grupę: przyimek + zaimek + liczebnik + rzeczownik.
  *
  * Ładuj w index.html dokładnie w tej kolejności:
  * <script src="slovo_model.js"></script>
@@ -43,7 +43,7 @@
     const URL_RE = /(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
     const TERMINAL_PUNCT_RE = /([.!?…]+)$/u;
 
-    const ORDER = { numeral: 1, adjective: 2, noun: 3 };
+    const ORDER = { determiner: 0, numeral: 1, adjective: 2, noun: 3 };
 
     const CASE_BY_PREPOSITION = {
         "do": "genitive", "od": "genitive", "bez": "genitive", "dla": "genitive", "u": "genitive",
@@ -53,6 +53,27 @@
         "z": "instrumental", "ze": "instrumental", "nad": "instrumental", "pod": "instrumental", "przed": "instrumental",
         "między": "instrumental", "pomiędzy": "instrumental", "za": "instrumental"
     };
+
+
+    const BUILTIN_PL2SLO = [
+        { polish: "tych", slovian: "tyh", typeCase: "determiner - zajimenьnik | genitive - rodilьnik | plural - munoga ličьba", priority: 950 },
+        { polish: "tym", slovian: "tym", typeCase: "determiner - zajimenьnik | dative - měrьnik | plural - munoga ličьba", priority: 930 },
+        { polish: "tymi", slovian: "tymi", typeCase: "determiner - zajimenьnik | instrumental - orǫdьnik | plural - munoga ličьba", priority: 930 },
+        { polish: "te", slovian: "ti", typeCase: "determiner - zajimenьnik | nominative - jimenovьnik | plural - munoga ličьba", priority: 920 },
+        { polish: "ci", slovian: "ti", typeCase: "determiner - zajimenьnik | nominative - jimenovьnik | plural - munoga ličьba", priority: 920 },
+        { polish: "tego", slovian: "togo", typeCase: "determiner - zajimenьnik | genitive - rodilьnik | singular - poedinьna ličьba", priority: 930 },
+        { polish: "temu", slovian: "tomu", typeCase: "determiner - zajimenьnik | dative - měrьnik | singular - poedinьna ličьba", priority: 930 },
+        { polish: "tym", slovian: "tymь", typeCase: "determiner - zajimenьnik | instrumental - orǫdьnik | singular - poedinьna ličьba", priority: 900 },
+        { polish: "ten", slovian: "tojь", typeCase: "determiner - zajimenьnik | nominative - jimenovьnik | singular - poedinьna ličьba", priority: 900 },
+        { polish: "ta", slovian: "ta", typeCase: "determiner - zajimenьnik | nominative - jimenovьnik | singular - poedinьna ličьba", priority: 900 },
+        { polish: "to", slovian: "to", typeCase: "determiner - zajimenьnik | nominative - jimenovьnik | singular - poedinьna ličьba", priority: 900 },
+
+        { polish: "dwóch", slovian: "duvoh", typeCase: "numeral - ličebьnik | genitive - rodilьnik | plural - munoga ličьba", priority: 960 },
+        { polish: "dwu", slovian: "duvoh", typeCase: "numeral - ličebьnik | genitive - rodilьnik | plural - munoga ličьba", priority: 950 },
+        { polish: "dwoma", slovian: "duvoma", typeCase: "numeral - ličebьnik | instrumental - orǫdьnik | plural - munoga ličьba", priority: 950 },
+        { polish: "dwa", slovian: "dva", typeCase: "numeral - ličebьnik | nominative - jimenovьnik | plural - munoga ličьba", priority: 940 },
+        { polish: "dwie", slovian: "dvě", typeCase: "numeral - ličebьnik | nominative - jimenovьnik | plural - munoga ličьba", priority: 940 }
+    ];
 
     const ACCUSATIVE_VERBS = new Set([
         "mam", "masz", "ma", "mamy", "macie", "mają",
@@ -169,7 +190,10 @@
 
         if (info.includes("phrase") || info.includes("rěčen")) meta.isPhrase = true;
 
-        if (info.includes("noun") || info.includes("jimenьnik") || info.includes("imenьnik") || info.includes("rzeczownik")) {
+        if (info.includes("determiner") || info.includes("pronoun") || info.includes("zajimenьnik") || info.includes("zaimek")) {
+            meta.wordClass = "determiner";
+        }
+        if (meta.wordClass !== "determiner" && (info.includes("noun") || info.includes("jimenьnik") || info.includes("imenьnik") || info.includes("rzeczownik"))) {
             meta.wordClass = "noun";
         }
         if (info.includes("adjective") || info.includes("pridavьnik") || info.includes("pridavnik") || info.includes("priloga") || info.includes("przymiotnik")) {
@@ -214,7 +238,7 @@
     function addLemmaForm(map, candidate) {
         const meta = candidate && candidate.meta;
         if (!meta || !meta.lemma || !meta.grammaticalCase) return;
-        if (!ORDER[meta.wordClass]) return;
+        if (!(meta.wordClass in ORDER)) return;
         const lemmaMap = map === BRIDGE.slo2pl ? BRIDGE.formsByLemmaSlo2Pl : BRIDGE.formsByLemmaPl2Slo;
         const keys = [
             lemmaFormKey(meta.lemma, meta.grammaticalCase, meta.number || ""),
@@ -265,6 +289,79 @@
         return "";
     }
 
+    function getStaticWordClass(word, direction) {
+        const list = mapForDirection(direction || "pl2slo").get(normalizeKey(word));
+        if (!list || !list.length) return "";
+
+        for (const cand of list) {
+            const type = cand && cand.meta && cand.meta.wordClass;
+            if (type && type !== "unknown") return type;
+        }
+
+        return "";
+    }
+
+    function canSkipForCaseSearch(word, direction) {
+        const norm = normalizeKey(word);
+        if (!norm) return false;
+        if (CASE_BY_PREPOSITION[norm]) return false;
+
+        const type = getStaticWordClass(norm, direction || "pl2slo");
+        return type === "determiner" || type === "numeral" || type === "adjective";
+    }
+
+    function findCaseFromEarlierPreposition(tokens, startIndex, direction) {
+        let seenWords = 0;
+
+        for (let i = startIndex - 1; i >= 0; i--) {
+            const token = tokens[i];
+
+            if (isSpace(token)) continue;
+
+            if (!isWord(token)) {
+                if (seenWords === 0) continue;
+                break;
+            }
+
+            const word = normalizeKey(token);
+            seenWords++;
+
+            if (CASE_BY_PREPOSITION[word]) {
+                return CASE_BY_PREPOSITION[word];
+            }
+
+            if (canSkipForCaseSearch(word, direction)) {
+                if (seenWords <= 5) continue;
+            }
+
+            break;
+        }
+
+        return null;
+    }
+
+    function findNumberFromNearbyWords(tokens, startIndex, direction) {
+        for (let i = startIndex - 1, seen = 0; i >= 0 && seen < 4; i--) {
+            if (isSpace(tokens[i])) continue;
+            if (!isWord(tokens[i])) break;
+            seen++;
+            const list = mapForDirection(direction || "pl2slo").get(normalizeKey(tokens[i]));
+            if (list && list.some(c => c.meta && c.meta.number === "plural")) return "plural";
+            if (list && list.some(c => c.meta && c.meta.wordClass === "numeral")) return "plural";
+        }
+
+        for (let i = startIndex + 1, seen = 0; i < tokens.length && seen < 3; i++) {
+            if (isSpace(tokens[i])) continue;
+            if (!isWord(tokens[i])) break;
+            seen++;
+            const list = mapForDirection(direction || "pl2slo").get(normalizeKey(tokens[i]));
+            if (list && list.some(c => c.meta && c.meta.number === "plural")) return "plural";
+            if (list && list.some(c => c.meta && c.meta.wordClass === "numeral")) return "plural";
+        }
+
+        return null;
+    }
+
     function inferPolishCaseFromEnding(word) {
         const w = normalizeKey(word);
         if (!w) return null;
@@ -281,14 +378,32 @@
         const byEnding = inferPolishCaseFromEnding(sourceText);
         const prev1 = getPreviousWord(tokens, startIndex, 1);
         const prev2 = getPreviousWord(tokens, startIndex, 2);
-        if (prev1 && CASE_BY_PREPOSITION[prev1]) {
+
+        const contextualPrepCase = findCaseFromEarlierPreposition(tokens || [], startIndex || 0, direction);
+        if (contextualPrepCase) {
             if ((prev1 === "z" || prev1 === "ze") && byEnding === "genitive") return "genitive";
-            return CASE_BY_PREPOSITION[prev1];
+            return contextualPrepCase;
         }
+
         if (prev2 && prev1 && normalizeKey(prev2 + " " + prev1) === "z powodu") return "genitive";
         if (prev1 && ACCUSATIVE_VERBS.has(prev1)) return "accusative";
         if (byEnding) return byEnding;
         return "nominative";
+    }
+
+    function inferWantedNumber(candidate, tokens, startIndex, sourceText, direction) {
+        if (!candidate || !candidate.meta) return null;
+
+        const direct = candidate.meta.number;
+        const contextual = findNumberFromNearbyWords(tokens || [], startIndex || 0, direction);
+
+        if (contextual === "plural") return "plural";
+        if (direct) return direct;
+
+        const w = normalizeKey(sourceText);
+        if (/(owie|ami|ach|om|ów)$/.test(w)) return "plural";
+
+        return null;
     }
 
     function candidateScore(candidate, sourceText, tokens, startIndex, direction) {
@@ -313,17 +428,54 @@
         return best;
     }
 
-    function lookupLemmaForm(candidate, wantedCase, direction) {
+
+    function overrideInflectedClosedClass(candidate, wantedCase, wantedNumber) {
+        if (!candidate || !candidate.meta || !wantedCase) return null;
+
+        const source = normalizeKey(candidate.source);
+        const target = normalizeKey(candidate.target);
+        const plural = wantedNumber === "plural" || candidate.meta.number === "plural";
+
+        if (candidate.meta.wordClass === "determiner") {
+            if (wantedCase === "genitive" && plural) {
+                if (["ten", "ta", "to", "te", "ci", "tych", "togo", "ti"].includes(source) || ["tojь", "ta", "to", "ti", "tyh", "togo"].includes(target)) {
+                    return { ...candidate, target: "tyh", meta: { ...candidate.meta, grammaticalCase: "genitive", number: "plural" } };
+                }
+            }
+        }
+
+        if (candidate.meta.wordClass === "numeral") {
+            if (wantedCase === "genitive" && plural) {
+                if (["dwa", "dwie", "dwóch", "dwu", "dvoh", "duvoh"].includes(source) || ["dva", "dvě", "dvoh", "duvoh"].includes(target)) {
+                    return { ...candidate, target: "duvoh", meta: { ...candidate.meta, grammaticalCase: "genitive", number: "plural" } };
+                }
+            }
+            if (wantedCase === "instrumental" && plural) {
+                if (["dwa", "dwie", "dwóch", "dwoma", "dwu", "duvoh", "duvoma"].includes(source) || ["dva", "dvě", "duvoh", "duvoma"].includes(target)) {
+                    return { ...candidate, target: "duvoma", meta: { ...candidate.meta, grammaticalCase: "instrumental", number: "plural" } };
+                }
+            }
+        }
+
+        return null;
+    }
+
+    function lookupLemmaForm(candidate, wantedCase, wantedNumber, direction) {
         if (!candidate || !candidate.meta || !candidate.meta.lemma || !wantedCase) return null;
-        if (!ORDER[candidate.meta.wordClass]) return null;
+        if (!(candidate.meta.wordClass in ORDER)) return null;
         const lemmaMap = direction === "slo2pl" ? BRIDGE.formsByLemmaSlo2Pl : BRIDGE.formsByLemmaPl2Slo;
-        const number = candidate.meta.number || "singular";
+        const number = wantedNumber || candidate.meta.number || "singular";
         const keys = [
             lemmaFormKey(candidate.meta.lemma, wantedCase, number),
+            lemmaFormKey(candidate.meta.lemma, wantedCase, candidate.meta.number || ""),
             lemmaFormKey(candidate.meta.lemma, wantedCase, "singular"),
+            lemmaFormKey(candidate.meta.lemma, wantedCase, "plural"),
             lemmaFormKey(candidate.meta.lemma, wantedCase, "")
         ];
+        const seen = new Set();
         for (const key of keys) {
+            if (seen.has(key)) continue;
+            seen.add(key);
             const list = lemmaMap.get(key);
             if (list && list.length) return list[0];
         }
@@ -332,10 +484,18 @@
 
     function inflectCandidate(candidate, sourceText, tokens, startIndex, direction) {
         if (!candidate || direction === "slo2pl") return candidate;
-        const wanted = inferWantedCase(tokens || [], startIndex || 0, sourceText, direction);
-        if (!wanted) return candidate;
-        if (candidate.meta && candidate.meta.grammaticalCase === wanted) return candidate;
-        const form = lookupLemmaForm(candidate, wanted, direction);
+        const wantedCase = inferWantedCase(tokens || [], startIndex || 0, sourceText, direction);
+        const wantedNumber = inferWantedNumber(candidate, tokens || [], startIndex || 0, sourceText, direction);
+        if (!wantedCase) return candidate;
+
+        const closedClassOverride = overrideInflectedClosedClass(candidate, wantedCase, wantedNumber);
+        if (closedClassOverride) return closedClassOverride;
+
+        if (candidate.meta && candidate.meta.grammaticalCase === wantedCase) {
+            if (!wantedNumber || !candidate.meta.number || candidate.meta.number === wantedNumber) return candidate;
+        }
+
+        const form = lookupLemmaForm(candidate, wantedCase, wantedNumber, direction);
         return form || candidate;
     }
 
@@ -390,6 +550,22 @@
                 }
             }
             for (const fileInfo of DATA_FILES) absorbRows(await fetchJsonMaybe(fileInfo.url), fileInfo);
+
+            for (const item of BUILTIN_PL2SLO) {
+                addToMap(BRIDGE.pl2slo, item.polish, item.slovian, {
+                    typeCase: item.typeCase,
+                    context: "built-in grammar form",
+                    source: "builtin",
+                    priority: item.priority || 900
+                });
+                addToMap(BRIDGE.slo2pl, item.slovian, item.polish, {
+                    typeCase: item.typeCase,
+                    context: "built-in grammar form",
+                    source: "builtin",
+                    priority: item.priority || 900
+                });
+            }
+
             try {
                 if (typeof plToSlo !== "undefined") {
                     Object.keys(plToSlo || {}).forEach(pl => addToMap(BRIDGE.pl2slo, pl, plToSlo[pl], { typeCase: "", source: "script.js", priority: 50 }));
@@ -516,7 +692,7 @@
                 if (!isWord(tokens[j])) break;
                 const cand = lookupWordCandidate(tokens[j], tokens, j, direction);
                 const type = cand && cand.meta && cand.meta.wordClass;
-                if (!(type === "noun" || type === "adjective" || type === "numeral")) break;
+                if (!(type === "noun" || type === "adjective" || type === "numeral" || type === "determiner")) break;
                 group.push({ source: tokens[j], target: cand.target, type, index: group.length });
                 let k = j + 1;
                 while (k < tokens.length && isSpace(tokens[k])) k++;
@@ -527,35 +703,15 @@
             if (direction === "pl2slo" && group.length > 1 && group.some(g => g.type === "noun") && group.some(g => g.type !== "noun")) {
                 const firstCaseSource = group[0].source;
                 const sorted = group.slice().sort((a, b) => {
-                    const d = (ORDER[a.type] || 99) - (ORDER[b.type] || 99);
+                    const d = ((a.type in ORDER) ? ORDER[a.type] : 99) - ((b.type in ORDER) ? ORDER[b.type] : 99);
                     return d || a.index - b.index;
                 });
-                const words = sorted.map((g, idx) =>
-    idx === 0
-        ? applyCaseLike(firstCaseSource, g.target)
-        : g.target.toLocaleLowerCase("pl")
-);
-
-out.push(words.join(" "));
-
-/*
- * Jeżeli po przestawionej grupie stoi kolejne słowo,
- * trzeba ręcznie oddać spację, bo podczas zbierania grupy
- * spacje między wyrazami zostały pominięte.
- *
- * Bez tego wychodziło:
- * Dobry pisestь
- *
- * zamiast:
- * Dobry pis estь
- */
-if (j < tokens.length && isWord(tokens[j])) {
-    out.push(" ");
-}
-
-i = j - 1;
-changed = true;
-continue;
+                const words = sorted.map((g, idx) => idx === 0 ? applyCaseLike(firstCaseSource, g.target) : g.target.toLocaleLowerCase("pl"));
+                out.push(words.join(" "));
+                if (j < tokens.length && isWord(tokens[j])) out.push(" ");
+                i = j - 1;
+                changed = true;
+                continue;
             }
 
             // 3. Pojedynczy wyraz.
