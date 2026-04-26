@@ -86,27 +86,225 @@ const uiTranslations = {
     ar: { title: "مترجم Slovo", from: "من:", to: "إلى:", paste: "لصق", clear: "مسح", copy: "نسخ", placeholder: "أدخل النص..." }
 };
 
-function populateLanguageLists(uiLang, userLocale) {
-    const s1 = document.getElementById('srcLang'), s2 = document.getElementById('tgtLang');
-    if (!s1 || !s2) return;
-    let dn;
-    try { dn = new Intl.DisplayNames([userLocale], { type: 'language' }); } catch (e) {}
+// --- LOCAL STORAGE + DOMYŚLNY JĘZYK INTERFEJSU I TŁUMACZENIA ---
+const STORAGE_KEYS = {
+    uiLang: "uiLang",
+    srcLang: "srcLang",
+    tgtLang: "tgtLang"
+};
 
-    [s1, s2].forEach(s => {
-        s.options.length = 0;
-        languageData.forEach(l => {
+function safeLocalGet(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+}
+
+function safeLocalSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+}
+
+function getBrowserLocales() {
+    const list = [];
+    try {
+        if (Array.isArray(navigator.languages)) {
+            navigator.languages.forEach(l => {
+                if (l && !list.includes(l)) list.push(l);
+            });
+        }
+        if (navigator.language && !list.includes(navigator.language)) {
+            list.push(navigator.language);
+        }
+    } catch (e) {}
+    if (!list.length) list.push("en");
+    return list;
+}
+
+function buildLocaleCandidates(locale) {
+    const raw = String(locale || "").trim().replace("_", "-");
+    if (!raw) return [];
+
+    const lower = raw.toLowerCase();
+    const base = lower.split("-")[0];
+
+    if (lower === "zh" || lower.includes("zh-hans") || lower.includes("zh-cn") || lower.includes("zh-sg")) {
+        return ["zh-CN", "zh"];
+    }
+
+    if (lower.includes("zh-hant") || lower.includes("zh-tw") || lower.includes("zh-hk") || lower.includes("zh-mo")) {
+        return ["zh-TW", "zh"];
+    }
+
+    if (lower.includes("sr-latn")) {
+        return ["sr-Latn", "sr"];
+    }
+
+    return [...new Set([raw, lower, base].filter(Boolean))];
+}
+
+function findSupportedFromLocales(locales, supportedValues, fallback) {
+    const supported = new Set(supportedValues);
+    for (const locale of locales) {
+        const candidates = buildLocaleCandidates(locale);
+        for (const candidate of candidates) {
+            if (supported.has(candidate)) return candidate;
+        }
+    }
+    return fallback;
+}
+
+function isSupportedLanguageCode(code) {
+    return languageData.some(l => l.code === code);
+}
+
+function isSupportedUILanguage(code) {
+    return !!uiTranslations[code];
+}
+
+function getStoredLanguage(key) {
+    const value = safeLocalGet(key);
+    if (value && isSupportedLanguageCode(value)) return value;
+    return null;
+}
+
+function getStoredUILanguage() {
+    const value = safeLocalGet(STORAGE_KEYS.uiLang);
+    if (value && isSupportedUILanguage(value)) return value;
+    return null;
+}
+
+function detectDefaultUILanguage() {
+    const stored = getStoredUILanguage();
+    if (stored) return stored;
+    return findSupportedFromLocales(getBrowserLocales(), Object.keys(uiTranslations), "en");
+}
+
+function detectDefaultSourceLanguage() {
+    const stored = getStoredLanguage(STORAGE_KEYS.srcLang);
+    if (stored) return stored;
+
+    const detected = findSupportedFromLocales(getBrowserLocales(), languageData.map(l => l.code), "pl");
+    return detected === "slo" ? "pl" : detected;
+}
+
+function detectDefaultTargetLanguage(srcLang) {
+    const stored = getStoredLanguage(STORAGE_KEYS.tgtLang);
+    if (stored && stored !== srcLang) return stored;
+    return srcLang === "slo" ? "pl" : "slo";
+}
+
+function getDisplayLocale(uiLang) {
+    const locales = getBrowserLocales();
+
+    if (uiLang === "zh") {
+        const chinese = locales.find(l => String(l).toLowerCase().startsWith("zh"));
+        return chinese || "zh-CN";
+    }
+
+    if (uiLang === "sr-Latn") return "sr-Latn";
+    return locales[0] || uiLang || "en";
+}
+
+function normalizeSelectPair(src, tgt) {
+    let source = isSupportedLanguageCode(src) ? src : "pl";
+    let target = isSupportedLanguageCode(tgt) ? tgt : "slo";
+
+    if (source === target) {
+        target = source === "slo" ? "pl" : "slo";
+    }
+
+    return { source, target };
+}
+
+function populateLanguageLists(uiLang, userLocale) {
+    const s1 = document.getElementById('srcLang');
+    const s2 = document.getElementById('tgtLang');
+    if (!s1 || !s2) return;
+
+    const oldSrc = s1.value;
+    const oldTgt = s2.value;
+
+    let dn;
+    try {
+        dn = new Intl.DisplayNames([userLocale || getDisplayLocale(uiLang)], { type: 'language' });
+    } catch (e) {
+        dn = null;
+    }
+
+    [s1, s2].forEach(select => {
+        select.options.length = 0;
+
+        languageData.forEach(lang => {
             let name = "";
-            if (l.code === 'slo') {
-                name = l[uiLang] || l.en || l.slo;
+
+            if (lang.code === "slo") {
+                // Tu specjalnie nie używamy Intl.DisplayNames, bo "slo" to język projektu.
+                // Dla niemieckiego ma być: Slawisch.
+                name = lang[uiLang] || (uiLang === "zh" ? lang["zh-CN"] : "") || lang.en || lang.slo || lang.code;
             } else if (dn) {
-                try { name = dn.of(l.code); } catch (e) { name = l[uiLang] || l.en || l.code; }
+                try {
+                    name = dn.of(lang.code);
+                } catch (e) {
+                    name = lang[uiLang] || (uiLang === "zh" ? lang["zh-CN"] : "") || lang.en || lang.code;
+                }
             } else {
-                name = l[uiLang] || l.en || l.code;
+                name = lang[uiLang] || (uiLang === "zh" ? lang["zh-CN"] : "") || lang.en || lang.code;
             }
+
+            if (!name) name = lang.code;
             name = name.charAt(0).toUpperCase() + name.slice(1);
-            s.add(new Option(name, l.code));
+            select.add(new Option(name, lang.code));
         });
     });
+
+    if (oldSrc && isSupportedLanguageCode(oldSrc)) s1.value = oldSrc;
+    if (oldTgt && isSupportedLanguageCode(oldTgt)) s2.value = oldTgt;
+}
+
+function applyUI(lang) {
+    const uiLang = uiTranslations[lang] ? lang : "en";
+    const ui = uiTranslations[uiLang] || uiTranslations.en;
+
+    const idToKey = {
+        "ui-title": "title",
+        "ui-label-from": "from",
+        "ui-label-to": "to",
+        "ui-paste": "paste",
+        "ui-clear": "clear",
+        "ui-copy": "copy"
+    };
+
+    Object.keys(idToKey).forEach(id => {
+        const el = document.getElementById(id);
+        const key = idToKey[id];
+        if (el && ui[key]) el.innerText = ui[key];
+    });
+
+    const input = document.getElementById("userInput");
+    if (input && ui.placeholder) input.placeholder = ui.placeholder;
+
+    if (ui.title) document.title = ui.title;
+
+    const html = document.documentElement;
+    if (html) {
+        html.lang = uiLang === "slo" ? "sla" : uiLang;
+        html.dir = uiLang === "ar" ? "rtl" : "ltr";
+    }
+}
+
+function setInterfaceLanguage(lang) {
+    if (!isSupportedUILanguage(lang)) return;
+
+    safeLocalSet(STORAGE_KEYS.uiLang, lang);
+
+    const displayLocale = getDisplayLocale(lang);
+    const src = document.getElementById('srcLang');
+    const tgt = document.getElementById('tgtLang');
+    const currentSrc = src ? src.value : null;
+    const currentTgt = tgt ? tgt.value : null;
+
+    applyUI(lang);
+    populateLanguageLists(lang, displayLocale);
+
+    if (src && currentSrc && isSupportedLanguageCode(currentSrc)) src.value = currentSrc;
+    if (tgt && currentTgt && isSupportedLanguageCode(currentTgt)) tgt.value = currentTgt;
 }
 
 function getCase(word) {
@@ -238,7 +436,6 @@ function shouldCorrectInput(text, src, tgt) {
     if (text.trim().length < 4) return false;
     return true;
 }
-
 
 const LOCAL_CORRECTION_MAX_DISTANCE = 2;
 const LOCAL_CORRECTION_MIN_WORD_LENGTH = 4;
@@ -394,16 +591,12 @@ async function getGoogleCorrectedInput(text, lang) {
     const key = `${lang}::${original}`;
     if (correctionCache.has(key)) return correctionCache.get(key);
 
-    // Polski poprawiamy lokalnie z osnova/vuzor. Nie odpalamy Google PL→PL,
-    // bo często nic nie poprawia, a potrafi blokować tłumaczenie po wklejeniu tekstu.
     let corrected = localCorrectText(original, lang);
     if (lang === "pl") {
         correctionCache.set(key, corrected);
         return corrected;
     }
 
-    // Dla innych języków próbujemy Google, ale z krótkim limitem czasu.
-    // Jeżeli Google nie odpowie szybko, tłumaczenie idzie dalej bez zawieszenia.
     if (normalizeCorrectionCompare(corrected) === normalizeCorrectionCompare(original)) {
         corrected = await withTimeout(googleRaw(original, lang, lang), 900, original);
         if (!corrected || !corrected.trim()) corrected = original;
@@ -595,11 +788,18 @@ async function loadDictionaries() {
                         const slo = item.slovian.toLowerCase().trim();
                         plToSlo[pl] = item.slovian.trim();
                         sloToPl[slo] = item.polish.trim();
+
                         if (item["type and case"]) {
                             const info = item["type and case"].toLowerCase();
-                            if (info.includes("jimenьnik") || info.includes("imenьnik") || info.includes("noun") || info.includes("rzeczownik")) wordTypes[slo] = "noun";
-                            if (info.includes("priloga") || info.includes("pridavьnik") || info.includes("pridavnik") || info.includes("adjective") || info.includes("przymiotnik")) wordTypes[slo] = "adjective";
-                            if (info.includes("ličьnik") || info.includes("numeral") || info.includes("liczebnik")) wordTypes[slo] = "numeral";
+                            if (info.includes("jimenьnik") || info.includes("imenьnik") || info.includes("noun") || info.includes("rzeczownik")) {
+                                wordTypes[slo] = "noun";
+                            }
+                            if (info.includes("priloga") || info.includes("pridavьnik") || info.includes("pridavnik") || info.includes("adjective") || info.includes("przymiotnik")) {
+                                wordTypes[slo] = "adjective";
+                            }
+                            if (info.includes("ličьnik") || info.includes("ličebьnik") || info.includes("liczebnik") || info.includes("numeral")) {
+                                wordTypes[slo] = "numeral";
+                            }
                         }
                     }
                 });
@@ -613,61 +813,79 @@ async function loadDictionaries() {
 }
 
 async function init() {
-    const sysLocale = navigator.language || 'en';
-    const sysLang = sysLocale.split('-')[0];
-    const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
-    applyUI(uiKey);
-    populateLanguageLists(uiKey, sysLocale);
+    const uiKey = detectDefaultUILanguage();
+    const displayLocale = getDisplayLocale(uiKey);
 
-    const savedSrc = localStorage.getItem('srcLang') || (languageData.some(l => l.code === sysLang) ? sysLang : 'pl');
-    const savedTgt = localStorage.getItem('tgtLang') || 'slo';
+    applyUI(uiKey);
+    populateLanguageLists(uiKey, displayLocale);
+
+    const defaultSrc = detectDefaultSourceLanguage();
+    const defaultTgt = detectDefaultTargetLanguage(defaultSrc);
+    const pair = normalizeSelectPair(defaultSrc, defaultTgt);
+
     const srcSelect = document.getElementById('srcLang');
     const tgtSelect = document.getElementById('tgtLang');
 
+    if (srcSelect) srcSelect.value = pair.source;
+    if (tgtSelect) tgtSelect.value = pair.target;
+
     if (srcSelect) {
-        srcSelect.value = savedSrc;
         srcSelect.addEventListener('change', (e) => {
-            localStorage.setItem('srcLang', e.target.value);
+            const selectedSrc = e.target.value;
+            let selectedTgt = tgtSelect ? tgtSelect.value : "slo";
+
+            if (selectedSrc === selectedTgt) {
+                selectedTgt = selectedSrc === "slo" ? "pl" : "slo";
+                if (tgtSelect) tgtSelect.value = selectedTgt;
+                safeLocalSet(STORAGE_KEYS.tgtLang, selectedTgt);
+            }
+
+            safeLocalSet(STORAGE_KEYS.srcLang, selectedSrc);
             translate();
         });
     }
 
     if (tgtSelect) {
-        tgtSelect.value = savedTgt;
         tgtSelect.addEventListener('change', (e) => {
-            localStorage.setItem('tgtLang', e.target.value);
+            const selectedTgt = e.target.value;
+            let selectedSrc = srcSelect ? srcSelect.value : "pl";
+
+            if (selectedSrc === selectedTgt) {
+                selectedSrc = selectedTgt === "slo" ? "pl" : "slo";
+                if (srcSelect) srcSelect.value = selectedSrc;
+                safeLocalSet(STORAGE_KEYS.srcLang, selectedSrc);
+            }
+
+            safeLocalSet(STORAGE_KEYS.tgtLang, selectedTgt);
             translate();
         });
     }
 
     await loadDictionaries();
+
     const userInput = document.getElementById('userInput');
     if (userInput) userInput.addEventListener('input', debounce(translate, 700));
-}
-
-function applyUI(lang) {
-    const ui = uiTranslations[lang] || uiTranslations.en;
-    const ids = ['ui-title', 'ui-label-from', 'ui-label-to', 'ui-paste', 'ui-clear', 'ui-copy'];
-    ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = ui[id.replace('ui-', '')] || "";
-    });
-    const input = document.getElementById('userInput');
-    if (input) input.placeholder = ui.placeholder;
 }
 
 function swapLanguages() {
     const src = document.getElementById('srcLang');
     const tgt = document.getElementById('tgtLang');
+    if (!src || !tgt) return;
+
     [src.value, tgt.value] = [tgt.value, src.value];
-    localStorage.setItem('srcLang', src.value);
-    localStorage.setItem('tgtLang', tgt.value);
+
+    safeLocalSet(STORAGE_KEYS.srcLang, src.value);
+    safeLocalSet(STORAGE_KEYS.tgtLang, tgt.value);
+
     translate();
 }
 
 function clearText() {
-    document.getElementById('userInput').value = "";
-    document.getElementById('resultOutput').innerText = "";
+    const input = document.getElementById('userInput');
+    const output = document.getElementById('resultOutput');
+
+    if (input) input.value = "";
+    if (output) output.innerText = "";
     hideCorrectionSuggestion();
 }
 
@@ -685,7 +903,9 @@ async function pasteText() {
             input.dispatchEvent(new Event('input', { bubbles: true }));
         }
         if (typeof translate === 'function') await translate();
-    } catch(e) { console.log("Clipboard error", e); }
+    } catch(e) {
+        console.log("Clipboard error", e);
+    }
 }
 
 function debounce(func, wait) {
@@ -699,4 +919,5 @@ function debounce(func, wait) {
 window.prepareInputForTranslation = prepareInputForTranslation;
 window.hideCorrectionSuggestion = hideCorrectionSuggestion;
 window.googleRaw = googleRaw;
+window.setInterfaceLanguage = setInterfaceLanguage;
 window.onload = init;
