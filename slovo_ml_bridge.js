@@ -48,6 +48,198 @@
     const USE_REORDER_SMART = false;
 
     const MAX_PHRASE_WORDS = 10;
+    // --- KOREKTA WEJŚCIA PRZEZ GOOGLE TRANSLATE ---
+    // Działa tylko wtedy, gdy język źródłowy NIE jest słowiański.
+    // Przykład: EN -> EN jako korekta -> PL -> SLO.
+    const ENABLE_GOOGLE_INPUT_CORRECTION = true;
+    const AUTO_USE_GOOGLE_CORRECTION = true;
+    const CORRECTION_MIN_LENGTH = 4;
+    const correctionCache = new Map();
+    let lastCorrectionKey = "";
+
+    function normalizeCorrectionCompare(text) {
+        return String(text || "")
+            .normalize("NFC")
+            .replace(/[“”„]/g, '"')
+            .replace(/[’]/g, "'")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLocaleLowerCase("pl");
+    }
+
+    function shouldCorrectInput(text, src, tgt) {
+        if (!ENABLE_GOOGLE_INPUT_CORRECTION) return false;
+        if (!text || !text.trim()) return false;
+        if (src === "slo") return false;
+        if (String(text).trim().length < CORRECTION_MIN_LENGTH) return false;
+        return true;
+    }
+
+    async function googleRawForCorrection(text, s, t) {
+        try {
+            if (typeof googleRaw === "function") {
+                return await googleRaw(text, s, t);
+            }
+
+            if (typeof google === "function" && s !== t) {
+                return await google(text, s, t);
+            }
+
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (!Array.isArray(data) || !Array.isArray(data[0])) return text;
+
+            return data[0]
+                .map(part => Array.isArray(part) ? (part[0] || "") : "")
+                .join("");
+        } catch (e) {
+            console.warn("Google correction error:", e);
+            return text;
+        }
+    }
+
+    async function getGoogleCorrectedInput(text, lang) {
+        const original = String(text || "");
+        const key = `${lang}::${original}`;
+
+        if (correctionCache.has(key)) return correctionCache.get(key);
+
+        let corrected = original;
+
+        try {
+            corrected = await googleRawForCorrection(original, lang, lang);
+            if (!corrected || !corrected.trim()) corrected = original;
+        } catch (e) {
+            corrected = original;
+        }
+
+        correctionCache.set(key, corrected);
+        return corrected;
+    }
+
+    function ensureCorrectionBox() {
+        let box = document.getElementById("correctionSuggestionBox");
+        if (box) return box;
+
+        const input = document.getElementById("userInput");
+        if (!input || !input.parentNode) return null;
+
+        box = document.createElement("div");
+        box.id = "correctionSuggestionBox";
+        box.style.display = "none";
+        box.style.margin = "8px 0 10px 0";
+        box.style.padding = "10px 12px";
+        box.style.border = "1px solid #d7e3ff";
+        box.style.borderRadius = "12px";
+        box.style.background = "#f4f8ff";
+        box.style.color = "#1f2937";
+        box.style.fontSize = "14px";
+        box.style.lineHeight = "1.4";
+
+        input.insertAdjacentElement("afterend", box);
+        return box;
+    }
+
+    function hideCorrectionSuggestion() {
+        const box = document.getElementById("correctionSuggestionBox");
+        if (box) {
+            box.style.display = "none";
+            box.innerHTML = "";
+        }
+        lastCorrectionKey = "";
+    }
+
+    function showCorrectionSuggestion(original, corrected, lang) {
+        const box = ensureCorrectionBox();
+        if (!box) return;
+
+        const key = `${lang}::${original}::${corrected}`;
+        if (lastCorrectionKey === key) return;
+        lastCorrectionKey = key;
+
+        box.innerHTML = "";
+
+        const label = document.createElement("span");
+        label.textContent = "Sugestia poprawy: ";
+
+        const suggestion = document.createElement("button");
+        suggestion.type = "button";
+        suggestion.textContent = corrected;
+        suggestion.style.border = "none";
+        suggestion.style.background = "transparent";
+        suggestion.style.color = "#0b63ff";
+        suggestion.style.fontWeight = "600";
+        suggestion.style.cursor = "pointer";
+        suggestion.style.padding = "0 4px";
+
+        const useCorrection = function () {
+            const input = document.getElementById("userInput");
+            if (input) {
+                input.value = corrected;
+                hideCorrectionSuggestion();
+                if (typeof translate === "function") translate();
+            }
+        };
+
+        suggestion.onclick = useCorrection;
+
+        const useBtn = document.createElement("button");
+        useBtn.type = "button";
+        useBtn.textContent = "Użyj";
+        useBtn.style.marginLeft = "10px";
+        useBtn.style.padding = "4px 10px";
+        useBtn.style.border = "1px solid #0b63ff";
+        useBtn.style.borderRadius = "8px";
+        useBtn.style.background = "#ffffff";
+        useBtn.style.color = "#0b63ff";
+        useBtn.style.cursor = "pointer";
+        useBtn.style.fontWeight = "600";
+        useBtn.onclick = useCorrection;
+
+        const ignoreBtn = document.createElement("button");
+        ignoreBtn.type = "button";
+        ignoreBtn.textContent = "Ignoruj";
+        ignoreBtn.style.marginLeft = "6px";
+        ignoreBtn.style.padding = "4px 10px";
+        ignoreBtn.style.border = "1px solid #d1d5db";
+        ignoreBtn.style.borderRadius = "8px";
+        ignoreBtn.style.background = "#ffffff";
+        ignoreBtn.style.color = "#374151";
+        ignoreBtn.style.cursor = "pointer";
+        ignoreBtn.onclick = hideCorrectionSuggestion;
+
+        box.appendChild(label);
+        box.appendChild(suggestion);
+        box.appendChild(useBtn);
+        box.appendChild(ignoreBtn);
+        box.style.display = "block";
+    }
+
+    async function prepareInputForTranslation(text, src, tgt) {
+        const original = String(text || "");
+
+        if (!shouldCorrectInput(original, src, tgt)) {
+            hideCorrectionSuggestion();
+            return { text: original, corrected: false, suggestion: original };
+        }
+
+        const corrected = await getGoogleCorrectedInput(original, src);
+
+        if (corrected && normalizeCorrectionCompare(corrected) !== normalizeCorrectionCompare(original)) {
+            showCorrectionSuggestion(original, corrected, src);
+            return {
+                text: AUTO_USE_GOOGLE_CORRECTION ? corrected : original,
+                corrected: true,
+                suggestion: corrected
+            };
+        }
+
+        hideCorrectionSuggestion();
+        return { text: original, corrected: false, suggestion: original };
+    }
+
 
     const DATA_FILES = [
         { url: "vuzor.json", source: "vuzor", priority: 400 },
@@ -433,6 +625,7 @@
 
         return "nominative";
     }
+
 
     function composeLiteralWordByWord(sourceText, direction) {
         /*
@@ -940,6 +1133,7 @@
 
             if (!text.trim()) {
                 out.innerText = "";
+                hideCorrectionSuggestion();
                 return;
             }
 
@@ -947,12 +1141,20 @@
 
             try {
                 let finalResult = "";
+                let workingText = text;
+
+                if (src !== "slo") {
+                    const prepared = await prepareInputForTranslation(text, src, tgt);
+                    workingText = prepared.text || text;
+                } else {
+                    hideCorrectionSuggestion();
+                }
 
                 if (src === "slo" && tgt === "pl") {
                     finalResult = translateSloToPlML(text);
 
                 } else if (src === "pl" && tgt === "slo") {
-                    finalResult = translatePlToSloML(text);
+                    finalResult = translatePlToSloML(workingText);
 
                 } else if (src === "slo") {
                     const bridge = translateSloToPlML(text);
@@ -962,15 +1164,15 @@
 
                 } else if (tgt === "slo") {
                     const bridge = typeof google === "function"
-                        ? await google(text, src, "pl")
-                        : text;
+                        ? await google(workingText, src, "pl")
+                        : workingText;
 
                     finalResult = translatePlToSloML(bridge);
 
                 } else {
                     finalResult = typeof google === "function"
-                        ? await google(text, src, tgt)
-                        : text;
+                        ? await google(workingText, src, tgt)
+                        : workingText;
                 }
 
                 out.innerText = finalResult || "";
@@ -988,6 +1190,8 @@
         window.translate = patchedTranslate;
     }
 
+    window.prepareInputForTranslation = prepareInputForTranslation;
+    window.hideCorrectionSuggestion = hideCorrectionSuggestion;
     window.loadSlovoMLBridge = loadSlovoMLBridge;
     window.translatePlToSloML = translatePlToSloML;
     window.translateSloToPlML = translateSloToPlML;

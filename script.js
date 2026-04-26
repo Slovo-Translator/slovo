@@ -1,5 +1,6 @@
 let plToSlo = {}, sloToPl = {};
 let wordTypes = {};
+
 const languageData = [
     { code: 'slo', slo: 'Slověnьsky', pl: 'Słowiański', en: 'Slovian (Slavic)', de: 'Slawisch', cs: 'Slovanský', sk: 'Slovanský', ru: 'Славянский', fr: 'Slave', es: 'Eslavo', it: 'Slavo', uk: 'Слов\'янська', be: 'Славянская', bg: 'Славянски', hr: 'Slavenski', sr: 'Словенски', 'sr-Latn': 'Slavenski', sl: 'Slovanski', mk: 'Словенски', pt: 'Eslavo', nl: 'Slavisch', da: 'Slavisk', sv: 'Slaviska', no: 'Slavisk', fi: 'Slaavilainen', et: 'Slaavi', lv: 'Slāvu', lt: 'Slavų', el: 'Σλαβική', tr: 'Slavca', hu: 'Szláv', ro: 'Slavă', ja: 'スラヴ語', ko: '슬라브어', "zh-CN": '斯拉夫语', "zh-TW": '斯拉夫語', ar: 'السلافية', hi: 'स्लाविक', id: 'Slavia', vi: 'Tiếng Slav', th: 'ภาษาสลาวิก', he: 'סלאבית', az: 'Slavyan', ka: 'სლავური', hy: 'Սլավոնական', af: 'Slawies', sq: 'Sllave', am: 'ስላቪክ', bn: 'স্লাভিক', ms: 'Slavik', zu: 'IsiSlavic' },
     { code: 'en', pl: 'Angielski', en: 'English', slo: "Angol'ьsky", de: 'Englisch' },
@@ -51,6 +52,7 @@ const languageData = [
     { code: 'tr', pl: 'Turecki', en: 'Turkish', slo: 'Turečьsky', de: 'Türkisch' },
     { code: 'vi', pl: 'Wietnamski', en: 'Vietnamese', slo: 'Větnamьsky', de: 'Vietnamesisch' }
 ];
+
 const uiTranslations = {
     slo: { title: "Slovo Perkladačь", from: "Jiz ęzyka:", to: "Na ęzyk:", paste: "Vyloži", clear: "Terbi", copy: "Poveli", placeholder: "Piši tu..." },
     pl: { title: "Slovo Tłumacz", from: "Z języka:", to: "Na język:", paste: "Wklej", clear: "Usuń", copy: "Kopiuj", placeholder: "Wpisz tekst..." },
@@ -84,30 +86,22 @@ const uiTranslations = {
     ar: { title: "مترجم Slovo", from: "من:", to: "إلى:", paste: "لصق", clear: "مسح", copy: "نسخ", placeholder: "أدخل النص..." }
 };
 
-// --- POPRAWIONA FUNKCJA GENERUJĄCA LISTĘ JĘZYKÓW ---
 function populateLanguageLists(uiLang, userLocale) {
     const s1 = document.getElementById('srcLang'), s2 = document.getElementById('tgtLang');
     if (!s1 || !s2) return;
     let dn;
-    try {
-        dn = new Intl.DisplayNames([userLocale], { type: 'language' });
-    } catch (e) {}
+    try { dn = new Intl.DisplayNames([userLocale], { type: 'language' }); } catch (e) {}
+
     [s1, s2].forEach(s => {
         s.options.length = 0;
         languageData.forEach(l => {
             let name = "";
             if (l.code === 'slo') {
                 name = l[uiLang] || l.en || l.slo;
+            } else if (dn) {
+                try { name = dn.of(l.code); } catch (e) { name = l[uiLang] || l.en || l.code; }
             } else {
-                if (dn) {
-                    try {
-                        name = dn.of(l.code);
-                    } catch (e) {
-                        name = l[uiLang] || l.en || l.code;
-                    }
-                } else {
-                    name = l[uiLang] || l.en || l.code;
-                }
+                name = l[uiLang] || l.en || l.code;
             }
             name = name.charAt(0).toUpperCase() + name.slice(1);
             s.add(new Option(name, l.code));
@@ -115,13 +109,13 @@ function populateLanguageLists(uiLang, userLocale) {
     });
 }
 
-// --- FUNKCJE WIELKOŚCI LITER ---
 function getCase(word) {
     if (!word) return "lower";
     if (word === word.toUpperCase() && word.length > 1) return "upper";
     if (word[0] === word[0].toUpperCase()) return "title";
     return "lower";
 }
+
 function applyCase(word, caseType) {
     if (!word) return "";
     switch (caseType) {
@@ -131,7 +125,6 @@ function applyCase(word, caseType) {
     }
 }
 
-// --- LOGIKA TŁUMACZENIA ---
 function dictReplace(text, dict) {
     if (!text) return "";
     const urlRegex = /(https?:\/\/[^\s]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
@@ -140,13 +133,13 @@ function dictReplace(text, dict) {
         placeholders.push(match);
         return `__URL_PH_${placeholders.length - 1}__`;
     });
+
     tempText = tempText.replace(/[a-ząćęłńóśźżěьъ']+/gi, (word) => {
         const lowWord = word.toLowerCase();
-        if (dict[lowWord]) {
-            return applyCase(dict[lowWord], getCase(word));
-        }
+        if (dict[lowWord]) return applyCase(dict[lowWord], getCase(word));
         return word;
     });
+
     return tempText.replace(/__URL_PH_(\d+)__/g, (match, id) => placeholders[id]);
 }
 
@@ -159,19 +152,16 @@ function reorderSmart(text) {
         let token = tokens[i];
         let lowToken = token.toLowerCase();
 
-        // Jeśli to nie jest słowo (tylko spacja lub interpunkcja), dodaj i idź dalej
         if (/^[\s.,!?;:()=+\-%*/]+$/.test(token)) {
             result.push(token);
             continue;
         }
 
-        // Sprawdzamy, czy obecne słowo to rzeczownik, przymiotnik lub liczebnik
         if (wordTypes[lowToken]) {
             let group = [];
             let currentIdx = i;
             let firstWordCase = getCase(tokens[i]);
 
-            // Zbieraj wszystkie powiązane słowa występujące po sobie (ignorując spacje)
             while (currentIdx < tokens.length) {
                 let currentToken = tokens[currentIdx];
                 let currentLow = currentToken.toLowerCase();
@@ -184,35 +174,26 @@ function reorderSmart(text) {
                 let type = wordTypes[currentLow];
                 if (type === "noun" || type === "adjective" || type === "numeral") {
                     group.push({ val: currentToken, type: type });
-                    i = currentIdx; // Przesuwamy główny licznik pętli
+                    i = currentIdx;
                     currentIdx++;
                 } else {
-                    break; 
+                    break;
                 }
             }
 
             if (group.length > 1) {
-                // Sortujemy grupę według klucza: 1. numeral, 2. adjective, 3. noun
                 const order = { "numeral": 1, "adjective": 2, "noun": 3 };
                 group.sort((a, b) => (order[a.type] || 99) - (order[b.type] || 99));
 
-                // Składamy grupę z powrotem w całość
                 group.forEach((word, index) => {
                     let formattedWord = word.val.toLowerCase();
-                    
-                    // Pierwsze słowo w nowym szyku dostaje wielkość liter pierwotnego pierwszego słowa
-                    if (index === 0) {
-                        formattedWord = applyCase(word.val, firstWordCase);
-                    } else if (firstWordCase === "upper") {
-                        formattedWord = word.val.toUpperCase();
-                    }
-
+                    if (index === 0) formattedWord = applyCase(word.val, firstWordCase);
+                    else if (firstWordCase === "upper") formattedWord = word.val.toUpperCase();
                     result.push(formattedWord);
                     if (index < group.length - 1) result.push(" ");
                 });
                 continue;
             } else if (group.length === 1) {
-                // Jeśli grupa ma tylko 1 słowo, nic nie zmieniaj
                 result.push(token);
                 continue;
             }
@@ -223,23 +204,211 @@ function reorderSmart(text) {
     return result.join("");
 }
 
+// --- GOOGLE + KOREKTA WEJŚCIA ---
+const ENABLE_GOOGLE_INPUT_CORRECTION = true;
+const AUTO_USE_GOOGLE_CORRECTION = true;
+const correctionCache = new Map();
+let lastCorrectionKey = "";
+
+function normalizeCorrectionCompare(text) {
+    return String(text || "")
+        .normalize("NFC")
+        .replace(/[“”„]/g, '"')
+        .replace(/[’]/g, "'")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLocaleLowerCase("pl");
+}
+
+function shouldCorrectInput(text, src, tgt) {
+    if (!ENABLE_GOOGLE_INPUT_CORRECTION) return false;
+    if (!text || !text.trim()) return false;
+    if (src === "slo") return false;
+    if (text.trim().length < 4) return false;
+    return true;
+}
+
+async function googleRaw(text, s, t) {
+    try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!Array.isArray(data) || !Array.isArray(data[0])) return text;
+        return data[0].map(x => Array.isArray(x) ? (x[0] || "") : "").join('');
+    } catch (e) {
+        console.warn("Google error:", e);
+        return text;
+    }
+}
+
+async function google(text, s, t) {
+    return await googleRaw(text, s, t);
+}
+
+async function getGoogleCorrectedInput(text, lang) {
+    const original = String(text || "");
+    const key = `${lang}::${original}`;
+    if (correctionCache.has(key)) return correctionCache.get(key);
+
+    let corrected = original;
+    try {
+        corrected = await googleRaw(original, lang, lang);
+        if (!corrected || !corrected.trim()) corrected = original;
+    } catch (e) {
+        corrected = original;
+    }
+
+    correctionCache.set(key, corrected);
+    return corrected;
+}
+
+function ensureCorrectionBox() {
+    let box = document.getElementById("correctionSuggestionBox");
+    if (box) return box;
+
+    const input = document.getElementById("userInput");
+    if (!input || !input.parentNode) return null;
+
+    box = document.createElement("div");
+    box.id = "correctionSuggestionBox";
+    box.style.display = "none";
+    box.style.margin = "8px 0 10px 0";
+    box.style.padding = "10px 12px";
+    box.style.border = "1px solid #d7e3ff";
+    box.style.borderRadius = "12px";
+    box.style.background = "#f4f8ff";
+    box.style.color = "#1f2937";
+    box.style.fontSize = "14px";
+    box.style.lineHeight = "1.4";
+    input.insertAdjacentElement("afterend", box);
+    return box;
+}
+
+function hideCorrectionSuggestion() {
+    const box = document.getElementById("correctionSuggestionBox");
+    if (box) {
+        box.style.display = "none";
+        box.innerHTML = "";
+    }
+    lastCorrectionKey = "";
+}
+
+function showCorrectionSuggestion(original, corrected, lang) {
+    const box = ensureCorrectionBox();
+    if (!box) return;
+
+    const key = `${lang}::${original}::${corrected}`;
+    if (lastCorrectionKey === key) return;
+    lastCorrectionKey = key;
+
+    box.innerHTML = "";
+
+    const label = document.createElement("span");
+    label.textContent = "Sugestia poprawy: ";
+
+    const suggestion = document.createElement("button");
+    suggestion.type = "button";
+    suggestion.textContent = corrected;
+    suggestion.style.border = "none";
+    suggestion.style.background = "transparent";
+    suggestion.style.color = "#0b63ff";
+    suggestion.style.fontWeight = "600";
+    suggestion.style.cursor = "pointer";
+    suggestion.style.padding = "0 4px";
+
+    const useCorrection = function () {
+        const input = document.getElementById("userInput");
+        if (input) {
+            input.value = corrected;
+            hideCorrectionSuggestion();
+            translate();
+        }
+    };
+
+    suggestion.onclick = useCorrection;
+
+    const useBtn = document.createElement("button");
+    useBtn.type = "button";
+    useBtn.textContent = "Użyj";
+    useBtn.style.marginLeft = "10px";
+    useBtn.style.padding = "4px 10px";
+    useBtn.style.border = "1px solid #0b63ff";
+    useBtn.style.borderRadius = "8px";
+    useBtn.style.background = "#ffffff";
+    useBtn.style.color = "#0b63ff";
+    useBtn.style.cursor = "pointer";
+    useBtn.style.fontWeight = "600";
+    useBtn.onclick = useCorrection;
+
+    const ignoreBtn = document.createElement("button");
+    ignoreBtn.type = "button";
+    ignoreBtn.textContent = "Ignoruj";
+    ignoreBtn.style.marginLeft = "6px";
+    ignoreBtn.style.padding = "4px 10px";
+    ignoreBtn.style.border = "1px solid #d1d5db";
+    ignoreBtn.style.borderRadius = "8px";
+    ignoreBtn.style.background = "#ffffff";
+    ignoreBtn.style.color = "#374151";
+    ignoreBtn.style.cursor = "pointer";
+    ignoreBtn.onclick = hideCorrectionSuggestion;
+
+    box.appendChild(label);
+    box.appendChild(suggestion);
+    box.appendChild(useBtn);
+    box.appendChild(ignoreBtn);
+    box.style.display = "block";
+}
+
+async function prepareInputForTranslation(text, src, tgt) {
+    const original = String(text || "");
+
+    if (!shouldCorrectInput(original, src, tgt)) {
+        hideCorrectionSuggestion();
+        return { text: original, corrected: false, suggestion: original };
+    }
+
+    const corrected = await getGoogleCorrectedInput(original, src);
+
+    if (corrected && normalizeCorrectionCompare(corrected) !== normalizeCorrectionCompare(original)) {
+        showCorrectionSuggestion(original, corrected, src);
+        return {
+            text: AUTO_USE_GOOGLE_CORRECTION ? corrected : original,
+            corrected: true,
+            suggestion: corrected
+        };
+    }
+
+    hideCorrectionSuggestion();
+    return { text: original, corrected: false, suggestion: original };
+}
+
 async function translate() {
     const input = document.getElementById('userInput');
     const out = document.getElementById('resultOutput');
     if (!input || !out) return;
-    const text = input.value;
+
+    const originalText = input.value;
     const src = document.getElementById('srcLang').value;
     const tgt = document.getElementById('tgtLang').value;
-    if (!text.trim()) { out.innerText = ""; return; }
+
+    if (!originalText.trim()) {
+        out.innerText = "";
+        hideCorrectionSuggestion();
+        return;
+    }
+
     try {
         let finalResult = "";
+        const prepared = await prepareInputForTranslation(originalText, src, tgt);
+        const text = prepared.text;
+
         if (src === 'slo' && tgt === 'pl') {
-            finalResult = dictReplace(text, sloToPl);
+            finalResult = dictReplace(originalText, sloToPl);
         } else if (src === 'pl' && tgt === 'slo') {
             let translated = dictReplace(text, plToSlo);
             finalResult = reorderSmart(translated);
         } else if (src === 'slo') {
-            const bridge = dictReplace(text, sloToPl);
+            const bridge = dictReplace(originalText, sloToPl);
             finalResult = await google(bridge, 'pl', tgt);
         } else if (tgt === 'slo') {
             const bridge = await google(text, src, 'pl');
@@ -248,17 +417,12 @@ async function translate() {
         } else {
             finalResult = await google(text, src, tgt);
         }
-        out.innerText = finalResult;
-    } catch (e) { out.innerText = "Error..."; }
-}
 
-async function google(text, s, t) {
-    try {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${s}&tl=${t}&dt=t&q=${encodeURIComponent(text)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        return data[0].map(x => x[0]).join('');
-    } catch (e) { return text; }
+        out.innerText = finalResult;
+    } catch (e) {
+        console.error(e);
+        out.innerText = "Error...";
+    }
 }
 
 async function loadDictionaries() {
@@ -286,20 +450,24 @@ async function loadDictionaries() {
             }
         }
         if (status) status.innerText = "Engine Ready.";
-    } catch (e) { if (status) status.innerText = "Dict Error."; }
+    } catch (e) {
+        console.error(e);
+        if (status) status.innerText = "Dict Error.";
+    }
 }
 
-// --- ZMODYFIKOWANA FUNKCJA INICJUJĄCA ---
 async function init() {
     const sysLocale = navigator.language || 'en';
     const sysLang = sysLocale.split('-')[0];
     const uiKey = uiTranslations[sysLang] ? sysLang : 'en';
     applyUI(uiKey);
     populateLanguageLists(uiKey, sysLocale);
+
     const savedSrc = localStorage.getItem('srcLang') || (languageData.some(l => l.code === sysLang) ? sysLang : 'pl');
     const savedTgt = localStorage.getItem('tgtLang') || 'slo';
     const srcSelect = document.getElementById('srcLang');
     const tgtSelect = document.getElementById('tgtLang');
+
     if (srcSelect) {
         srcSelect.value = savedSrc;
         srcSelect.addEventListener('change', (e) => {
@@ -307,6 +475,7 @@ async function init() {
             translate();
         });
     }
+
     if (tgtSelect) {
         tgtSelect.value = savedTgt;
         tgtSelect.addEventListener('change', (e) => {
@@ -314,11 +483,10 @@ async function init() {
             translate();
         });
     }
+
     await loadDictionaries();
     const userInput = document.getElementById('userInput');
-    if (userInput) {
-        userInput.addEventListener('input', debounce(translate, 300));
-    }
+    if (userInput) userInput.addEventListener('input', debounce(translate, 700));
 }
 
 function applyUI(lang) {
@@ -344,6 +512,7 @@ function swapLanguages() {
 function clearText() {
     document.getElementById('userInput').value = "";
     document.getElementById('resultOutput').innerText = "";
+    hideCorrectionSuggestion();
 }
 
 function copyText() {
@@ -367,4 +536,7 @@ function debounce(func, wait) {
     };
 }
 
+window.prepareInputForTranslation = prepareInputForTranslation;
+window.hideCorrectionSuggestion = hideCorrectionSuggestion;
+window.googleRaw = googleRaw;
 window.onload = init;
