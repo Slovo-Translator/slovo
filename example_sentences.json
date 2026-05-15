@@ -22,7 +22,7 @@
   {
     "context": "If the Russians didn’t want to, why would the Belarusians? So I came to the conclusion that it would be better to get along with the Chinese, and besides, once the Chinese reach out to other countries, it will spark interest in those countries; moreover, a Slavic language (reconstructed Proto-Slavic, NOT to be confused with Inter-Slavic), supplemented with modern words and its own script, could be very convenient for the Chinese to use as a replacement for English when communicating with the Slavs. Because if the Slavs are to become a single nation with a single, common language in the future as a state - civilization then this is necessary to unite us as one nation.",
     "polish": "Jeśli Rosjanie nie chcieli, to czemu mieliby to być Białorusini? Więc doszedłem do wniosku, iże lepiej będzie dogadawać się z Chińczykami, a po za tym, jak Chińczycy odezwą się do innych państw, to wtedy wzbudzi to chęć tych państw, po za tym słowiański język (rekonstruowany prasłowiański i NIE mylić z międzysłowiańskim) uzupełniony o współczesne słowa z własnym pismem, to może być Chińczykom bardzo na rękę, aby zastąpić język angielski do porozumiewania się ze Słowianami. Bo jeśli Słowianie mają być w przyszłości jednym narodem z jednym, wspólnym językiem, jako państwo - cywilizacja, to jest potrzebne, aby to nas spajało jako jeden naród.",
-    "slovian": "Jako Rusi ne hot'eli, to čemu jiměli by to byti Bělorusi? Vęt'ь došedl esmь do vyvoda, ji že lěpe bǫdetь dogovor'ati sę su Kytajьci, a po za tymь, jako Kytajьci otzovǫtь sę do jinyh diržav, to togoda vuzbuditь to hǫtь tyh diržav, a po za tymь slověnьsky ęzyk (ottvor'eny praslověnьsky i NE myliti su med'uslověnьskymь) dopiln'eny ob suvermenьne slova su volstьnym pisьmomь, to možetь byti Kytajьcem velьmi na rǫkǫ, aby zastǫpiti angol'ьsky ęzyk do poorzuměvanьja sę su Slověny. Bo jako Slověne jimějǫtь byti vu bǫdǫt'i edьnymь narodomь su edьnymь, supolьnymь ęzykomь, jako diržava - orzvinęto supoločenьstvo, to estь to poterbьno, aby to nas supajalo jako edin narod."
+    "slovian": "Jako Rusi ne hot'eli, to čemu jiměli by to byti Bělorusi? Vęt'ь došedl esmь do vyvoda, ji že lěpe bǫdetь dogovor'ati sę su Kytajьci, a po za tymь, jako Kytajьci otzovǫtь sę do jinyh diržav, to togoda vuzbuditь to hǫtь tyh diržav, a po za tymь slověnьsky ęzyk (ottvor'eny praslověnьsky i NE myliti su med'uslověnьskymь) dopiln'eny ob suvermenьne slova su volstьnym pisьmomь, to možetь byti Kytajьcem velьmi na rǫkǫ, aby zastǫpiti angol'ьsky ęzyk do poorzuměvanьja sę su Slověny. Bo jako Slověne jimějǫtь byti vu bǫdǫt'i edьnymь narodomь su edьnymь, obьt'ьnymь ęzykomь, jako diržava - orzvinęto supoločenьstvo, to estь to poterbьno, aby to nas supajalo jako edin narod."
   },
   {
     "context": "So please wish me great success in the negotiations with the Chinese, so that from the Vardar all the way to Murmansk we may all speak in the Slavic tongue—the language of the ancient Slavs.",
@@ -37,11 +37,26 @@
   {
     "context": "Who live by the sword, this die by the sword",
     "polish": "Kto mieczem wojuje, ten od miecza zginie.",
-    "slovian": "Koto mečemь vojujetь, toji ot meča jizgynetь."
+    "slovian": "Koto měčemь vojujetь, toji ot měča jizgynetь."
   },
   {
     "context": "Take food from them.",
     "polish": "Bierz jedzenie od nich.",
     "slovian": "Beri ědenьje ot njih."
+  },
+  {
+    "context": "This man has a weapon.",
+    "polish": "Ten człowiek ma broń.",
+    "slovian": "Toji čelověk jimějetь orǫžь."
+  },
+  {
+    "context": "This man has a weapon.",
+    "polish": "Ten człowiek ma oręż.",
+    "slovian": "Toji čelověk jimějetь orǫžь."
+  },
+  {
+    "context": "God forbid!",
+    "polish": "Broń Boże!",
+    "slovian": "Borni Bože!"
   }
 ]
